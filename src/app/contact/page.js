@@ -172,8 +172,8 @@ export default function ContactPage() {
             {/* Contact info list */}
             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
               {[
-                { icon: "call", text: "+91 98765 43210", label: "Phone" },
-                { icon: "mail", text: "hello@thepawsfriend.com", label: "Email" },
+                { icon: "call", text: "+91 9211338489 (Emergency: +91 9211338488)", label: "Phone & Emergency" },
+                { icon: "mail", text: "support@thepawsfriend.in", label: "Email" },
                 { icon: "location_on", text: "Delhi NCR, India", label: "Location" },
               ].map((c) => (
                 <div
@@ -228,8 +228,11 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-headline-md text-headline-md text-on-surface mb-1">WhatsApp/Call</h3>
-                <p className="text-on-surface-variant">+91 98765 43210</p>
-                <button className="text-label-md text-primary mt-2 font-semibold hover:underline text-left">
+                <p className="text-on-surface-variant">+91 9211338489</p>
+                <button
+                  onClick={() => window.open("https://wa.me/919211338489", "_blank")}
+                  className="text-label-md text-primary mt-2 font-semibold hover:underline text-left"
+                >
                   Start Chat →
                 </button>
               </div>
@@ -241,8 +244,11 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-headline-md text-headline-md text-on-surface mb-1">Email</h3>
-                <p className="text-on-surface-variant">care@thepawsfriend.com</p>
-                <button className="text-label-md text-primary mt-2 font-semibold hover:underline text-left">
+                <p className="text-on-surface-variant">support@thepawsfriend.in</p>
+                <button
+                  onClick={() => window.open("mailto:support@thepawsfriend.in", "_self")}
+                  className="text-label-md text-primary mt-2 font-semibold hover:underline text-left"
+                >
                   Send Email →
                 </button>
               </div>
@@ -357,7 +363,7 @@ export default function ContactPage() {
           <div className="apple-glass-elevated p-4 rounded-2xl flex items-center gap-4 animate-bounce">
             <img
               alt="Logo"
-              className="w-10 h-10 rounded-full"
+              className="w-10 h-10 rounded-full mix-blend-multiply"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkuANiBnzYDxy_sQLfNvBAGihvzbWHQFJB6zcyXBITtmp3uFCnp2Ej1LTQwXHJzLlfP0dnDHX5RVkOCQClmL1VCdSX_n7OAHKQuBvjgY5jJY6lrETQ7vHXBMNx00o6AFYHqSO4nqvgPHy3j26U0edBEwE5CY0Gu7F-H3vU9Hq1P_zSqbDcDBuqA7nAe_1zGH9nNtkiL_oRWASTRBeSifWNN4pgU9zWJkxYHZkY3Ug_Lde7iyKXtz4_ITYjtfwD5zOO-Fo9TrHJnpMU"
             />
             <div>
@@ -375,10 +381,13 @@ export default function ContactPage() {
             <span className="material-symbols-outlined text-4xl animate-pulse">emergency</span>
             <div>
               <h4 className="font-headline-md text-headline-md">Emergency Care Available 24/7</h4>
-              <p className="font-body-md opacity-90">Call us anytime for urgent medical assistance.</p>
+              <p className="font-body-md opacity-90">Call +91 9211338488 anytime for urgent medical assistance.</p>
             </div>
           </div>
-          <button className="bg-on-primary text-primary px-8 py-3 rounded-full font-headline-md hover:bg-primary-fixed transition-colors active:scale-95">
+          <button
+            onClick={() => window.open("tel:+919211338488", "_self")}
+            className="bg-on-primary text-primary px-8 py-3 rounded-full font-headline-md hover:bg-primary-fixed transition-colors active:scale-95"
+          >
             Call Now
           </button>
         </div>

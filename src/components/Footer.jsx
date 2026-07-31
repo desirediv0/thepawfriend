@@ -174,7 +174,7 @@ export default function Footer() {
               Book a Visit ✦
             </Link>
             <button
-              onClick={() => window.open("https://wa.me/919876543210", "_blank")}
+              onClick={() => window.open("https://wa.me/919211338489", "_blank")}
               style={{
                 background: "rgba(255,255,255,0.08)",
                 color: "#fff",
@@ -196,7 +196,7 @@ export default function Footer() {
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
               </svg>
-              Call Us Now
+              WhatsApp Us
             </button>
           </div>
 
@@ -212,8 +212,8 @@ export default function Footer() {
             }}
           >
             {[
-              { value: "2000+", label: "Happy Pets" },
-              { value: "4.9 ★", label: "Average Rating" },
+              { value: "5200+", label: "Happy Pet Parents" },
+              { value: "4.8 ★", label: "Average Rating" },
               { value: "Delhi NCR", label: "Cities Covered" },
             ].map((s) => (
               <div key={s.label} style={{ textAlign: "center" }}>
@@ -260,7 +260,7 @@ export default function Footer() {
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
                 <img
                   alt="The Paws Friend Logo"
-                  style={{ height: "38px", width: "38px", objectFit: "contain" }}
+                  style={{ height: "38px", width: "38px", objectFit: "contain", mixBlendMode: "multiply" }}
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkuANiBnzYDxy_sQLfNvBAGihvzbWHQFJB6zcyXBITtmp3uFCnp2Ej1LTQwXHJzLlfP0dnDHX5RVkOCQClmL1VCdSX_n7OAHKQuBvjgY5jJY6lrETQ7vHXBMNx00o6AFYHqSO4nqvgPHy3j26U0edBEwE5CY0Gu7F-H3vU9Hq1P_zSqbDcDBuqA7nAe_1zGH9nNtkiL_oRWASTRBeSifWNN4pgU9zWJkxYHZkY3Ug_Lde7iyKXtz4_ITYjtfwD5zOO-Fo9TrHJnpMU"
                 />
                 <span style={{ fontWeight: 800, fontSize: "15px", color: "#fff", letterSpacing: "0.04em" }}>
@@ -278,7 +278,7 @@ export default function Footer() {
                     <span key={i} className="material-symbols-outlined" style={{ fontSize: "16px", fontVariationSettings: "'FILL' 1" }}>star</span>
                   ))}
                 </div>
-                <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>4.9 by 250+ Pet Parents</span>
+                <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>4.8 rated by 600+ Pet Parents</span>
               </div>
 
               {/* Newsletter */}
@@ -354,7 +354,7 @@ export default function Footer() {
                   </svg>
                 </a>
                 {/* WhatsApp */}
-                <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" className="social-btn" aria-label="WhatsApp">
+                <a href="https://wa.me/919211338489" target="_blank" rel="noopener noreferrer" className="social-btn" aria-label="WhatsApp">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                   </svg>
@@ -384,11 +384,11 @@ export default function Footer() {
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "14px" }}>
                 <li style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "#ffb59f", marginTop: "1px", flexShrink: 0 }}>call</span>
-                  <span style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.55)", lineHeight: "20px" }}>+91 98765 43210</span>
+                  <span style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.55)", lineHeight: "20px" }}>+91 9211338489<br /><span style={{ fontSize: "11px", opacity: 0.8 }}>Emergency: +91 9211338488</span></span>
                 </li>
                 <li style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "#ffb59f", marginTop: "1px", flexShrink: 0 }}>mail</span>
-                  <span style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.55)", lineHeight: "20px" }}>hello@thepawsfriend.com</span>
+                  <span style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.55)", lineHeight: "20px" }}>support@thepawsfriend.in</span>
                 </li>
                 <li style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "#ffb59f", marginTop: "1px", flexShrink: 0 }}>location_on</span>
@@ -433,12 +433,15 @@ export default function Footer() {
               © 2025 The Paws Friend. All rights reserved. Professional Pet Healthcare at Your Doorstep.
             </p>
             <div style={{ display: "flex", gap: "20px" }}>
-              {["Terms & Conditions", "Privacy Policy", "Sitemap"].map(t => (
-                <Link key={t} href="/" style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", textDecoration: "none", transition: "color 0.2s" }}
+              {[
+                { label: "Terms & Conditions", href: "/terms" },
+                { label: "Privacy Policy", href: "/privacy" },
+              ].map(t => (
+                <Link key={t.label} href={t.href} style={{ fontSize: "12px", color: "rgba(255,255,255,0.35)", textDecoration: "none", transition: "color 0.2s" }}
                   onMouseOver={e => e.currentTarget.style.color = "#ffb59f"}
                   onMouseOut={e => e.currentTarget.style.color = "rgba(255,255,255,0.35)"}
                 >
-                  {t}
+                  {t.label}
                 </Link>
               ))}
             </div>

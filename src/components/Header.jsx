@@ -40,7 +40,7 @@ export default function Header() {
           <Link href="/" className="flex items-center gap-2.5 group">
             <img
               alt="The Paws Friend Logo"
-              className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-105"
+              className="h-10 w-10 object-contain transition-transform duration-300 group-hover:scale-105 mix-blend-multiply"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkuANiBnzYDxy_sQLfNvBAGihvzbWHQFJB6zcyXBITtmp3uFCnp2Ej1LTQwXHJzLlfP0dnDHX5RVkOCQClmL1VCdSX_n7OAHKQuBvjgY5jJY6lrETQ7vHXBMNx00o6AFYHqSO4nqvgPHy3j26U0edBEwE5CY0Gu7F-H3vU9Hq1P_zSqbDcDBuqA7nAe_1zGH9nNtkiL_oRWASTRBeSifWNN4pgU9zWJkxYHZkY3Ug_Lde7iyKXtz4_ITYjtfwD5zOO-Fo9TrHJnpMU"
             />
             <span className="text-body-lg font-headline-lg text-primary uppercase tracking-tight font-extrabold">
@@ -68,19 +68,21 @@ export default function Header() {
             })}
           </div>
 
-          <Link
-            href="/book"
-            className="hidden md:flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-full font-label-md text-label-md active:scale-95 duration-200 transition-all hover:bg-primary-container shadow-sm hover:shadow-md"
-          >
-            <span className="material-symbols-outlined text-[18px]">calendar_today</span>
-            Book Visit
-          </Link>
+          <div className="hidden md:flex items-center gap-3">
+            <Link
+              href="/book"
+              className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-md hover:bg-primary-container transition-all duration-200 active:scale-95 flex items-center gap-2"
+            >
+              <span className="material-symbols-outlined text-[18px]">calendar_today</span>
+              Book Visit
+            </Link>
+          </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Hamburger Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-on-surface p-2 focus:outline-none rounded-full hover:bg-surface-container"
-            aria-label="Toggle Navigation Menu"
+            className="md:hidden p-2 rounded-xl text-on-surface hover:bg-surface-container transition-colors focus:outline-none"
+            aria-label="Toggle Menu"
           >
             <span className="material-symbols-outlined text-2xl">
               {isOpen ? "close" : "menu"}
@@ -88,13 +90,9 @@ export default function Header() {
           </button>
         </nav>
 
-        {/* Mobile Menu Drawer */}
-        <div
-          className={`fixed top-[60px] left-0 w-full bg-white/95 backdrop-blur-2xl border-b border-surface-container-highest shadow-xl md:hidden transition-all duration-300 overflow-hidden ${
-            isOpen ? "max-h-[450px] opacity-100 py-4" : "max-h-0 opacity-0 py-0"
-          }`}
-        >
-          <div className="flex flex-col px-gutter gap-2">
+        {/* Mobile Dropdown Menu */}
+        {isOpen && (
+          <div className="md:hidden bg-white/95 backdrop-blur-xl border-b border-surface-variant/40 px-6 py-4 space-y-3 animate-in slide-in-from-top-5 duration-200 shadow-xl">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -102,9 +100,9 @@ export default function Header() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`font-semibold py-2.5 px-4 rounded-xl transition-all ${
+                  className={`block py-2.5 px-4 rounded-xl font-semibold text-base transition-colors ${
                     isActive
-                      ? "bg-primary-fixed text-on-primary-fixed-variant"
+                      ? "bg-primary-container/20 text-primary font-bold"
                       : "text-on-surface hover:bg-surface-container"
                   }`}
                 >
@@ -121,13 +119,13 @@ export default function Header() {
               Book Appointment Now
             </Link>
           </div>
-        </div>
+        )}
       </header>
 
       {/* ── Mobile Sticky Bottom Action Bar ── */}
-      <div className="md:hidden fixed bottom-4 left-4 right-4 z-40 flex items-center gap-2.5 bg-white/90 backdrop-blur-xl p-2 rounded-2xl border border-surface-variant/40 shadow-2xl">
+      <div className="md:hidden fixed bottom-4 left-4 right-4 z-40 flex items-center gap-2.5 bg-transparent p-0 border-none shadow-none">
         <button
-          onClick={() => window.open("tel:+919876543210", "_self")}
+          onClick={() => window.open("tel:+919211338489", "_self")}
           className="flex-1 bg-surface-container text-on-surface py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 border border-surface-variant/60 active:scale-95 transition-all"
         >
           <span className="material-symbols-outlined text-primary text-[18px]">call</span>
@@ -135,7 +133,7 @@ export default function Header() {
         </button>
 
         <button
-          onClick={() => window.open("https://wa.me/919876543210", "_blank")}
+          onClick={() => window.open("https://wa.me/919211338489", "_blank")}
           className="flex-1 bg-[#25D366] text-white py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-all shadow-sm"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">

@@ -28,6 +28,9 @@ export default function Home() {
   const { showToast } = useToast();
   
   // State for Hero Quick Callback Form
+  const [queryPetType, setQueryPetType] = useState("Dog");
+  const [queryPetAge, setQueryPetAge] = useState("");
+  const [queryCity, setQueryCity] = useState("");
   const [queryName, setQueryName] = useState("");
   const [queryPhone, setQueryPhone] = useState("");
   const [queryMessage, setQueryMessage] = useState("");
@@ -113,23 +116,28 @@ export default function Home() {
     setQueryLoading(true);
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("/api/book", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: queryName,
+          ownerName: queryName,
+          petName: `${queryPetType || 'Pet'} (${queryPetAge || 'Age not specified'})`,
+          petType: queryPetType,
           phone: queryPhone,
-          email: "query-callback@thepawsfriend.com",
-          message: queryMessage
+          email: "support@thepawsfriend.in",
+          address: queryCity || "Delhi NCR",
+          query: `City: ${queryCity || 'N/A'}\nPet Type: ${queryPetType}\nPet Age: ${queryPetAge || 'N/A'}${queryMessage ? '\nNotes: ' + queryMessage : ''}`
         })
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        showToast("Callback request received! We will call you within 15 minutes.", "success");
+        showToast("Callback requested! Our expert will reach out within 15 minutes.", "success");
         setQueryName("");
         setQueryPhone("");
+        setQueryPetAge("");
+        setQueryCity("");
         setQueryMessage("");
       } else {
         showToast(result.error || "Failed to submit request.", "error");
@@ -209,6 +217,7 @@ export default function Home() {
                   { icon: "verified_user", label: "Licensed Vets" },
                   { icon: "health_and_safety", label: "Insured" },
                   { icon: "schedule", label: "Same-Day Visits" },
+                  { icon: "vaccines", label: "US-Based Vaccination & Medicine" },
                 ].map((t) => (
                   <span key={t.label}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-label-md font-label-md"
@@ -235,7 +244,7 @@ export default function Home() {
                   Book Appointment
                 </Link>
                 <button
-                  onClick={() => window.open("https://wa.me/919876543210", "_blank")}
+                  onClick={() => window.open("https://wa.me/919211338489", "_blank")}
                   className="px-7 py-3.5 rounded-xl font-headline-md text-headline-md transition-all active:scale-95 flex items-center justify-center gap-2"
                   style={{
                     background: "rgba(255,255,255,0.12)",
@@ -270,7 +279,7 @@ export default function Home() {
                     ))}
                   </div>
                   <span className="text-label-md" style={{ color: "rgba(255,255,255,0.70)" }}>
-                    <span className="font-bold text-white">4.9</span>/5 · <Counter target="1000" suffix="+" /> Happy Pet Parents
+                    <span className="font-bold text-white">4.8</span>/5 · <Counter target="5200" suffix="+" /> Happy Pet Parents
                   </span>
                 </div>
               </div>
@@ -290,106 +299,149 @@ export default function Home() {
               >
                 {/* Card header */}
                 <div>
-                  <h3 className="font-headline-md flex items-center gap-2" style={{ color: "#fff", fontSize: "18px" }}>
+                  <h3 className="font-headline-md flex items-center gap-2" style={{ color: "#fff", fontSize: "20px", fontWeight: 800 }}>
                     <span className="material-symbols-outlined" style={{ color: "#ffb59f" }}>support_agent</span>
-                    Book Appointment
+                    Book Free Consultation
                   </h3>
-                  <p className="text-label-md mt-1" style={{ color: "rgba(255,255,255,0.60)" }}>
-                    Professional Home Visits · Call back in 15 min
+                  <p className="text-label-md mt-1" style={{ color: "rgba(255,255,255,0.70)", fontSize: "13px" }}>
+                    Expert vet & paravet guidance · Call back in 15 min
                   </p>
                 </div>
 
                 <form onSubmit={handleQuickQuery} className="space-y-3">
-                  {/* Pet type chips — Dog & Cat only */}
+                  {/* Pet Type Dropdown */}
                   <div>
-                    <p className="text-label-md mb-2" style={{ color: "rgba(255,255,255,0.55)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600 }}>Select Pet Type</p>
-                    <div className="grid grid-cols-2 gap-2">
-                      {[{ id: "Dog", emoji: "🐶" }, { id: "Cat", emoji: "🐱" }].map((p) => (
-                        <div
-                          key={p.id}
-                          className="flex flex-col items-center gap-1 py-2.5 rounded-xl cursor-pointer transition-all"
-                          style={{
-                            background: "rgba(255,255,255,0.15)",
-                            border: "1.5px solid rgba(255,255,255,0.25)",
-                          }}
-                          onMouseOver={e => e.currentTarget.style.borderColor = "#ffb59f"}
-                          onMouseOut={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)"}
-                        >
-                          <span style={{ fontSize: "22px" }}>{p.emoji}</span>
-                          <span className="text-label-md font-semibold" style={{ color: "#fff", fontSize: "11px" }}>{p.id}</span>
-                        </div>
-                      ))}
-                    </div>
+                    <label className="block text-xs font-semibold mb-1" style={{ color: "rgba(255,255,255,0.75)" }}>Pet Type</label>
+                    <select
+                      value={queryPetType}
+                      onChange={(e) => setQueryPetType(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all cursor-pointer"
+                      style={{
+                        background: "rgba(255,255,255,0.18)",
+                        border: "1px solid rgba(255,255,255,0.30)",
+                        color: "#fff",
+                      }}
+                    >
+                      <option value="Dog" style={{ color: "#000" }}>Dog</option>
+                      <option value="Cat" style={{ color: "#000" }}>Cat</option>
+                      <option value="Other" style={{ color: "#000" }}>Other Pet</option>
+                    </select>
                   </div>
 
-                  <input
-                    required
-                    type="text"
-                    value={queryName}
-                    onChange={(e) => setQueryName(e.target.value)}
-                    placeholder="Your Name"
-                    className="w-full px-4 py-3 rounded-xl outline-none text-body-md transition-all"
-                    style={{
-                      background: "rgba(255,255,255,0.15)",
-                      border: "1px solid rgba(255,255,255,0.20)",
-                      color: "#fff",
-                    }}
-                    onFocus={e => { e.target.style.borderColor = "#ffb59f"; e.target.style.background = "rgba(255,255,255,0.20)"; }}
-                    onBlur={e => { e.target.style.borderColor = "rgba(255,255,255,0.20)"; e.target.style.background = "rgba(255,255,255,0.15)"; }}
-                  />
+                  {/* Pet Age Dropdown */}
+                  <div>
+                    <label className="block text-xs font-semibold mb-1" style={{ color: "rgba(255,255,255,0.75)" }}>Pet Age</label>
+                    <select
+                      value={queryPetAge}
+                      onChange={(e) => setQueryPetAge(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all cursor-pointer"
+                      style={{
+                        background: "rgba(255,255,255,0.18)",
+                        border: "1px solid rgba(255,255,255,0.30)",
+                        color: "#fff",
+                      }}
+                    >
+                      <option value="" style={{ color: "#000" }}>Select Pet age</option>
+                      <option value="Puppy/Kitten (< 1 yr)" style={{ color: "#000" }}>Puppy / Kitten (&lt; 1 yr)</option>
+                      <option value="Adult (1-7 yrs)" style={{ color: "#000" }}>Adult (1-7 yrs)</option>
+                      <option value="Senior (7+ yrs)" style={{ color: "#000" }}>Senior (7+ yrs)</option>
+                    </select>
+                  </div>
 
-                  <input
-                    required
-                    type="tel"
-                    value={queryPhone}
-                    onChange={(e) => setQueryPhone(e.target.value)}
-                    placeholder="Phone Number"
-                    className="w-full px-4 py-3 rounded-xl outline-none text-body-md transition-all"
-                    style={{
-                      background: "rgba(255,255,255,0.15)",
-                      border: "1px solid rgba(255,255,255,0.20)",
-                      color: "#fff",
-                    }}
-                    onFocus={e => { e.target.style.borderColor = "#ffb59f"; e.target.style.background = "rgba(255,255,255,0.20)"; }}
-                    onBlur={e => { e.target.style.borderColor = "rgba(255,255,255,0.20)"; e.target.style.background = "rgba(255,255,255,0.15)"; }}
-                  />
+                  {/* Your City Dropdown */}
+                  <div>
+                    <label className="block text-xs font-semibold mb-1" style={{ color: "rgba(255,255,255,0.75)" }}>Your City</label>
+                    <select
+                      value={queryCity}
+                      onChange={(e) => setQueryCity(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all cursor-pointer"
+                      style={{
+                        background: "rgba(255,255,255,0.18)",
+                        border: "1px solid rgba(255,255,255,0.30)",
+                        color: "#fff",
+                      }}
+                    >
+                      <option value="" style={{ color: "#000" }}>Select your city</option>
+                      <option value="Noida" style={{ color: "#000" }}>Noida</option>
+                      <option value="Gurgaon" style={{ color: "#000" }}>Gurgaon</option>
+                      <option value="Delhi" style={{ color: "#000" }}>Delhi</option>
+                      <option value="Ghaziabad" style={{ color: "#000" }}>Ghaziabad</option>
+                      <option value="Faridabad" style={{ color: "#000" }}>Faridabad</option>
+                      <option value="Greater Noida" style={{ color: "#000" }}>Greater Noida</option>
+                    </select>
+                  </div>
 
-                  <textarea
-                    value={queryMessage}
-                    onChange={(e) => setQueryMessage(e.target.value)}
-                    placeholder="How can we help? (optional)"
-                    rows={2}
-                    className="w-full px-4 py-3 rounded-xl outline-none text-body-md transition-all resize-none"
-                    style={{
-                      background: "rgba(255,255,255,0.15)",
-                      border: "1px solid rgba(255,255,255,0.20)",
-                      color: "#fff",
-                    }}
-                    onFocus={e => { e.target.style.borderColor = "#ffb59f"; e.target.style.background = "rgba(255,255,255,0.20)"; }}
-                    onBlur={e => { e.target.style.borderColor = "rgba(255,255,255,0.20)"; e.target.style.background = "rgba(255,255,255,0.15)"; }}
-                  />
+                  {/* Name Input */}
+                  <div>
+                    <label className="block text-xs font-semibold mb-1" style={{ color: "rgba(255,255,255,0.75)" }}>Your Name</label>
+                    <input
+                      required
+                      type="text"
+                      value={queryName}
+                      onChange={(e) => setQueryName(e.target.value)}
+                      placeholder="e.g. Priya Sharma"
+                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all"
+                      style={{
+                        background: "rgba(255,255,255,0.18)",
+                        border: "1px solid rgba(255,255,255,0.30)",
+                        color: "#fff",
+                      }}
+                    />
+                  </div>
+
+                  {/* Phone Input with +91 Prefix */}
+                  <div>
+                    <label className="block text-xs font-semibold mb-1" style={{ color: "rgba(255,255,255,0.75)" }}>Phone Number</label>
+                    <div className="flex gap-2">
+                      <div
+                        className="px-3 py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center shrink-0"
+                        style={{
+                          background: "rgba(255,255,255,0.22)",
+                          border: "1px solid rgba(255,255,255,0.30)",
+                          color: "#fff",
+                        }}
+                      >
+                        +91
+                      </div>
+                      <input
+                        required
+                        type="tel"
+                        maxLength={10}
+                        value={queryPhone}
+                        onChange={(e) => setQueryPhone(e.target.value.replace(/\D/g, ""))}
+                        placeholder="10-digit number"
+                        className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all"
+                        style={{
+                          background: "rgba(255,255,255,0.18)",
+                          border: "1px solid rgba(255,255,255,0.30)",
+                          color: "#fff",
+                        }}
+                      />
+                    </div>
+                  </div>
 
                   <button
                     type="submit"
                     disabled={queryLoading}
-                    className="w-full py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50"
+                    className="w-full py-3.5 mt-2 rounded-xl font-bold uppercase tracking-wide flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50"
                     style={{
                       background: "#ab2f00",
                       color: "#fff",
-                      fontSize: "15px",
-                      boxShadow: "0 4px 20px rgba(171,47,0,0.40)",
+                      fontSize: "14px",
+                      boxShadow: "0 4px 20px rgba(171,47,0,0.45)",
                     }}
                     onMouseOver={e => e.currentTarget.style.background = "#cf4516"}
                     onMouseOut={e => e.currentTarget.style.background = "#ab2f00"}
                   >
-                    <span className="material-symbols-outlined text-[20px]">phone_in_talk</span>
-                    {queryLoading ? "Submitting..." : "Get Call Back"}
+                    <span className="material-symbols-outlined text-[18px]">phone_in_talk</span>
+                    {queryLoading ? "Submitting..." : "BOOK FREE EXPERT CALL BACK"}
                   </button>
                 </form>
 
-                <p className="text-center" style={{ fontSize: "11px", color: "rgba(255,255,255,0.40)" }}>
-                  We'll call you back within 15 minutes 🐾
-                </p>
+                <div className="flex items-center justify-center gap-1.5 pt-1" style={{ fontSize: "12px", color: "rgba(255,255,255,0.75)" }}>
+                  <span className="material-symbols-outlined text-[15px]" style={{ color: "#ffb59f" }}>verified_user</span>
+                  <span>Our expert will reach out to you in 15 mins</span>
+                </div>
               </div>
             </div>
 

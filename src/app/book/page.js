@@ -139,7 +139,7 @@ function BookingForm() {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+91 98765 43210"
+                placeholder="+91 92113 38489"
                 className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-on-surface transition-all"
               />
             </div>
@@ -195,7 +195,7 @@ function BookingForm() {
           <div>
             <p className="font-bold text-on-surface text-sm">Need Help Booking?</p>
             <p className="text-xs text-on-surface-variant mt-0.5 leading-relaxed">
-              Call or WhatsApp us at <strong>+91 98765 43210</strong> for custom requirements.
+              Call or WhatsApp us at <strong>+91 9211338489</strong> for custom requirements.
             </p>
           </div>
         </div>

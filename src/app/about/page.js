@@ -119,9 +119,9 @@ export default function AboutPage() {
   ];
 
   const stats = [
-    { value: "2,000+", label: "Happy Families" },
+    { value: "5,200+", label: "Happy Pet Parents" },
     { value: "30+", label: "Expert Vets" },
-    { value: "4.9★", label: "Average Rating" },
+    { value: "4.8★", label: "Average Rating" },
     { value: "10+", label: "Years of Care" },
   ];
 
