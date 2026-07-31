@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ab2f00;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #cf4516;
+  --color-on-primary-container: #fffbff;
+  --color-primary-fixed: #ffdbd1;
+  --color-primary-fixed-dim: #ffb59f;
+  --color-on-primary-fixed: #3a0a00;
+  --color-on-primary-fixed-variant: #862200;
+
+  --color-secondary: #655d59;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #ece0db;
+  --color-on-secondary-container: #6b635f;
+  --color-secondary-fixed: #ece0db;
+  --color-secondary-fixed-dim: #cfc4c0;
+  --color-on-secondary-fixed: #201a18;
+  --color-on-secondary-fixed-variant: #4c4542;
+
+  --color-tertiary: #5d5c5b;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #757474;
+  --color-on-tertiary-container: #f7feff;
+  --color-tertiary-fixed: #e5e2e1;
+  --color-tertiary-fixed-dim: #c8c6c5;
+  --color-on-tertiary-fixed: #1c1b1b;
+  --color-on-tertiary-fixed-variant: #474746;
+
+  --color-background: #fbf9f8;
+  --color-on-background: #1b1c1c;
+
+  --color-surface: #fbf9f8;
+  --color-on-surface: #1b1c1c;
+  --color-surface-variant: #e4e2e2;
+  --color-on-surface-variant: #5a413a;
+  --color-surface-dim: #dbdad9;
+  --color-surface-bright: #fbf9f8;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f5f3f3;
+  --color-surface-container: #efeded;
+  --color-surface-container-high: #e9e8e7;
+  --color-surface-container-highest: #e4e2e2;
+
+  --color-outline: #8e7068;
+  --color-outline-variant: #e2bfb5;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --spacing-section-padding: 80px;
+  --spacing-gutter: 24px;
+  --spacing-margin-mobile: 16px;
+  --spacing-base: 8px;
+  --spacing-container-max: 1280px;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+@layer base {
+  body {
+    background-color: #fbf9f8;
+    color: #1b1c1c;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+/* Custom CSS Styles verbatim from static design */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.bg-pattern {
+  background-image: radial-gradient(#ab2f00 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  opacity: 0.05;
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #fbf9f8 0%, #ffdbd1 100%);
+}
+
+.card-shadow {
+  box-shadow: 0px 4px 20px rgba(211, 71, 25, 0.05);
+}
+
+/* Font styles matching our utility classes */
+.font-body-md {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.font-label-md {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.font-headline-md {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+}
+
+.font-headline-lg {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+}
+
+.font-headline-xl {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.text-body-md {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.text-label-md {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.text-headline-md {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.text-headline-lg {
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.text-body-lg {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.text-headline-xl {
+  font-size: 48px;
+  line-height: 56px;
+}
+
+.text-headline-xl-mobile {
+  font-size: 32px;
+  line-height: 40px;
+}
+
+/* Apple-style Glassmorphism utilities */
+.apple-glass {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.02), 
+    0 1px 3px rgba(0, 0, 0, 0.01),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.apple-glass-elevated {
+  background: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(25px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.55) !important;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.06), 
+    0 4px 15px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.apple-glass-hover:hover {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.65) !important;
+  box-shadow: 
+    0 30px 60px rgba(211, 71, 25, 0.08), 
+    0 8px 25px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  transform: translateY(-4px) scale(1.01) !important;
+}
+
