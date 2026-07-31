@@ -4,11 +4,11 @@ import nodemailer from "nodemailer";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { petName, petType, phone, email, query, breed, service, ownerName, address } = body;
+    const { petName, petType, phone, email, query, breed, service, ownerName, address, specialRequests } = body;
 
-    if (!petName || !phone || !email) {
+    if (!phone) {
       return NextResponse.json(
-        { error: "Pet name, phone and email are required." },
+        { error: "Phone number is required." },
         { status: 400 }
       );
     }
@@ -29,32 +29,62 @@ export async function POST(request) {
       },
     });
 
+    const notesContent = specialRequests || query || "";
+
     const mailOptions = {
       from: `"The Paws Friend Booking" <${from}>`,
-      replyTo: email,
+      replyTo: email || from,
       to: to,
-      subject: `[The Paws Friend] New Appointment Booking for ${petName} (${petType || 'Pet'})`,
+      subject: `[New Appointment] ${service || 'Booking'} for ${petName || 'Pet'} (${petType || 'Pet'}) - ${ownerName || phone}`,
       html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-          <h2 style="color: #ab2f00; border-bottom: 2px solid #ab2f00; padding-bottom: 8px;">New Appointment / Service Booking</h2>
-          <p><strong>Pet Name:</strong> ${petName}</p>
-          <p><strong>Pet Type:</strong> ${petType || "N/A"}</p>
-          <p><strong>Owner / Contact Phone:</strong> ${phone}</p>
-          <p><strong>Owner / Contact Email:</strong> ${email}</p>
-          ${service ? `<p><strong>Service Requested:</strong> ${service}</p>` : ''}
-          ${breed ? `<p><strong>Breed:</strong> ${breed}</p>` : ''}
-          ${ownerName ? `<p><strong>Owner Name:</strong> ${ownerName}</p>` : ''}
-          ${address ? `<p><strong>Address:</strong> ${address}</p>` : ''}
-          ${query ? `<p><strong>Additional Notes / Query:</strong></p>
-          <div style="background-color: #f9f9f9; padding: 12px; border-left: 4px solid #ab2f00; margin-top: 5px;">
-            ${query.replace(/\n/g, '<br/>')}
-          </div>` : ''}
-          <br/>
-          <hr style="border: none; border-top: 1px solid #eee;" />
-          <div style="font-size: 12px; color: #666; line-height: 1.6;">
+        <div style="font-family: Arial, sans-serif; max-w: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; color: #333;">
+          <div style="background-color: #ab2f00; padding: 20px; text-align: center; color: #ffffff;">
+            <h2 style="margin: 0; font-size: 22px;">🐾 The Paws Friend</h2>
+            <p style="margin: 5px 0 0; font-size: 14px; opacity: 0.9;">New Appointment Booking Received</p>
+          </div>
+          
+          <div style="padding: 24px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+              <tr style="background-color: #f8f9fa;">
+                <td style="padding: 10px 14px; font-weight: bold; width: 38%; border-bottom: 1px solid #eee;">Selected Pet Type:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; color: #ab2f00; font-weight: bold;">${petType || "N/A"}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Chosen Service:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${service || "N/A"}</td>
+              </tr>
+              <tr style="background-color: #f8f9fa;">
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Pet Name:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${petName || "N/A"}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Owner Name:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${ownerName || "N/A"}</td>
+              </tr>
+              <tr style="background-color: #f8f9fa;">
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Mobile Number:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold; color: #ab2f00;">+91 ${phone}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Email Address:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${email || "N/A"}</td>
+              </tr>
+            </table>
+
+            ${notesContent ? `
+              <div style="margin-top: 20px;">
+                <p style="margin: 0 0 6px; font-weight: bold; font-size: 14px;">Special Requests / Concerns:</p>
+                <div style="background-color: #fff8f5; border-left: 4px solid #ab2f00; padding: 12px 16px; border-radius: 4px; font-size: 13px; color: #444;">
+                  ${notesContent.replace(/\n/g, '<br/>')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+
+          <div style="background-color: #fafafa; padding: 16px 24px; border-top: 1px solid #eeeeee; font-size: 12px; color: #666; text-align: center; line-height: 1.6;">
             <p style="margin: 0; font-weight: bold; color: #ab2f00;">The Paws Friend — Doorstep Pet Healthcare</p>
             <p style="margin: 2px 0;">Website: <a href="https://thepawsfriend.com" style="color: #ab2f00;">thepawsfriend.com</a> | Email: support@thepawsfriend.in</p>
-            <p style="margin: 2px 0;">Phone: +91 9211338489 | Emergency: +91 9211338488</p>
+            <p style="margin: 2px 0;">Phone: +91 9211338489 | Emergency 24/7: +91 9211338488</p>
           </div>
         </div>
       `,
