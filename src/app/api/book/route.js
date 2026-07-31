@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { petName, petType, phone, email, query, service, specialRequests } = body;
+    const { petName, petType, phone, query, service, specialRequests } = body;
 
     if (!phone) {
       return NextResponse.json(
@@ -33,7 +33,6 @@ export async function POST(request) {
 
     const mailOptions = {
       from: `"The Paws Friend Booking" <${from}>`,
-      replyTo: email || from,
       to: to,
       subject: `[New Appointment] ${service || 'Booking'} for ${petName || 'Pet'} (${petType || 'Pet'}) - +91 ${phone}`,
       html: `
@@ -60,10 +59,6 @@ export async function POST(request) {
               <tr>
                 <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Mobile Number:</td>
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold; color: #ab2f00;">+91 ${phone}</td>
-              </tr>
-              <tr style="background-color: #f8f9fa;">
-                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Email Address:</td>
-                <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${email || "N/A"}</td>
               </tr>
             </table>
 

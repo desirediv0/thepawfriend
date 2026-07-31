@@ -31,8 +31,6 @@ export default function Home() {
   const [queryPetType, setQueryPetType] = useState("");
   const [queryService, setQueryService] = useState("");
   const [queryPetName, setQueryPetName] = useState("");
-  const [queryName, setQueryName] = useState("");
-  const [queryEmail, setQueryEmail] = useState("");
   const [queryPhone, setQueryPhone] = useState("");
   const [queryMessage, setQueryMessage] = useState("");
   const [queryLoading, setQueryLoading] = useState(false);
@@ -129,7 +127,6 @@ export default function Home() {
           petType: queryPetType || "Dog",
           service: queryService || "General Consultation",
           phone: queryPhone,
-          email: queryEmail || "support@thepawsfriend.in",
           specialRequests: queryMessage || "",
           query: queryMessage || ""
         })
@@ -142,7 +139,6 @@ export default function Home() {
         setQueryPetType("");
         setQueryService("");
         setQueryPetName("");
-        setQueryEmail("");
         setQueryPhone("");
         setQueryMessage("");
       } else {
@@ -387,23 +383,7 @@ export default function Home() {
                     />
                   </div>
 
-                  {/* Email Address */}
-                  <div>
-                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Email Address *</label>
-                    <input
-                      required
-                      type="email"
-                      value={queryEmail}
-                      onChange={(e) => setQueryEmail(e.target.value)}
-                      placeholder="your.email@example.com"
-                      className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all"
-                      style={{
-                        background: "rgba(255,255,255,0.18)",
-                        border: "1px solid rgba(255,255,255,0.30)",
-                        color: "#fff",
-                      }}
-                    />
-                  </div>
+
 
                   {/* Mobile Number */}
                   <div>
