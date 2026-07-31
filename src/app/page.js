@@ -125,14 +125,13 @@ export default function Home() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ownerName: queryName,
           petName: queryPetName || "My Pet",
           petType: queryPetType || "Dog",
           service: queryService || "General Consultation",
           phone: queryPhone,
           email: queryEmail || "support@thepawsfriend.in",
-          address: "Delhi NCR",
-          query: `Service: ${queryService || 'N/A'}\nPet Name: ${queryPetName || 'N/A'}\nPet Type: ${queryPetType || 'N/A'}\nOwner Name: ${queryName}\nEmail: ${queryEmail}\nPhone: +91 ${queryPhone}${queryMessage ? '\nSpecial Requests: ' + queryMessage : ''}`
+          specialRequests: queryMessage || "",
+          query: queryMessage || ""
         })
       });
 
@@ -143,7 +142,6 @@ export default function Home() {
         setQueryPetType("");
         setQueryService("");
         setQueryPetName("");
-        setQueryName("");
         setQueryEmail("");
         setQueryPhone("");
         setQueryMessage("");
@@ -371,40 +369,22 @@ export default function Home() {
                     </select>
                   </div>
 
-                  {/* Pet Name & Your Name */}
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Pet Name *</label>
-                      <input
-                        required
-                        type="text"
-                        value={queryPetName}
-                        onChange={(e) => setQueryPetName(e.target.value)}
-                        placeholder="Your pet's name"
-                        className="w-full px-3 py-2 rounded-xl outline-none text-xs transition-all"
-                        style={{
-                          background: "rgba(255,255,255,0.18)",
-                          border: "1px solid rgba(255,255,255,0.30)",
-                          color: "#fff",
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Your Name *</label>
-                      <input
-                        required
-                        type="text"
-                        value={queryName}
-                        onChange={(e) => setQueryName(e.target.value)}
-                        placeholder="Your full name"
-                        className="w-full px-3 py-2 rounded-xl outline-none text-xs transition-all"
-                        style={{
-                          background: "rgba(255,255,255,0.18)",
-                          border: "1px solid rgba(255,255,255,0.30)",
-                          color: "#fff",
-                        }}
-                      />
-                    </div>
+                  {/* Pet Name */}
+                  <div>
+                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Pet Name *</label>
+                    <input
+                      required
+                      type="text"
+                      value={queryPetName}
+                      onChange={(e) => setQueryPetName(e.target.value)}
+                      placeholder="Your pet's name"
+                      className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all font-medium"
+                      style={{
+                        background: "rgba(255,255,255,0.18)",
+                        border: "1px solid rgba(255,255,255,0.30)",
+                        color: "#fff",
+                      }}
+                    />
                   </div>
 
                   {/* Email Address */}

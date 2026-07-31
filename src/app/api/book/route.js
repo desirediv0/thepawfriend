@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { petName, petType, phone, email, query, breed, service, ownerName, address, specialRequests } = body;
+    const { petName, petType, phone, email, query, service, specialRequests } = body;
 
     if (!phone) {
       return NextResponse.json(
@@ -35,7 +35,7 @@ export async function POST(request) {
       from: `"The Paws Friend Booking" <${from}>`,
       replyTo: email || from,
       to: to,
-      subject: `[New Appointment] ${service || 'Booking'} for ${petName || 'Pet'} (${petType || 'Pet'}) - ${ownerName || phone}`,
+      subject: `[New Appointment] ${service || 'Booking'} for ${petName || 'Pet'} (${petType || 'Pet'}) - +91 ${phone}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-w: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; color: #333;">
           <div style="background-color: #ab2f00; padding: 20px; text-align: center; color: #ffffff;">
@@ -58,14 +58,10 @@ export async function POST(request) {
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${petName || "N/A"}</td>
               </tr>
               <tr>
-                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Owner Name:</td>
-                <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${ownerName || "N/A"}</td>
-              </tr>
-              <tr style="background-color: #f8f9fa;">
                 <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Mobile Number:</td>
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold; color: #ab2f00;">+91 ${phone}</td>
               </tr>
-              <tr>
+              <tr style="background-color: #f8f9fa;">
                 <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Email Address:</td>
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${email || "N/A"}</td>
               </tr>
