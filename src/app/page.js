@@ -28,10 +28,11 @@ export default function Home() {
   const { showToast } = useToast();
   
   // State for Hero Quick Callback Form
-  const [queryPetType, setQueryPetType] = useState("Dog");
-  const [queryPetAge, setQueryPetAge] = useState("");
-  const [queryCity, setQueryCity] = useState("");
+  const [queryPetType, setQueryPetType] = useState("");
+  const [queryService, setQueryService] = useState("");
+  const [queryPetName, setQueryPetName] = useState("");
   const [queryName, setQueryName] = useState("");
+  const [queryEmail, setQueryEmail] = useState("");
   const [queryPhone, setQueryPhone] = useState("");
   const [queryMessage, setQueryMessage] = useState("");
   const [queryLoading, setQueryLoading] = useState(false);
@@ -113,6 +114,10 @@ export default function Home() {
 
   const handleQuickQuery = async (e) => {
     e.preventDefault();
+    if (!queryPhone || queryPhone.length < 10) {
+      showToast("Please enter a valid 10-digit mobile number.", "error");
+      return;
+    }
     setQueryLoading(true);
 
     try {
@@ -121,26 +126,29 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ownerName: queryName,
-          petName: `${queryPetType || 'Pet'} (${queryPetAge || 'Age not specified'})`,
-          petType: queryPetType,
+          petName: queryPetName || "My Pet",
+          petType: queryPetType || "Dog",
+          service: queryService || "General Consultation",
           phone: queryPhone,
-          email: "support@thepawsfriend.in",
-          address: queryCity || "Delhi NCR",
-          query: `City: ${queryCity || 'N/A'}\nPet Type: ${queryPetType}\nPet Age: ${queryPetAge || 'N/A'}${queryMessage ? '\nNotes: ' + queryMessage : ''}`
+          email: queryEmail || "support@thepawsfriend.in",
+          address: "Delhi NCR",
+          query: `Service: ${queryService || 'N/A'}\nPet Name: ${queryPetName || 'N/A'}\nPet Type: ${queryPetType || 'N/A'}\nOwner Name: ${queryName}\nEmail: ${queryEmail}\nPhone: +91 ${queryPhone}${queryMessage ? '\nSpecial Requests: ' + queryMessage : ''}`
         })
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        showToast("Callback requested! Our expert will reach out within 15 minutes.", "success");
+        showToast("Appointment booked successfully! Our team will contact you shortly.", "success");
+        setQueryPetType("");
+        setQueryService("");
+        setQueryPetName("");
         setQueryName("");
+        setQueryEmail("");
         setQueryPhone("");
-        setQueryPetAge("");
-        setQueryCity("");
         setQueryMessage("");
       } else {
-        showToast(result.error || "Failed to submit request.", "error");
+        showToast(result.error || "Failed to submit appointment.", "error");
       }
     } catch (err) {
       showToast("Something went wrong. Please try again.", "error");
@@ -298,89 +306,117 @@ export default function Home() {
                 }}
               >
                 {/* Card header */}
-                <div>
-                  <h3 className="font-headline-md flex items-center gap-2" style={{ color: "#fff", fontSize: "20px", fontWeight: 800 }}>
-                    <span className="material-symbols-outlined" style={{ color: "#ffb59f" }}>support_agent</span>
-                    Book Free Consultation
+                <div className="text-center">
+                  <h3 className="font-headline-md text-center" style={{ color: "#fff", fontSize: "22px", fontWeight: 800, textTransform: "capitalize" }}>
+                    Book Your Appointment
                   </h3>
-                  <p className="text-label-md mt-1" style={{ color: "rgba(255,255,255,0.70)", fontSize: "13px" }}>
-                    Expert vet & paravet guidance · Call back in 15 min
+                  <p className="text-label-md mt-1 text-center font-bold tracking-wider" style={{ color: "rgba(255,255,255,0.75)", fontSize: "11px", textTransform: "uppercase" }}>
+                    PROFESSIONAL HOME VISITS - OFFERS ON TREATMENTS
                   </p>
+                  
+                  {/* Offer Pill */}
+                  <div className="mt-3 inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold shadow-sm" style={{ background: "linear-gradient(90deg, #ff4e50, #f9d423)", color: "#111" }}>
+                    <span>🎉</span>
+                    <span>Special Offers Available - Up to 30% OFF!</span>
+                  </div>
                 </div>
 
-                <form onSubmit={handleQuickQuery} className="space-y-3">
-                  {/* Pet Type Dropdown */}
+                <form onSubmit={handleQuickQuery} className="space-y-3 pt-2">
+                  {/* Select Your Pet Dropdown */}
                   <div>
-                    <label className="block text-xs font-semibold mb-1" style={{ color: "rgba(255,255,255,0.75)" }}>Pet Type</label>
+                    <label className="block text-xs font-bold mb-1 flex items-center gap-1" style={{ color: "#fff" }}>
+                      <span className="material-symbols-outlined text-[15px]" style={{ color: "#ffb59f" }}>pets</span>
+                      Select Your Pet:
+                    </label>
                     <select
                       value={queryPetType}
                       onChange={(e) => setQueryPetType(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all cursor-pointer"
+                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all cursor-pointer font-medium"
                       style={{
                         background: "rgba(255,255,255,0.18)",
                         border: "1px solid rgba(255,255,255,0.30)",
                         color: "#fff",
                       }}
                     >
+                      <option value="" style={{ color: "#000" }}>-- Select Your Pet --</option>
                       <option value="Dog" style={{ color: "#000" }}>Dog</option>
                       <option value="Cat" style={{ color: "#000" }}>Cat</option>
-                      <option value="Other" style={{ color: "#000" }}>Other Pet</option>
+                      <option value="Other Pet" style={{ color: "#000" }}>Other Pet</option>
                     </select>
                   </div>
 
-                  {/* Pet Age Dropdown */}
+                  {/* Choose Service Dropdown */}
                   <div>
-                    <label className="block text-xs font-semibold mb-1" style={{ color: "rgba(255,255,255,0.75)" }}>Pet Age</label>
+                    <label className="block text-xs font-bold mb-1 flex items-center gap-1" style={{ color: "#fff" }}>
+                      <span className="material-symbols-outlined text-[15px]" style={{ color: "#ffb59f" }}>grade</span>
+                      Choose Service:
+                    </label>
                     <select
-                      value={queryPetAge}
-                      onChange={(e) => setQueryPetAge(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all cursor-pointer"
+                      value={queryService}
+                      onChange={(e) => setQueryService(e.target.value)}
+                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all cursor-pointer font-medium"
                       style={{
                         background: "rgba(255,255,255,0.18)",
                         border: "1px solid rgba(255,255,255,0.30)",
                         color: "#fff",
                       }}
                     >
-                      <option value="" style={{ color: "#000" }}>Select Pet age</option>
-                      <option value="Puppy/Kitten (< 1 yr)" style={{ color: "#000" }}>Puppy / Kitten (&lt; 1 yr)</option>
-                      <option value="Adult (1-7 yrs)" style={{ color: "#000" }}>Adult (1-7 yrs)</option>
-                      <option value="Senior (7+ yrs)" style={{ color: "#000" }}>Senior (7+ yrs)</option>
+                      <option value="" style={{ color: "#000" }}>-- Select Your Service --</option>
+                      <option value="Vet Consultation" style={{ color: "#000" }}>Vet Consultation</option>
+                      <option value="Pet Grooming" style={{ color: "#000" }}>Pet Grooming</option>
+                      <option value="Vaccinations" style={{ color: "#000" }}>Vaccinations</option>
+                      <option value="Pet Training" style={{ color: "#000" }}>Pet Training</option>
+                      <option value="Emergency Care" style={{ color: "#000" }}>Emergency Care</option>
+                      <option value="Care Packages" style={{ color: "#000" }}>Care Packages</option>
                     </select>
                   </div>
 
-                  {/* Your City Dropdown */}
-                  <div>
-                    <label className="block text-xs font-semibold mb-1" style={{ color: "rgba(255,255,255,0.75)" }}>Your City</label>
-                    <select
-                      value={queryCity}
-                      onChange={(e) => setQueryCity(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all cursor-pointer"
-                      style={{
-                        background: "rgba(255,255,255,0.18)",
-                        border: "1px solid rgba(255,255,255,0.30)",
-                        color: "#fff",
-                      }}
-                    >
-                      <option value="" style={{ color: "#000" }}>Select your city</option>
-                      <option value="Noida" style={{ color: "#000" }}>Noida</option>
-                      <option value="Gurgaon" style={{ color: "#000" }}>Gurgaon</option>
-                      <option value="Delhi" style={{ color: "#000" }}>Delhi</option>
-                      <option value="Ghaziabad" style={{ color: "#000" }}>Ghaziabad</option>
-                      <option value="Faridabad" style={{ color: "#000" }}>Faridabad</option>
-                      <option value="Greater Noida" style={{ color: "#000" }}>Greater Noida</option>
-                    </select>
+                  {/* Pet Name & Your Name */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Pet Name *</label>
+                      <input
+                        required
+                        type="text"
+                        value={queryPetName}
+                        onChange={(e) => setQueryPetName(e.target.value)}
+                        placeholder="Your pet's name"
+                        className="w-full px-3 py-2 rounded-xl outline-none text-xs transition-all"
+                        style={{
+                          background: "rgba(255,255,255,0.18)",
+                          border: "1px solid rgba(255,255,255,0.30)",
+                          color: "#fff",
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Your Name *</label>
+                      <input
+                        required
+                        type="text"
+                        value={queryName}
+                        onChange={(e) => setQueryName(e.target.value)}
+                        placeholder="Your full name"
+                        className="w-full px-3 py-2 rounded-xl outline-none text-xs transition-all"
+                        style={{
+                          background: "rgba(255,255,255,0.18)",
+                          border: "1px solid rgba(255,255,255,0.30)",
+                          color: "#fff",
+                        }}
+                      />
+                    </div>
                   </div>
 
-                  {/* Name Input */}
+                  {/* Email Address */}
                   <div>
-                    <label className="block text-xs font-semibold mb-1" style={{ color: "rgba(255,255,255,0.75)" }}>Your Name</label>
+                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Email Address *</label>
                     <input
                       required
-                      type="text"
-                      value={queryName}
-                      onChange={(e) => setQueryName(e.target.value)}
-                      placeholder="e.g. Priya Sharma"
-                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all"
+                      type="email"
+                      value={queryEmail}
+                      onChange={(e) => setQueryEmail(e.target.value)}
+                      placeholder="your.email@example.com"
+                      className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all"
                       style={{
                         background: "rgba(255,255,255,0.18)",
                         border: "1px solid rgba(255,255,255,0.30)",
@@ -389,12 +425,12 @@ export default function Home() {
                     />
                   </div>
 
-                  {/* Phone Input with +91 Prefix */}
+                  {/* Mobile Number */}
                   <div>
-                    <label className="block text-xs font-semibold mb-1" style={{ color: "rgba(255,255,255,0.75)" }}>Phone Number</label>
+                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Mobile Number *</label>
                     <div className="flex gap-2">
                       <div
-                        className="px-3 py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center shrink-0"
+                        className="px-3 py-2 rounded-xl text-xs font-bold flex items-center justify-center shrink-0"
                         style={{
                           background: "rgba(255,255,255,0.22)",
                           border: "1px solid rgba(255,255,255,0.30)",
@@ -410,7 +446,7 @@ export default function Home() {
                         value={queryPhone}
                         onChange={(e) => setQueryPhone(e.target.value.replace(/\D/g, ""))}
                         placeholder="10-digit number"
-                        className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all"
+                        className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all"
                         style={{
                           background: "rgba(255,255,255,0.18)",
                           border: "1px solid rgba(255,255,255,0.30)",
@@ -420,21 +456,38 @@ export default function Home() {
                     </div>
                   </div>
 
+                  {/* Special Requests */}
+                  <div>
+                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Special Requests</label>
+                    <textarea
+                      value={queryMessage}
+                      onChange={(e) => setQueryMessage(e.target.value)}
+                      placeholder="Tell us about any specific concerns or requirements..."
+                      rows={2}
+                      className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all resize-none"
+                      style={{
+                        background: "rgba(255,255,255,0.18)",
+                        border: "1px solid rgba(255,255,255,0.30)",
+                        color: "#fff",
+                      }}
+                    />
+                  </div>
+
                   <button
                     type="submit"
                     disabled={queryLoading}
-                    className="w-full py-3.5 mt-2 rounded-xl font-bold uppercase tracking-wide flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50"
+                    className="w-full py-3.5 mt-2 rounded-xl font-extrabold flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50"
                     style={{
-                      background: "#ab2f00",
+                      background: "linear-gradient(135deg, #ab2f00 0%, #d43b00 100%)",
                       color: "#fff",
                       fontSize: "14px",
                       boxShadow: "0 4px 20px rgba(171,47,0,0.45)",
                     }}
                     onMouseOver={e => e.currentTarget.style.background = "#cf4516"}
-                    onMouseOut={e => e.currentTarget.style.background = "#ab2f00"}
+                    onMouseOut={e => e.currentTarget.style.background = "linear-gradient(135deg, #ab2f00 0%, #d43b00 100%)"}
                   >
-                    <span className="material-symbols-outlined text-[18px]">phone_in_talk</span>
-                    {queryLoading ? "Submitting..." : "BOOK FREE EXPERT CALL BACK"}
+                    <span className="material-symbols-outlined text-[18px]">calendar_today</span>
+                    {queryLoading ? "Booking..." : "Book Now & Save Up to 30% OFF ✦"}
                   </button>
                 </form>
 
