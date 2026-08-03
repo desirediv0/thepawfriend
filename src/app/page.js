@@ -325,55 +325,6 @@ export default function Home() {
                 </div>
 
                 <form onSubmit={handleQuickQuery} className="space-y-3 pt-2">
-                  {/* Select Your Pet Dropdown */}
-                  <div>
-                    <label className="block text-xs font-bold mb-1 flex items-center gap-1" style={{ color: "#fff" }}>
-                      <span className="material-symbols-outlined text-[15px]" style={{ color: "#ffb59f" }}>pets</span>
-                      Select Your Pet:
-                    </label>
-                    <select
-                      value={queryPetType}
-                      onChange={(e) => setQueryPetType(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all cursor-pointer font-medium"
-                      style={{
-                        background: "rgba(255,255,255,0.18)",
-                        border: "1px solid rgba(255,255,255,0.30)",
-                        color: "#fff",
-                      }}
-                    >
-                      <option value="" style={{ color: "#000" }}>-- Select Your Pet --</option>
-                      <option value="Dog" style={{ color: "#000" }}>Dog</option>
-                      <option value="Cat" style={{ color: "#000" }}>Cat</option>
-                      <option value="Other Pet" style={{ color: "#000" }}>Other Pet</option>
-                    </select>
-                  </div>
-
-                  {/* Choose Service Dropdown */}
-                  <div>
-                    <label className="block text-xs font-bold mb-1 flex items-center gap-1" style={{ color: "#fff" }}>
-                      <span className="material-symbols-outlined text-[15px]" style={{ color: "#ffb59f" }}>grade</span>
-                      Choose Service:
-                    </label>
-                    <select
-                      value={queryService}
-                      onChange={(e) => setQueryService(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl outline-none text-sm transition-all cursor-pointer font-medium"
-                      style={{
-                        background: "rgba(255,255,255,0.18)",
-                        border: "1px solid rgba(255,255,255,0.30)",
-                        color: "#fff",
-                      }}
-                    >
-                      <option value="" style={{ color: "#000" }}>-- Select Your Service --</option>
-                      <option value="Vet Consultation" style={{ color: "#000" }}>Vet Consultation</option>
-                      <option value="Pet Grooming" style={{ color: "#000" }}>Pet Grooming</option>
-                      <option value="Vaccinations" style={{ color: "#000" }}>Vaccinations</option>
-                      <option value="Pet Training" style={{ color: "#000" }}>Pet Training</option>
-                      <option value="Emergency Care" style={{ color: "#000" }}>Emergency Care</option>
-                      <option value="Care Packages" style={{ color: "#000" }}>Care Packages</option>
-                    </select>
-                  </div>
-
                   {/* Pet Name */}
                   <div>
                     <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Pet Name *</label>
