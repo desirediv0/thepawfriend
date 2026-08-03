@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { petName, petType, phone, query, service, specialRequests } = body;
+    const { petName, petType, phone, query, service, specialRequests, userName, petAge, location } = body;
 
     if (!phone) {
       return NextResponse.json(
@@ -45,20 +45,32 @@ export async function POST(request) {
           <div style="padding: 24px;">
             <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
               <tr style="background-color: #f8f9fa;">
-                <td style="padding: 10px 14px; font-weight: bold; width: 38%; border-bottom: 1px solid #eee;">Selected Pet Type:</td>
-                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; color: #ab2f00; font-weight: bold;">${petType || "N/A"}</td>
+                <td style="padding: 10px 14px; font-weight: bold; width: 38%; border-bottom: 1px solid #eee;">Your Name:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; color: #ab2f00; font-weight: bold;">${userName || "N/A"}</td>
               </tr>
               <tr>
-                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Chosen Service:</td>
-                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${service || "N/A"}</td>
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Mobile Number:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold; color: #ab2f00;">+91 ${phone}</td>
+              </tr>
+              <tr style="background-color: #f8f9fa;">
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Location:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${location || "N/A"}</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Selected Pet Type:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; color: #ab2f00; font-weight: bold;">${petType || "N/A"}</td>
               </tr>
               <tr style="background-color: #f8f9fa;">
                 <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Pet Name:</td>
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${petName || "N/A"}</td>
               </tr>
               <tr>
-                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Mobile Number:</td>
-                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold; color: #ab2f00;">+91 ${phone}</td>
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Pet Age:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${petAge || "N/A"}</td>
+              </tr>
+              <tr style="background-color: #f8f9fa;">
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Chosen Service:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${service || "N/A"}</td>
               </tr>
             </table>
 

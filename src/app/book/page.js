@@ -13,6 +13,9 @@ function BookingForm() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [query, setQuery] = useState("");
+  const [userName, setUserName] = useState("");
+  const [petAge, setPetAge] = useState("");
+  const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
 
   const petOptions = [
@@ -38,8 +41,11 @@ function BookingForm() {
       query,
       breed: "N/A",
       service: "Consultation",
-      ownerName: "",
-      address: "N/A",
+      ownerName: userName || "",
+      address: location || "",
+      userName: userName || "",
+      petAge: petAge || "",
+      location: location || "",
     };
 
     try {
@@ -123,6 +129,54 @@ function BookingForm() {
               value={petName}
               onChange={(e) => setPetName(e.target.value)}
               placeholder={`e.g. Buddy`}
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-on-surface transition-all"
+            />
+          </div>
+
+          {/* Your Name */}
+          <div className="space-y-2">
+            <label htmlFor="userName" className="font-label-md text-label-md text-on-surface-variant block">
+              Your Name *
+            </label>
+            <input
+              id="userName"
+              required
+              type="text"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              placeholder="Your name"
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-on-surface transition-all"
+            />
+          </div>
+
+          {/* Pet Age */}
+          <div className="space-y-2">
+            <label htmlFor="petAge" className="font-label-md text-label-md text-on-surface-variant block">
+              Pet Age *
+            </label>
+            <input
+              id="petAge"
+              required
+              type="text"
+              value={petAge}
+              onChange={(e) => setPetAge(e.target.value)}
+              placeholder="e.g. 2 years"
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-on-surface transition-all"
+            />
+          </div>
+
+          {/* Your Location */}
+          <div className="space-y-2">
+            <label htmlFor="location" className="font-label-md text-label-md text-on-surface-variant block">
+              Your Location *
+            </label>
+            <input
+              id="location"
+              required
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Your location"
               className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-on-surface transition-all"
             />
           </div>
