@@ -558,14 +558,17 @@ export default function Home() {
       {/* Why Choose Us */}
       <section className="py-section-padding bg-surface-container-lowest gsap-choose-section">
         <div className="max-w-container-max mx-auto px-gutter grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl">
-            <iframe
-              className="w-full h-full border-none"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-              title="Why Choose The Paws Friend"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+          <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl group border border-[#E7D9C6]">
+            <img
+              src="/service_vet_consultation.png"
+              alt="Why Choose The Paws Friend Doorstep Care"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4 text-white text-xs sm:text-sm font-bold bg-black/40 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/20 flex items-center gap-2">
+              <span>⭐</span>
+              <span>100% Certified Doorstep Vet &amp; Grooming Care</span>
+            </div>
           </div>
           <div className="space-y-8">
             <h2 className="font-headline-xl text-headline-xl-mobile md:text-headline-lg text-on-background">Why Choose Us?</h2>
