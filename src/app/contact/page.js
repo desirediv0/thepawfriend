@@ -49,94 +49,29 @@ export default function ContactPage() {
 
   return (
     <>
-      {/* ── Hero with Reception Image — Split Layout ── */}
-      <section
-        style={{
-          background: "linear-gradient(135deg, #1a0905 0%, #2c1208 100%)",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1280px",
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            minHeight: "520px",
-          }}
-          className="grid-cols-1 md:grid-cols-2"
-        >
-          {/* Left: Full Image — no crop */}
-          <div
-            style={{
-              position: "relative",
-              overflow: "hidden",
-              minHeight: "420px",
-            }}
-          >
+      {/* ── Hero with Reception Image — Responsive Split Layout ── */}
+      <section className="bg-gradient-to-br from-[#1a0905] to-[#2c1208] overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 min-h-0 md:min-h-[520px]">
+          {/* Left: Full Image — responsive height */}
+          <div className="relative overflow-hidden h-64 sm:h-80 md:h-full min-h-[240px] md:min-h-[420px]">
             <img
               src="/contact-reception.png"
               alt="The Paws Friend Reception"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center center",
-                display: "block",
-              }}
+              className="w-full h-full object-cover object-center block"
             />
-            {/* Right-edge fade into the dark content panel */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background:
-                  "linear-gradient(to right, transparent 60%, rgba(26,9,5,0.95) 100%)",
-                pointerEvents: "none",
-              }}
-            />
-            {/* Bottom fade */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background:
-                  "linear-gradient(to bottom, rgba(26,9,5,0.15) 0%, transparent 40%, rgba(26,9,5,0.25) 100%)",
-                pointerEvents: "none",
-              }}
-            />
+            {/* Right-edge fade into dark panel on desktop */}
+            <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#1a0905]/95 pointer-events-none" />
+            {/* Bottom fade into dark panel on mobile */}
+            <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-[#1a0905]/40 to-[#1a0905] pointer-events-none" />
           </div>
 
           {/* Right: Content panel */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              padding: "60px 48px 60px 40px",
-            }}
-          >
+          <div className="flex flex-col justify-center p-6 sm:p-10 md:p-12 lg:p-16">
             {/* Badge */}
-            <span
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                padding: "5px 16px",
-                borderRadius: "100px",
-                background: "rgba(255,219,209,0.15)",
-                border: "1px solid rgba(255,181,159,0.30)",
-                color: "#ffdbd1",
-                fontSize: "13px",
-                fontWeight: 600,
-                marginBottom: "20px",
-                width: "fit-content",
-                backdropFilter: "blur(8px)",
-              }}
-            >
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#ffdbd1] text-xs sm:text-sm font-semibold mb-4 w-fit backdrop-blur-md">
               <span
-                className="material-symbols-outlined"
-                style={{ fontSize: "15px", fontVariationSettings: "'FILL' 1" }}
+                className="material-symbols-outlined text-base"
+                style={{ fontVariationSettings: "'FILL' 1" }}
               >
                 contact_support
               </span>
@@ -144,33 +79,16 @@ export default function ContactPage() {
             </span>
 
             {/* Headline */}
-            <h1
-              className="font-headline-xl"
-              style={{
-                color: "#fff",
-                fontSize: "clamp(1.6rem, 3vw, 2.6rem)",
-                lineHeight: 1.2,
-                marginBottom: "14px",
-              }}
-            >
-              We'd Love to Hear{" "}
-              <span style={{ color: "#ffb59f" }}>From You</span>
+            <h1 className="text-white text-3xl sm:text-4xl md:text-5xl font-black leading-tight mb-3">
+              We'd Love to Hear <span className="text-[#ffb59f]">From You</span>
             </h1>
 
-            <p
-              style={{
-                color: "rgba(255,255,255,0.62)",
-                fontSize: "15px",
-                lineHeight: "24px",
-                marginBottom: "32px",
-                maxWidth: "380px",
-              }}
-            >
+            <p className="text-white/70 text-xs sm:text-base leading-relaxed mb-6 max-w-md">
               Have questions about our services or packages? Our team is just a call or message away.
             </p>
 
             {/* Contact info list */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+            <div className="flex flex-col gap-3">
               {[
                 { icon: "call", text: "+91 9211338489 (Emergency: +91 9211338488)", label: "Phone & Emergency" },
                 { icon: "mail", text: "support@thepawsfriend.in", label: "Email" },
@@ -178,33 +96,19 @@ export default function ContactPage() {
               ].map((c) => (
                 <div
                   key={c.text}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    padding: "11px 16px",
-                    borderRadius: "12px",
-                    background: "rgba(255,255,255,0.07)",
-                    border: "1px solid rgba(255,255,255,0.10)",
-                    backdropFilter: "blur(6px)",
-                  }}
+                  className="flex items-center gap-3 p-3.5 rounded-xl bg-white/10 border border-white/10 backdrop-blur-md"
                 >
                   <span
-                    className="material-symbols-outlined"
-                    style={{
-                      fontSize: "18px",
-                      color: "#ffb59f",
-                      fontVariationSettings: "'FILL' 1",
-                      flexShrink: 0,
-                    }}
+                    className="material-symbols-outlined text-[#ffb59f] text-lg sm:text-xl shrink-0"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
                   >
                     {c.icon}
                   </span>
-                  <div>
-                    <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.40)", textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 600 }}>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[10px] sm:text-xs text-white/50 uppercase tracking-wider font-bold">
                       {c.label}
                     </div>
-                    <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.80)", marginTop: "1px" }}>
+                    <div className="text-xs sm:text-sm text-white/90 font-medium truncate sm:whitespace-normal">
                       {c.text}
                     </div>
                   </div>
@@ -215,127 +119,126 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <div className="max-w-container-max mx-auto px-gutter py-12">
-        <section className="mb-4" />
-
-        {/* Contact Info and Form Grid */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-section-padding">
+      {/* Main Content Area */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-28">
+        {/* Contact Info Cards and Form Grid */}
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 mb-12">
           {/* Left Column: Cards (5 cols) */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="apple-glass apple-glass-hover p-8 rounded-2xl flex items-start gap-5">
-              <div className="bg-primary-fixed p-3 rounded-full flex items-center justify-center text-primary">
-                <span className="material-symbols-outlined text-2xl">chat_bubble</span>
+          <div className="lg:col-span-5 space-y-4 sm:space-y-6">
+            <div className="apple-glass p-5 sm:p-8 rounded-2xl flex items-start gap-4">
+              <div className="bg-primary-fixed p-3 rounded-full flex items-center justify-center text-primary shrink-0">
+                <span className="material-symbols-outlined text-xl sm:text-2xl">chat_bubble</span>
               </div>
-              <div>
-                <h3 className="font-headline-md text-headline-md text-on-surface mb-1">WhatsApp/Call</h3>
-                <p className="text-on-surface-variant">+91 9211338489</p>
+              <div className="min-w-0">
+                <h3 className="font-bold text-lg sm:text-xl text-on-surface mb-1">WhatsApp/Call</h3>
+                <p className="text-xs sm:text-sm text-on-surface-variant font-medium">+91 9211338489</p>
                 <button
                   onClick={() => window.open("https://wa.me/919211338489", "_blank")}
-                  className="text-label-md text-primary mt-2 font-semibold hover:underline text-left"
+                  className="text-xs sm:text-sm text-primary mt-2 font-semibold hover:underline block text-left"
                 >
                   Start Chat →
                 </button>
               </div>
             </div>
 
-            <div className="apple-glass apple-glass-hover p-8 rounded-2xl flex items-start gap-5">
-              <div className="bg-primary-fixed p-3 rounded-full flex items-center justify-center text-primary">
-                <span className="material-symbols-outlined text-2xl">mail</span>
+            <div className="apple-glass p-5 sm:p-8 rounded-2xl flex items-start gap-4">
+              <div className="bg-primary-fixed p-3 rounded-full flex items-center justify-center text-primary shrink-0">
+                <span className="material-symbols-outlined text-xl sm:text-2xl">mail</span>
               </div>
-              <div>
-                <h3 className="font-headline-md text-headline-md text-on-surface mb-1">Email</h3>
-                <p className="text-on-surface-variant">support@thepawsfriend.in</p>
+              <div className="min-w-0">
+                <h3 className="font-bold text-lg sm:text-xl text-on-surface mb-1">Email</h3>
+                <p className="text-xs sm:text-sm text-on-surface-variant font-medium truncate">support@thepawsfriend.in</p>
                 <button
                   onClick={() => window.open("mailto:support@thepawsfriend.in", "_self")}
-                  className="text-label-md text-primary mt-2 font-semibold hover:underline text-left"
+                  className="text-xs sm:text-sm text-primary mt-2 font-semibold hover:underline block text-left"
                 >
                   Send Email →
                 </button>
               </div>
             </div>
 
-            <div className="apple-glass apple-glass-hover p-8 rounded-2xl flex items-start gap-5">
-              <div className="bg-primary-fixed p-3 rounded-full flex items-center justify-center text-primary">
-                <span className="material-symbols-outlined text-2xl">location_on</span>
+            <div className="apple-glass p-5 sm:p-8 rounded-2xl flex items-start gap-4">
+              <div className="bg-primary-fixed p-3 rounded-full flex items-center justify-center text-primary shrink-0">
+                <span className="material-symbols-outlined text-xl sm:text-2xl">location_on</span>
               </div>
-              <div>
-                <h3 className="font-headline-md text-headline-md text-on-surface mb-1">Address</h3>
-                <p className="text-on-surface-variant">D-111, Sector 4, Noida, Uttar Pradesh - 201301</p>
+              <div className="min-w-0">
+                <h3 className="font-bold text-lg sm:text-xl text-on-surface mb-1">Address</h3>
+                <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">D-111, Sector 4, Noida, Uttar Pradesh - 201301</p>
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="text-label-md text-primary mt-2 font-semibold hover:underline text-left"
+                  className="text-xs sm:text-sm text-primary mt-2 font-semibold hover:underline block text-left"
                 >
                   Get Directions →
                 </button>
               </div>
             </div>
 
-            <div className="apple-glass apple-glass-hover p-8 rounded-2xl flex items-start gap-5">
-              <div className="bg-primary-fixed p-3 rounded-full flex items-center justify-center text-primary">
-                <span className="material-symbols-outlined text-2xl">schedule</span>
+            <div className="apple-glass p-5 sm:p-8 rounded-2xl flex items-start gap-4">
+              <div className="bg-primary-fixed p-3 rounded-full flex items-center justify-center text-primary shrink-0">
+                <span className="material-symbols-outlined text-xl sm:text-2xl">schedule</span>
               </div>
-              <div>
-                <h3 className="font-headline-md text-headline-md text-on-surface mb-1">Working Hours</h3>
-                <p className="text-on-surface-variant">Mon - Sun: 9:00 AM - 9:00 PM</p>
-                <p className="text-label-md text-primary mt-2 font-semibold">Available all days</p>
+              <div className="min-w-0">
+                <h3 className="font-bold text-lg sm:text-xl text-on-surface mb-1">Working Hours</h3>
+                <p className="text-xs sm:text-sm text-on-surface-variant">Mon - Sun: 9:00 AM - 9:00 PM</p>
+                <p className="text-xs sm:text-sm text-primary mt-1 font-semibold">Available all days</p>
               </div>
             </div>
           </div>
 
           {/* Right Column: Form (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="apple-glass p-10 rounded-2xl h-full">
-              <h2 className="font-headline-lg text-headline-lg mb-8">Send Us a Message</h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="font-label-md text-label-md text-on-surface-variant">Your Name</label>
+            <div className="apple-glass p-6 sm:p-8 md:p-10 rounded-2xl h-full">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#3B322C] mb-6">Send Us a Message</h2>
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="space-y-1.5">
+                    <label className="text-xs sm:text-sm font-semibold text-on-surface-variant">Your Name</label>
                     <input
                       required
                       value={formData.name}
                       onChange={(e) => handleInputChange(e, "name")}
-                      className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                      className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none"
                       placeholder="John Doe"
                       type="text"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="font-label-md text-label-md text-on-surface-variant">Phone Number</label>
+                  <div className="space-y-1.5">
+                    <label className="text-xs sm:text-sm font-semibold text-on-surface-variant">Phone Number</label>
                     <input
                       required
                       value={formData.phone}
                       onChange={(e) => handleInputChange(e, "phone")}
-                      className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                      className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none"
                       placeholder="+91 00000 00000"
                       type="tel"
                     />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="font-label-md text-label-md text-on-surface-variant">Email Address</label>
+                <div className="space-y-1.5">
+                  <label className="text-xs sm:text-sm font-semibold text-on-surface-variant">Email Address</label>
                   <input
                     required
                     value={formData.email}
                     onChange={(e) => handleInputChange(e, "email")}
-                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-body-md focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none"
                     placeholder="example@email.com"
                     type="email"
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="font-label-md text-label-md text-on-surface-variant">Your Message</label>
+                <div className="space-y-1.5">
+                  <label className="text-xs sm:text-sm font-semibold text-on-surface-variant">Your Message</label>
                   <textarea
                     required
                     value={formData.message}
                     onChange={(e) => handleInputChange(e, "message")}
-                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-body-md resize-none focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 text-sm resize-none focus:ring-2 focus:ring-primary focus:border-primary outline-none"
                     placeholder="How can we help you today?"
                     rows="4"
                   ></textarea>
                 </div>
                 <button
                   disabled={loading}
-                  className="w-full bg-primary text-on-primary py-4 rounded-lg font-headline-md text-headline-md hover:bg-primary-container transition-all active:scale-[0.98] disabled:opacity-50"
+                  className="w-full bg-[#D2571E] text-white py-3.5 sm:py-4 rounded-xl font-bold text-sm sm:text-base hover:bg-[#B54717] transition-all active:scale-[0.98] disabled:opacity-50 shadow-md"
                   type="submit"
                 >
                   {loading ? "Sending..." : "Send Message"}
@@ -347,7 +250,7 @@ export default function ContactPage() {
       </div>
 
       {/* Map Section */}
-      <section className="w-full h-[450px] relative overflow-hidden bg-surface-container-highest">
+      <section className="w-full h-[380px] sm:h-[450px] relative overflow-hidden bg-surface-container-highest">
         <div className="absolute inset-0 pointer-events-none z-10 shadow-[inset_0px_0px_50px_rgba(0,0,0,0.05)]"></div>
         <div
           className="w-full h-full bg-cover bg-center grayscale contrast-[0.9] opacity-80"
@@ -360,33 +263,33 @@ export default function ContactPage() {
           onClick={() => setIsModalOpen(true)}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer"
         >
-          <div className="apple-glass-elevated p-4 rounded-2xl flex items-center gap-4 animate-bounce">
+          <div className="apple-glass-elevated p-4 rounded-2xl flex items-center gap-3 sm:gap-4 animate-bounce">
             <img
               alt="Logo"
-              className="w-10 h-10 rounded-full mix-blend-multiply"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full mix-blend-multiply"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkuANiBnzYDxy_sQLfNvBAGihvzbWHQFJB6zcyXBITtmp3uFCnp2Ej1LTQwXHJzLlfP0dnDHX5RVkOCQClmL1VCdSX_n7OAHKQuBvjgY5jJY6lrETQ7vHXBMNx00o6AFYHqSO4nqvgPHy3j26U0edBEwE5CY0Gu7F-H3vU9Hq1P_zSqbDcDBuqA7nAe_1zGH9nNtkiL_oRWASTRBeSifWNN4pgU9zWJkxYHZkY3Ug_Lde7iyKXtz4_ITYjtfwD5zOO-Fo9TrHJnpMU"
             />
             <div>
-              <p className="font-bold text-primary">The Paws Friend</p>
-              <p className="text-[12px] text-on-surface-variant">Click to view flagship clinic details</p>
+              <p className="font-bold text-primary text-xs sm:text-sm">The Paws Friend</p>
+              <p className="text-[11px] text-on-surface-variant">Click to view flagship clinic details</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Emergency Care Banner */}
-      <section className="bg-primary py-6 overflow-hidden">
-        <div className="max-w-container-max mx-auto px-gutter flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-4 text-on-primary">
-            <span className="material-symbols-outlined text-4xl animate-pulse">emergency</span>
+      <section className="bg-primary py-6 overflow-hidden pb-24 sm:pb-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6 text-center md:text-left">
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-on-primary">
+            <span className="material-symbols-outlined text-3xl sm:text-4xl animate-pulse">emergency</span>
             <div>
-              <h4 className="font-headline-md text-headline-md">Emergency Care Available 24/7</h4>
-              <p className="font-body-md opacity-90">Call +91 9211338488 anytime for urgent medical assistance.</p>
+              <h4 className="font-bold text-lg sm:text-xl">Emergency Care Available 24/7</h4>
+              <p className="text-xs sm:text-sm opacity-90">Call +91 9211338488 anytime for urgent medical assistance.</p>
             </div>
           </div>
           <button
             onClick={() => window.open("tel:+919211338488", "_self")}
-            className="bg-on-primary text-primary px-8 py-3 rounded-full font-headline-md hover:bg-primary-fixed transition-colors active:scale-95"
+            className="w-full sm:w-auto bg-on-primary text-primary px-8 py-3 rounded-full font-bold text-xs sm:text-sm hover:bg-primary-fixed transition-colors active:scale-95 shadow-md"
           >
             Call Now
           </button>
@@ -401,7 +304,7 @@ export default function ContactPage() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="apple-glass-elevated p-8 max-w-sm w-full relative"
+            className="apple-glass-elevated p-6 sm:p-8 max-w-sm w-full relative rounded-2xl"
           >
             <button
               onClick={() => setIsModalOpen(false)}
@@ -409,14 +312,14 @@ export default function ContactPage() {
             >
               <span className="material-symbols-outlined">close</span>
             </button>
-            <h3 className="font-headline-md text-headline-md text-primary mb-4">Noida Flagship Clinic</h3>
-            <p className="text-body-md text-on-surface mb-3">📍 D-81, Sector 4, Noida, Uttar Pradesh - 201301</p>
-            <p className="text-body-md text-on-surface mb-4">⏰ Working hours: Mon - Sun (9 AM - 9 PM)</p>
+            <h3 className="font-bold text-lg sm:text-xl text-primary mb-4">Noida Flagship Clinic</h3>
+            <p className="text-xs sm:text-sm text-on-surface mb-2">📍 D-81, Sector 4, Noida, Uttar Pradesh - 201301</p>
+            <p className="text-xs sm:text-sm text-on-surface mb-4">⏰ Working hours: Mon - Sun (9 AM - 9 PM)</p>
             <button
               onClick={() => window.open("https://maps.google.com/?q=Noida+Sector+4", "_blank")}
-              className="w-full bg-[#ab2f00] text-white py-3 rounded-lg font-bold flex justify-center items-center gap-2 active:scale-95 transition-all"
+              className="w-full bg-[#D2571E] text-white py-3 rounded-lg font-bold text-xs sm:text-sm flex justify-center items-center gap-2 active:scale-95 transition-all shadow-md"
             >
-              <span className="material-symbols-outlined">directions</span> Get Directions
+              <span className="material-symbols-outlined text-base">directions</span> Get Directions
             </button>
           </div>
         </div>

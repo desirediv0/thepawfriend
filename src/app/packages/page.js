@@ -1,30 +1,30 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
-/* ---------- data ---------- */
+/* ---------- DATA MODEL ---------- */
 
 const BENEFITS_POOL = {
-  coat: { icon: "spa", label: "Healthy Coat" },
-  skin: { icon: "healing", label: "Healthy Skin" },
-  immunity: { icon: "shield", label: "Strong Immunity" },
-  behaviour: { icon: "psychology", label: "Better Behaviour" },
-  professional: { icon: "verified", label: "Professional Care" },
-  doorstep: { icon: "home", label: "Doorstep Convenience" },
-  stressfree: { icon: "self_improvement", label: "Stress-free Experience" },
-  bond: { icon: "favorite", label: "Stronger Bond With You" },
-  safety: { icon: "security", label: "Long-term Protection" },
+  coat: { emoji: "✨", label: "Healthy Coat" },
+  skin: { emoji: "🌿", label: "Healthy Skin" },
+  immunity: { emoji: "🛡️", label: "Strong Immunity" },
+  behaviour: { emoji: "🧠", label: "Better Behaviour" },
+  professional: { emoji: "⭐", label: "Professional Care" },
+  doorstep: { emoji: "🏠", label: "Doorstep Convenience" },
+  stressfree: { emoji: "🧘", label: "Stress-free Experience" },
+  bond: { emoji: "❤️", label: "Stronger Bond With You" },
+  safety: { emoji: "🔐", label: "Long-term Protection" },
 };
 
 const WHY_US = [
-  { icon: "school", label: "Certified Trainers" },
-  { icon: "content_cut", label: "Professional Groomers" },
-  { icon: "medical_services", label: "Qualified Veterinarians" },
-  { icon: "home", label: "Doorstep Service" },
-  { icon: "spa", label: "Premium Products" },
-  { icon: "vaccines", label: "US Standard Vaccines" },
-  { icon: "emergency", label: "Emergency Support" },
+  { emoji: "🎓", label: "Certified Trainers" },
+  { emoji: "✂️", label: "Professional Groomers" },
+  { emoji: "🩺", label: "Qualified Veterinarians" },
+  { emoji: "🏠", label: "Doorstep Service" },
+  { emoji: "✨", label: "Premium Products" },
+  { emoji: "💉", label: "US Standard Vaccines" },
+  { emoji: "🚨", label: "Emergency Support" },
 ];
 
 const FAQ_SHARED = [
@@ -82,65 +82,24 @@ const TESTIMONIALS = {
 };
 
 const CATEGORY_META = {
-  packages: { icon: "inventory_2", label: "Packages" },
-  grooming: { icon: "content_cut", label: "Grooming" },
-  training: { icon: "school", label: "Training" },
-  vaccination: { icon: "vaccines", label: "Vaccination" },
+  packages: { emoji: "📦", label: "Packages" },
+  grooming: { emoji: "✂️", label: "Grooming" },
+  training: { emoji: "🎓", label: "Training" },
+  vaccination: { emoji: "💉", label: "Vaccination" },
 };
 
 const PET_META = {
-  dog: { icon: "🐶", label: "Dog" },
-  cat: { icon: "🐱", label: "Cat" },
-};
-
-const POSTER_IMAGES = {
-  Poster01_Adult_Dog_Ultra_Premium_Bundle:
-    "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=640&h=500&fit=crop",
-  Poster02_Puppy_Training:
-    "https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=640&h=500&fit=crop",
-  Poster03_Basic_Advanced_Obedience_Training:
-    "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=640&h=500&fit=crop",
-  Poster04_Behavioural_Modification:
-    "https://images.unsplash.com/photo-1558788353-f76d92427f16?w=640&h=500&fit=crop",
-  Poster05_Protection_Guard_Dog_Training:
-    "https://images.unsplash.com/photo-1560807707-8cc77767d783?w=640&h=500&fit=crop",
-  Poster06_Full_Grooming:
-    "https://images.unsplash.com/photo-1516756587012-0e8f0e909803?w=640&h=500&fit=crop",
-  Poster07_Mini_Grooming:
-    "https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?w=640&h=500&fit=crop",
-  Poster08_Bathing:
-    "https://images.unsplash.com/photo-1524511751214-b0a384dd9f70?w=640&h=500&fit=crop",
-  Poster09_Trimming:
-    "https://images.unsplash.com/photo-1544568100-847a948585b9?w=640&h=500&fit=crop",
-  Poster10_Tick_and_Flea_Bath:
-    "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=640&h=500&fit=crop",
-  Poster11_Veterinary:
-    "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=640&h=500&fit=crop",
-  Poster12_Puppy_Vaccination_Package:
-    "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=640&h=500&fit=crop",
-  Poster13_Adult_Dog_Vaccination_Package:
-    "https://images.unsplash.com/photo-1552053831-71594a27632d?w=640&h=500&fit=crop",
-  Poster14_Kitten_Vaccination_Package:
-    "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=640&h=500&fit=crop",
-  Poster15_Cat_Vaccination_Package:
-    "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=640&h=500&fit=crop",
-  Poster16_Adult_Dog_Premium_Bundle:
-    "https://images.unsplash.com/photo-1558788353-f76d92427f16?w=640&h=500&fit=crop",
-  Poster17_Puppy_Ultra_Premium_Bundle:
-    "https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=640&h=500&fit=crop",
-  Poster18_Puppy_Premium_Bundle:
-    "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=640&h=500&fit=crop",
-  Poster19_Cat_Yearly_Bundle:
-    "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=640&h=500&fit=crop",
+  dog: { emoji: "🐶", label: "Dog" },
+  cat: { emoji: "🐱", label: "Cat" },
 };
 
 const PACKAGES = [
-  /* DOG — PACKAGES */
+  /* DOG — PACKAGES (BUNDLES) */
   {
     id: "adult-ultra",
     pet: "dog",
     cat: "packages",
-    img: "Poster01_Adult_Dog_Ultra_Premium_Bundle",
+    image: "/dog_grooming_card.png",
     name: "Adult Dog — Ultra Premium Bundle",
     unit: "per year, all-inclusive",
     price: "₹20,999",
@@ -215,7 +174,7 @@ const PACKAGES = [
     id: "adult-premium",
     pet: "dog",
     cat: "packages",
-    img: "Poster16_Adult_Dog_Premium_Bundle",
+    image: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=800&h=500&fit=crop&q=80",
     name: "Adult Dog — Premium Bundle",
     unit: "per year, all-inclusive",
     price: "₹18,999",
@@ -285,7 +244,7 @@ const PACKAGES = [
     id: "puppy-ultra",
     pet: "dog",
     cat: "packages",
-    img: "Poster17_Puppy_Ultra_Premium_Bundle",
+    image: "/puppy_care_card.png",
     name: "Puppy — Ultra Premium Bundle",
     unit: "per 3-month plan, all-inclusive",
     price: "₹36,999",
@@ -354,7 +313,7 @@ const PACKAGES = [
     id: "puppy-premium",
     pet: "dog",
     cat: "packages",
-    img: "Poster18_Puppy_Premium_Bundle",
+    image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=500&fit=crop&q=80",
     name: "Puppy — Premium Bundle",
     unit: "per 1-month plan, all-inclusive",
     price: "₹20,999",
@@ -399,10 +358,7 @@ const PACKAGES = [
         label: "Week 2–3",
         detail: "DHPPIL + Canine Corona + boosters + Grooming #1–3",
       },
-      {
-        label: "Week 4",
-        detail: "Anti Rabies + Kennel Cough + Grooming #4–6",
-      },
+      { label: "Week 4", detail: "Anti Rabies + Kennel Cough + Grooming #4–6" },
     ],
     savings: {
       exact: false,
@@ -413,12 +369,12 @@ const PACKAGES = [
     },
   },
 
-  /* CAT — PACKAGES */
+  /* CAT — PACKAGES (BUNDLE) */
   {
     id: "cat-yearly",
     pet: "cat",
     cat: "packages",
-    img: "Poster19_Cat_Yearly_Bundle",
+    image: "/cat_grooming_card.png",
     name: "Cat Yearly Bundle",
     unit: "per year, all-inclusive",
     price: "₹7,799",
@@ -429,8 +385,7 @@ const PACKAGES = [
       breedFit: "Any breed",
       lifestyle:
         "For cat parents who want grooming and vaccination handled without separate bookings.",
-      healthNote:
-        "Keeps coat, skin and core immunity covered across the full year.",
+      healthNote: "Keeps coat, skin and core immunity covered across the full year.",
     },
     includes: [
       {
@@ -479,7 +434,7 @@ const PACKAGES = [
     id: "puppy-training",
     pet: "dog",
     cat: "training",
-    img: "Poster02_Puppy_Training",
+    image: "https://images.unsplash.com/photo-1587559070757-f72a388edbba?w=800&h=500&fit=crop&q=80",
     name: "Puppy Training",
     unit: "per 12 sessions",
     price: "₹8,999",
@@ -489,8 +444,7 @@ const PACKAGES = [
       ageFit: "Puppies, 2–6 months",
       breedFit: "Any breed",
       lifestyle: "Ideal first training programme for a new puppy in the home.",
-      healthNote:
-        "Builds early habits that prevent bigger behavioural issues later.",
+      healthNote: "Builds early habits that prevent bigger behavioural issues later.",
     },
     includes: [
       {
@@ -514,7 +468,7 @@ const PACKAGES = [
     id: "basic-advanced",
     pet: "dog",
     cat: "training",
-    img: "Poster03_Basic_Advanced_Obedience_Training",
+    image: "/dog_training_card.png",
     name: "Basic + Advanced Obedience Training",
     unit: "per 12 sessions",
     price: "₹11,999",
@@ -554,7 +508,7 @@ const PACKAGES = [
     id: "behavioural-mod",
     pet: "dog",
     cat: "training",
-    img: "Poster04_Behavioural_Modification",
+    image: "https://images.unsplash.com/photo-1558788353-f76d92427f16?w=800&h=500&fit=crop&q=80",
     name: "Behavioural Modification",
     unit: "per 12 sessions",
     price: "₹14,999",
@@ -591,7 +545,7 @@ const PACKAGES = [
     id: "protection-guard",
     pet: "dog",
     cat: "training",
-    img: "Poster05_Protection_Guard_Dog_Training",
+    image: "https://images.unsplash.com/photo-1560807707-8cc77767d783?w=800&h=500&fit=crop&q=80",
     name: "Protection / Guard Dog Training",
     unit: "per 12 sessions",
     price: "₹16,999",
@@ -628,7 +582,7 @@ const PACKAGES = [
     id: "full-grooming",
     pet: "both",
     cat: "grooming",
-    img: "Poster06_Full_Grooming",
+    image: "/service_full_grooming.png",
     name: "Full Grooming",
     unit: "per session",
     price: "₹1,799",
@@ -674,7 +628,7 @@ const PACKAGES = [
     id: "mini-grooming",
     pet: "both",
     cat: "grooming",
-    img: "Poster07_Mini_Grooming",
+    image: "/service_mini_grooming.png",
     name: "Mini Grooming",
     unit: "per session",
     price: "₹1,399",
@@ -711,7 +665,7 @@ const PACKAGES = [
     id: "bathing",
     pet: "both",
     cat: "grooming",
-    img: "Poster08_Bathing",
+    image: "/service_bathing.png",
     name: "Bathing",
     unit: "per session",
     price: "₹899",
@@ -744,7 +698,7 @@ const PACKAGES = [
     id: "trimming",
     pet: "both",
     cat: "grooming",
-    img: "Poster09_Trimming",
+    image: "https://images.unsplash.com/photo-1544568100-847a948585b9?w=800&h=500&fit=crop&q=80",
     name: "Trimming",
     unit: "per session",
     price: "₹899",
@@ -775,7 +729,7 @@ const PACKAGES = [
     id: "tick-flea",
     pet: "both",
     cat: "grooming",
-    img: "Poster10_Tick_and_Flea_Bath",
+    image: "/service_tick_flea.png",
     name: "Tick and Flea Bath",
     unit: "per session",
     price: "₹899",
@@ -811,7 +765,7 @@ const PACKAGES = [
     id: "puppy-vacc",
     pet: "dog",
     cat: "vaccination",
-    img: "Poster12_Puppy_Vaccination_Package",
+    image: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=800&h=500&fit=crop&q=80",
     name: "Puppy Vaccination Package",
     unit: "one-time package",
     price: "₹7,399",
@@ -856,7 +810,7 @@ const PACKAGES = [
     id: "adult-vacc",
     pet: "dog",
     cat: "vaccination",
-    img: "Poster13_Adult_Dog_Vaccination_Package",
+    image: "/service_vaccination.png",
     name: "Adult Dog Vaccination Package",
     unit: "one-time package",
     price: "₹3,999",
@@ -889,7 +843,7 @@ const PACKAGES = [
     id: "veterinary",
     pet: "dog",
     cat: "vaccination",
-    img: "Poster11_Veterinary",
+    image: "/service_vet_consultation.png",
     name: "Veterinary Services (Individual)",
     unit: "priced per service",
     price: "From ₹299",
@@ -929,7 +883,7 @@ const PACKAGES = [
     id: "kitten-vacc",
     pet: "cat",
     cat: "vaccination",
-    img: "Poster14_Kitten_Vaccination_Package",
+    image: "https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=800&h=500&fit=crop&q=80",
     name: "Kitten Vaccination Package",
     unit: "one-time package",
     price: "₹4,999",
@@ -938,10 +892,8 @@ const PACKAGES = [
     overview: {
       ageFit: "Kittens, 60 days – 5 months",
       breedFit: "Any breed",
-      lifestyle:
-        "Essential first vaccination schedule for a new kitten.",
-      healthNote:
-        "Includes Tricat and Anti Rabies with properly timed boosters.",
+      lifestyle: "Essential first vaccination schedule for a new kitten.",
+      healthNote: "Includes Tricat and Anti Rabies with properly timed boosters.",
     },
     includes: [
       {
@@ -968,7 +920,7 @@ const PACKAGES = [
     id: "cat-vacc",
     pet: "cat",
     cat: "vaccination",
-    img: "Poster15_Cat_Vaccination_Package",
+    image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&h=500&fit=crop&q=80",
     name: "Cat Vaccination Package",
     unit: "one-time package",
     price: "₹1,999",
@@ -977,35 +929,28 @@ const PACKAGES = [
       ageFit: "Adult cats, 1+ years",
       breedFit: "Any breed",
       lifestyle: "For annual re-vaccination and continued protection.",
-      healthNote:
-        "Covers Tricat and Anti Rabies in one scheduled visit.",
+      healthNote: "Covers Tricat and Anti Rabies in one scheduled visit.",
     },
-    includes: [
-      {
-        group: null,
-        items: ["Tricat", "Anti Rabies", "Deworming"],
-      },
-    ],
+    includes: [{ group: null, items: ["Tricat", "Anti Rabies", "Deworming"] }],
     benefits: ["immunity", "safety", "professional"],
     timeline: null,
     savings: null,
   },
 ];
 
-/* ---------- helpers ---------- */
-
 function fmtINR(n) {
   return "₹" + n.toLocaleString("en-IN");
 }
 
-/* ---------- sub-components ---------- */
+/* ---------- SUB-COMPONENTS ---------- */
 
 function BenefitChip({ benefitKey }) {
   const b = BENEFITS_POOL[benefitKey];
   if (!b) return null;
   return (
-    <span className="tpf-pkg-benefit-chip">
-      <span className="material-symbols-outlined">{b.icon}</span> {b.label}
+    <span className="inline-flex items-center gap-1.5 bg-[#F6D9BC]/40 text-[#3B322C] text-xs font-bold px-3.5 py-1.5 rounded-full border border-[#E7D9C6]">
+      <span className="text-sm">{b.emoji}</span>
+      {b.label}
     </span>
   );
 }
@@ -1018,28 +963,28 @@ function SavingsBlock({ savings }) {
     const save = individualTotal - packagePrice;
     const pct = Math.round((save / individualTotal) * 100);
     return (
-      <div className="tpf-pkg-m-section">
-        <h3>
-          <span className="material-symbols-outlined">savings</span> Your
-          Savings
+      <div className="pt-6 border-t border-[#E7D9C6]">
+        <h3 className="text-lg md:text-xl font-bold text-[#3B322C] flex items-center gap-2 mb-4">
+          <span className="text-[#D2571E]">💰</span>
+          Your Savings
         </h3>
-        <div className="tpf-pkg-savings-box">
+        <div className="bg-white border border-[#E7D9C6] rounded-2xl p-4 sm:p-6 space-y-3 shadow-2xs">
           {rows.map((r, i) => (
-            <div key={i} className="tpf-pkg-savings-row">
+            <div key={i} className="flex justify-between text-xs sm:text-sm text-[#6B5F55]">
               <span>{r.label}</span>
-              <span className="tpf-pkg-cost">{fmtINR(r.cost)}</span>
+              <span className="font-semibold">{fmtINR(r.cost)}</span>
             </div>
           ))}
-          <div className="tpf-pkg-savings-row tpf-pkg-total">
-            <span>Individual total</span>
+          <div className="pt-2 border-t border-dashed border-[#E7D9C6] flex justify-between text-sm font-bold text-[#3B322C]">
+            <span>Individual Total</span>
             <span>{fmtINR(individualTotal)}</span>
           </div>
-          <div className="tpf-pkg-savings-row tpf-pkg-total">
-            <span>Bundle price</span>
-            <span>{fmtINR(packagePrice)}</span>
+          <div className="flex justify-between text-sm font-bold text-[#3B322C]">
+            <span>Bundle Price</span>
+            <span className="text-[#D2571E]">{fmtINR(packagePrice)}</span>
           </div>
-          <div className="tpf-pkg-savings-highlight">
-            <span>You save</span>
+          <div className="bg-[#E7F0EA] text-[#4F7A5E] rounded-xl p-3.5 font-bold text-sm sm:text-base flex items-center justify-between mt-3">
+            <span>You Save</span>
             <span>
               {fmtINR(save)} ({pct}%)
             </span>
@@ -1050,20 +995,20 @@ function SavingsBlock({ savings }) {
   }
 
   return (
-    <div className="tpf-pkg-m-section">
-      <h3>
-        <span className="material-symbols-outlined">savings</span> Bundle
-        Value
+    <div className="pt-6 border-t border-[#E7D9C6]">
+      <h3 className="text-lg md:text-xl font-bold text-[#3B322C] flex items-center gap-2 mb-4">
+        <span className="text-[#D2571E]">💰</span>
+        Bundle Value
       </h3>
-      <div className="tpf-pkg-savings-box">
+      <div className="bg-white border border-[#E7D9C6] rounded-2xl p-4 sm:p-6 space-y-3 shadow-2xs">
         {rows.length > 0 &&
           rows.map((r, i) => (
-            <div key={i} className="tpf-pkg-savings-row">
+            <div key={i} className="flex justify-between text-xs sm:text-sm text-[#6B5F55]">
               <span>{r.label}</span>
-              <span className="tpf-pkg-cost">{fmtINR(r.cost)}</span>
+              <span className="font-semibold">{fmtINR(r.cost)}</span>
             </div>
           ))}
-        <p className="tpf-pkg-savings-note">{note}</p>
+        <p className="text-xs sm:text-sm text-[#6B5F55] leading-relaxed mt-2">{note}</p>
       </div>
     </div>
   );
@@ -1072,17 +1017,18 @@ function SavingsBlock({ savings }) {
 function TimelineBlock({ timeline }) {
   if (!timeline) return null;
   return (
-    <div className="tpf-pkg-m-section">
-      <h3>
-        <span className="material-symbols-outlined">timeline</span> Your
-        Journey
+    <div className="pt-6 border-t border-[#E7D9C6]">
+      <h3 className="text-lg md:text-xl font-bold text-[#3B322C] flex items-center gap-2 mb-4">
+        <span className="text-[#D2571E]">📅</span>
+        Your Service Journey
       </h3>
-      <div className="tpf-pkg-timeline">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {timeline.map((t, i) => (
-          <div key={i} className="tpf-pkg-timeline-item">
-            <div className="tpf-pkg-timeline-dot" />
-            <div className="tpf-pkg-t-label">{t.label}</div>
-            <div className="tpf-pkg-t-detail">{t.detail}</div>
+          <div key={i} className="bg-white border border-[#E7D9C6] rounded-xl p-3.5 space-y-1 relative shadow-2xs">
+            <span className="inline-block bg-[#FBEBDE] text-[#B54717] text-xs font-bold px-2.5 py-0.5 rounded-md">
+              {t.label}
+            </span>
+            <p className="text-xs sm:text-sm text-[#6B5F55] leading-snug">{t.detail}</p>
           </div>
         ))}
       </div>
@@ -1092,53 +1038,78 @@ function TimelineBlock({ timeline }) {
 
 function IncludesBlock({ includes }) {
   return (
-    <div className="tpf-pkg-m-section">
-      <h3>
-        <span className="material-symbols-outlined">checklist</span>{" "}
+    <div className="pt-6 border-t border-[#E7D9C6]">
+      <h3 className="text-lg md:text-xl font-bold text-[#3B322C] flex items-center gap-2 mb-4">
+        <span className="text-[#D2571E]">📋</span>
         Everything Included
       </h3>
-      {includes.map((group, gi) => (
-        <div key={gi} className="tpf-pkg-include-group">
-          {group.group && (
-            <div className="tpf-pkg-include-group-title">{group.group}</div>
-          )}
-          <div className="tpf-pkg-include-grid">
-            {group.items.map((item, ii) => (
-              <div key={ii} className="tpf-pkg-include-chip">
-                <span className="material-symbols-outlined">check_circle</span>{" "}
-                {item}
-              </div>
-            ))}
+      <div className="space-y-4">
+        {includes.map((group, gi) => (
+          <div key={gi} className="space-y-2">
+            {group.group && (
+              <h4 className="text-xs uppercase font-bold tracking-wider text-[#B54717]">
+                {group.group}
+              </h4>
+            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {group.items.map((item, ii) => (
+                <div
+                  key={ii}
+                  className="flex items-start gap-2.5 bg-white border border-[#E7D9C6] rounded-xl p-3 text-xs sm:text-sm text-[#3B322C] shadow-2xs"
+                >
+                  <span className="text-[#4F7A5E] font-bold text-sm shrink-0 mt-0.5">
+                    ✓
+                  </span>
+                  <span className="leading-snug">{item}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
 
 function OverviewBlock({ overview }) {
   return (
-    <div className="tpf-pkg-m-section">
-      <h3>
-        <span className="material-symbols-outlined">info</span> Package
-        Overview
+    <div className="space-y-4">
+      <h3 className="text-lg md:text-xl font-bold text-[#3B322C] flex items-center gap-2">
+        <span className="text-[#D2571E]">ℹ️</span>
+        Package Overview
       </h3>
-      <div className="tpf-pkg-overview-grid">
-        <div className="tpf-pkg-overview-item">
-          <div className="tpf-pkg-label">Ideal Age</div>
-          <div className="tpf-pkg-value">{overview.ageFit}</div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="bg-white border border-[#E7D9C6] rounded-xl p-4 space-y-1 shadow-2xs">
+          <span className="text-[11px] uppercase tracking-wider font-bold text-[#B54717] block">
+            Ideal Age
+          </span>
+          <span className="text-xs sm:text-sm font-semibold text-[#3B322C] block">
+            {overview.ageFit}
+          </span>
         </div>
-        <div className="tpf-pkg-overview-item">
-          <div className="tpf-pkg-label">Suitable Breeds</div>
-          <div className="tpf-pkg-value">{overview.breedFit}</div>
+        <div className="bg-white border border-[#E7D9C6] rounded-xl p-4 space-y-1 shadow-2xs">
+          <span className="text-[11px] uppercase tracking-wider font-bold text-[#B54717] block">
+            Suitable Breeds
+          </span>
+          <span className="text-xs sm:text-sm font-semibold text-[#3B322C] block">
+            {overview.breedFit}
+          </span>
         </div>
-        <div className="tpf-pkg-overview-item">
-          <div className="tpf-pkg-label">Best For</div>
-          <div className="tpf-pkg-value">{overview.lifestyle}</div>
+        <div className="bg-white border border-[#E7D9C6] rounded-xl p-4 space-y-1 shadow-2xs">
+          <span className="text-[11px] uppercase tracking-wider font-bold text-[#B54717] block">
+            Best For
+          </span>
+          <span className="text-xs sm:text-sm text-[#6B5F55] block">
+            {overview.lifestyle}
+          </span>
         </div>
-        <div className="tpf-pkg-overview-item">
-          <div className="tpf-pkg-label">Health Benefit</div>
-          <div className="tpf-pkg-value">{overview.healthNote}</div>
+        <div className="bg-white border border-[#E7D9C6] rounded-xl p-4 space-y-1 shadow-2xs">
+          <span className="text-[11px] uppercase tracking-wider font-bold text-[#B54717] block">
+            Health Benefit
+          </span>
+          <span className="text-xs sm:text-sm text-[#6B5F55] block">
+            {overview.healthNote}
+          </span>
         </div>
       </div>
     </div>
@@ -1148,18 +1119,22 @@ function OverviewBlock({ overview }) {
 function TestimonialBlock({ pet }) {
   const list = TESTIMONIALS[pet === "both" ? "dog" : pet] || TESTIMONIALS.dog;
   return (
-    <div className="tpf-pkg-m-section">
-      <h3>
-        <span className="material-symbols-outlined">rate_review</span> What Pet
-        Parents Say
+    <div className="pt-6 border-t border-[#E7D9C6]">
+      <h3 className="text-lg md:text-xl font-bold text-[#3B322C] flex items-center gap-2 mb-4">
+        <span className="text-[#D2571E]">💬</span>
+        What Pet Parents Say
       </h3>
-      <div className="tpf-pkg-testimonial-grid">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {list.map((t, i) => (
-          <div key={i} className="tpf-pkg-testimonial-card">
-            <div className="tpf-pkg-t-stars">{"★".repeat(t.rating)}</div>
-            <p className="tpf-pkg-t-text">&ldquo;{t.text}&rdquo;</p>
-            <div className="tpf-pkg-t-author">
-              {t.name} <span>· {t.pet}</span>
+          <div key={i} className="bg-white border border-[#E7D9C6] rounded-2xl p-4 sm:p-5 space-y-2 shadow-2xs">
+            <div className="text-amber-400 text-sm tracking-widest font-bold">
+              {"★".repeat(t.rating)}
+            </div>
+            <p className="text-xs sm:text-sm text-[#3B322C] leading-relaxed italic">
+              &ldquo;{t.text}&rdquo;
+            </p>
+            <div className="text-xs font-semibold text-[#6B5F55] pt-1">
+              {t.name} <span className="font-normal opacity-75">· {t.pet}</span>
             </div>
           </div>
         ))}
@@ -1171,44 +1146,32 @@ function TestimonialBlock({ pet }) {
 function FaqBlock() {
   const [openIdx, setOpenIdx] = useState(null);
   return (
-    <div className="tpf-pkg-m-section">
-      <h3>
-        <span className="material-symbols-outlined">help</span> Frequently
-        Asked Questions
+    <div className="pt-6 border-t border-[#E7D9C6]">
+      <h3 className="text-lg md:text-xl font-bold text-[#3B322C] flex items-center gap-2 mb-4">
+        <span className="text-[#D2571E]">❓</span>
+        Frequently Asked Questions
       </h3>
-      {FAQ_SHARED.map((f, i) => (
-        <div
-          key={i}
-          className={`tpf-pkg-faq-item ${openIdx === i ? "open" : ""}`}
-        >
-          <button
-            className="tpf-pkg-faq-q"
-            onClick={() => setOpenIdx(openIdx === i ? null : i)}
-          >
-            {f.q}{" "}
-            <span className="material-symbols-outlined">expand_more</span>
-          </button>
-          <div className="tpf-pkg-faq-a">
-            <p>{f.a}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function WhyUsBlock() {
-  return (
-    <div className="tpf-pkg-m-section">
-      <h3>
-        <span className="material-symbols-outlined">workspace_premium</span>{" "}
-        Why Choose The Paws Friend
-      </h3>
-      <div className="tpf-pkg-why-grid">
-        {WHY_US.map((w, i) => (
-          <div key={i} className="tpf-pkg-why-item">
-            <span className="material-symbols-outlined">{w.icon}</span>
-            <div className="tpf-pkg-label">{w.label}</div>
+      <div className="divide-y divide-[#E7D9C6] border-y border-[#E7D9C6]">
+        {FAQ_SHARED.map((f, i) => (
+          <div key={i} className="py-3">
+            <button
+              className="w-full text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-[#3B322C] hover:text-[#D2571E] transition-colors py-1"
+              onClick={() => setOpenIdx(openIdx === i ? null : i)}
+            >
+              <span>{f.q}</span>
+              <span
+                className={`text-xs text-[#D2571E] font-bold transition-transform duration-200 ${
+                  openIdx === i ? "rotate-180" : ""
+                }`}
+              >
+                ▼
+              </span>
+            </button>
+            {openIdx === i && (
+              <p className="text-xs sm:text-sm text-[#6B5F55] leading-relaxed pt-2 pb-1">
+                {f.a}
+              </p>
+            )}
           </div>
         ))}
       </div>
@@ -1216,309 +1179,395 @@ function WhyUsBlock() {
   );
 }
 
-/* ---------- main page ---------- */
+function WhyUsBlock() {
+  return (
+    <div className="pt-6 border-t border-[#E7D9C6]">
+      <h3 className="text-lg md:text-xl font-bold text-[#3B322C] flex items-center gap-2 mb-4">
+        <span className="text-[#D2571E]">🌟</span>
+        Why Choose The Paws Friend?
+      </h3>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        {WHY_US.map((item, i) => (
+          <div
+            key={i}
+            className="bg-white border border-[#E7D9C6] rounded-xl p-3.5 flex flex-col items-center justify-center gap-2 shadow-2xs"
+          >
+            <div className="w-10 h-10 rounded-full bg-[#FBEBDE] text-lg flex items-center justify-center">
+              <span>{item.emoji}</span>
+            </div>
+            <span className="text-xs font-bold text-[#3B322C] leading-snug">
+              {item.label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---------- MAIN PACKAGES PAGE ---------- */
 
 export default function PackagesPage() {
-  const [selectedPet, setSelectedPet] = useState("dog");
-  const [selectedCategory, setSelectedCategory] = useState("packages");
-  const [modalPkg, setModalPkg] = useState(null);
+  const [pet, setPet] = useState("dog");
+  const [category, setCategory] = useState("packages");
+  const [activeModalPkg, setActiveModalPkg] = useState(null);
 
-  const filtered = PACKAGES.filter(
-    (p) =>
-      (p.pet === selectedPet || p.pet === "both") &&
-      p.cat === selectedCategory
+  // Filter packages based on active pet & category
+  const filteredPackages = PACKAGES.filter(
+    (p) => (p.pet === pet || p.pet === "both") && p.cat === category
   );
 
-  const openModal = useCallback((pkg) => {
-    setModalPkg(pkg);
-    document.body.style.overflow = "hidden";
-  }, []);
-
-  const closeModal = useCallback(() => {
-    setModalPkg(null);
-    document.body.style.overflow = "";
-  }, []);
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (e.key === "Escape") closeModal();
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [closeModal]);
+  const handleWhatsAppBooking = (pkg) => {
+    const message = encodeURIComponent(
+      `Hello! I want to book the ${pkg.name} (${pkg.price}) for my pet.`
+    );
+    window.open(`https://wa.me/?text=${message}`, "_blank");
+  };
 
   return (
-    <div className="tpf-packages">
-      {/* Header */}
-      <section className="tpf-pkg-section-head">
-        <div className="tpf-pkg-wrap">
-          <span className="tpf-pkg-eyebrow">
-            <span
-              className="material-symbols-outlined"
-              style={{ fontSize: 15 }}
-            >
-              verified
-            </span>{" "}
-            Comprehensive Protection Plans
-          </span>
-          <h1>
-            Care Packages,{" "}
-            <span>picked for your pet</span>
-          </h1>
-          <p>
-            Select your pet and a category to see the exact package posters you
-            already know — now bookable in two taps.
-          </p>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[#FBF6EE] text-[#3B322C] font-sans pb-28 sm:pb-16 antialiased">
+      {/* SECTION HEADER */}
+      <header className="max-w-5xl mx-auto px-4 pt-10 sm:pt-16 pb-4 text-center">
+        <span className="inline-flex items-center gap-1.5 bg-[#FBEBDE] text-[#B54717] px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider mb-4 border border-[#F6D9BC]">
+          <span>🛡️</span>
+          Comprehensive Protection Plans
+        </span>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#3B322C] leading-tight tracking-tight mb-3">
+          Care Packages, <span className="text-[#D2571E]">picked for your pet</span>
+        </h1>
+        <p className="text-[#6B5F55] text-xs sm:text-base max-w-xl mx-auto leading-relaxed">
+          Select your pet and a category to explore complete doorstep protection plans, grooming, training, and vaccination schedules.
+        </p>
 
-      <main className="tpf-pkg-wrap">
-        {/* Pet Selector */}
-        <div className="tpf-pkg-pet-selector">
-          {Object.entries(PET_META).map(([key, meta]) => (
-            <button
-              key={key}
-              className={`tpf-pkg-pet-btn ${selectedPet === key ? "active" : ""}`}
-              onClick={() => {
-                setSelectedPet(key);
-                setSelectedCategory("packages");
-              }}
-            >
-              <span className="tpf-pkg-emoji">{meta.icon}</span> {meta.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Category Tabs */}
-        <div className="tpf-pkg-cat-tabs">
-          {Object.entries(CATEGORY_META).map(([key, meta]) => (
-            <button
-              key={key}
-              className={`tpf-pkg-cat-tab ${selectedCategory === key ? "active" : ""}`}
-              onClick={() => setSelectedCategory(key)}
-            >
-              <span className="material-symbols-outlined">{meta.icon}</span>{" "}
-              {meta.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Card Grid */}
-        <div className="tpf-pkg-card-grid">
-          {filtered.length === 0 ? (
-            <div className="tpf-pkg-empty-state">
-              <span className="material-symbols-outlined">pets</span>
-              <h3>
-                No {CATEGORY_META[selectedCategory].label.toLowerCase()} for{" "}
-                {PET_META[selectedPet].label.toLowerCase()}s yet
-              </h3>
-              <p>
-                We don&apos;t currently offer a structured{" "}
-                {CATEGORY_META[selectedCategory].label.toLowerCase()} for{" "}
-                {PET_META[selectedPet].label.toLowerCase()}s, but our team can
-                build a custom plan around your pet&apos;s needs.
-              </p>
-              <Link
-                href="https://wa.me/919211338489"
-                target="_blank"
-                className="tpf-pkg-btn tpf-pkg-btn-green"
+        {/* PET SELECTOR */}
+        <div className="flex justify-center gap-3 sm:gap-4 mt-8 mb-6 px-2">
+          {Object.entries(PET_META).map(([key, meta]) => {
+            const isActive = pet === key;
+            return (
+              <button
+                key={key}
+                onClick={() => setPet(key)}
+                className={`flex items-center justify-center gap-2.5 px-7 sm:px-10 py-3 sm:py-3.5 rounded-full font-black text-sm sm:text-base transition-all duration-300 ${
+                  isActive
+                    ? "bg-[#D2571E] text-white shadow-lg shadow-[#D2571E]/30 scale-105"
+                    : "bg-white text-[#3B322C] border-2 border-[#E7D9C6] hover:border-[#D2571E] hover:text-[#D2571E] shadow-xs"
+                }`}
               >
-                <span className="material-symbols-outlined">
-                  support_agent
-                </span>{" "}
-                Talk to an Expert
-              </Link>
-            </div>
-          ) : (
-            filtered.map((pkg) => (
-              <article key={pkg.id} className="tpf-pkg-card">
-                <div
-                  className="tpf-pkg-poster-frame"
-                  onClick={() => openModal(pkg)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && openModal(pkg)}
-                >
-                  <img
-                    src={POSTER_IMAGES[pkg.img]}
-                    alt={`${pkg.name} — official package poster`}
-                    loading="lazy"
-                  />
-                  {pkg.popular && (
-                    <span className="tpf-pkg-popular-badge">
-                      <span className="material-symbols-outlined">star</span>{" "}
-                      Most Popular
-                    </span>
-                  )}
-                  <span className="tpf-pkg-poster-tag">
-                    <span
-                      className="material-symbols-outlined"
-                      style={{ fontSize: 13 }}
-                    >
-                      photo_camera
-                    </span>{" "}
-                    Official Poster
-                  </span>
-                </div>
-                <div className="tpf-pkg-body">
-                  <div className="tpf-pkg-name">{pkg.name}</div>
-                  <p className="tpf-pkg-summary">{pkg.summary}</p>
-                  <div className="tpf-pkg-price-row">
-                    <span className="tpf-pkg-price">{pkg.price}</span>
-                    <span className="tpf-pkg-unit">{pkg.unit}</span>
-                  </div>
-                  <div className="tpf-pkg-actions">
-                    <Link
-                      href={`https://wa.me/919211338489?text=Hi%2C%20I%20want%20to%20book%20${encodeURIComponent(pkg.name)}`}
-                      target="_blank"
-                      className="tpf-pkg-btn tpf-pkg-btn-primary"
-                    >
-                      <span className="material-symbols-outlined">
-                        calendar_today
-                      </span>{" "}
-                      Book Now
-                    </Link>
-                    <button
-                      className="tpf-pkg-btn tpf-pkg-btn-secondary"
-                      onClick={() => openModal(pkg)}
-                    >
-                      <span className="material-symbols-outlined">
-                        visibility
-                      </span>{" "}
-                      View Details
-                    </button>
-                    <Link
-                      href="https://wa.me/919211338489"
-                      target="_blank"
-                      className="tpf-pkg-btn tpf-pkg-btn-soft-green"
-                    >
-                      <span className="material-symbols-outlined">
-                        support_agent
-                      </span>{" "}
-                      Talk to an Expert
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))
-          )}
+                <span className="text-xl sm:text-2xl">{meta.emoji}</span>
+                <span>{meta.label}</span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Bottom CTA */}
-        <section className="tpf-pkg-bottom-cta">
-          <h2>Ready to give your pet the best care?</h2>
-          <p>
-            Book a doorstep visit today — expert care delivered straight to your
-            home.
+        {/* CATEGORY TABS */}
+        <div className="w-full max-w-2xl mx-auto my-6 px-4">
+          <div className="grid grid-cols-2 sm:flex sm:justify-center sm:flex-wrap gap-2.5 sm:gap-3">
+            {Object.entries(CATEGORY_META).map(([key, meta]) => {
+              const isActive = category === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setCategory(key)}
+                  className={`flex items-center justify-center gap-2.5 px-4 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all duration-200 border-2 ${
+                    isActive
+                      ? "bg-[#D2571E] text-white border-[#D2571E] shadow-md shadow-[#D2571E]/20 scale-[1.02]"
+                      : "bg-white text-[#3B322C] border-[#E7D9C6] hover:border-[#D2571E] hover:text-[#D2571E] shadow-2xs"
+                  }`}
+                >
+                  <span className="text-lg sm:text-xl">{meta.emoji}</span>
+                  <span>{meta.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </header>
+
+      {/* CARDS GRID */}
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+        {filteredPackages.length === 0 ? (
+          <div className="text-center py-16 px-4 bg-white rounded-3xl border border-dashed border-[#E7D9C6] max-w-md mx-auto my-8">
+            <span className="text-4xl mb-2 block">🐾</span>
+            <h3 className="text-lg font-bold text-[#3B322C] mb-1">
+              No packages found
+            </h3>
+            <p className="text-xs sm:text-sm text-[#6B5F55] mb-4">
+              We couldn't find any packages matching this category selection.
+            </p>
+            <button
+              onClick={() => {
+                setPet("dog");
+                setCategory("packages");
+              }}
+              className="bg-[#4F7A5E] hover:bg-[#3f624b] text-white px-5 py-2 rounded-full font-semibold text-xs transition-colors"
+            >
+              Reset Filters
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {filteredPackages.map((pkg) => (
+              <div
+                key={pkg.id}
+                className="bg-white rounded-2xl md:rounded-3xl border border-[#E7D9C6] overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative group hover:-translate-y-1"
+              >
+                {/* Card Top Image Banner */}
+                <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-[#FBEBDE]">
+                  <img
+                    src={pkg.image}
+                    alt={pkg.name}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  
+                  {/* Badges on image */}
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 z-10">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-black/60 text-white backdrop-blur-md border border-white/20">
+                      {pkg.pet === "both" ? "Dog & Cat" : pkg.pet}
+                    </span>
+                    {pkg.popular && (
+                      <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[10px] font-black bg-amber-400 text-amber-950 shadow-md">
+                        <span>⭐</span>
+                        Popular
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="absolute bottom-3 left-3 z-10">
+                    <span className="text-[11px] font-bold bg-white/25 backdrop-blur-md text-white px-2.5 py-1 rounded-md border border-white/20">
+                      Official Package
+                    </span>
+                  </div>
+                </div>
+
+                {/* Card Content Body */}
+                <div className="p-5 sm:p-6 flex flex-col justify-between flex-1">
+                  <div>
+                    {/* Title & Summary */}
+                    <h2 className="text-xl sm:text-2xl font-black text-[#3B322C] leading-snug group-hover:text-[#D2571E] transition-colors">
+                      {pkg.name}
+                    </h2>
+                    <p className="text-xs sm:text-sm text-[#6B5F55] leading-relaxed mt-2 line-clamp-3">
+                      {pkg.summary}
+                    </p>
+
+                    {/* Highlighted Inclusions Snippet */}
+                    {pkg.includes && pkg.includes.length > 0 && (
+                      <div className="mt-4 pt-3 border-t border-[#E7D9C6]/60 space-y-1.5">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#B54717] block">
+                          Includes:
+                        </span>
+                        {pkg.includes[0].items.slice(0, 2).map((item, idx) => (
+                          <div key={idx} className="flex items-start gap-2 text-xs text-[#3B322C]">
+                            <span className="text-[#4F7A5E] font-bold text-xs shrink-0 mt-0.5">
+                              ✓
+                            </span>
+                            <span className="line-clamp-1">{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Price & Action Buttons */}
+                  <div className="mt-6 pt-4 border-t border-[#E7D9C6]/60 space-y-3">
+                    <div className="flex items-baseline justify-between">
+                      <div>
+                        <span className="text-2xl sm:text-3xl font-black text-[#D2571E] block">
+                          {pkg.price}
+                        </span>
+                        <span className="text-[11px] text-[#6B5F55] font-medium">
+                          {pkg.unit}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 pt-1">
+                      <button
+                        onClick={() => handleWhatsAppBooking(pkg)}
+                        className="w-full bg-[#D2571E] hover:bg-[#B54717] text-white py-3 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all"
+                      >
+                        <span>📅</span>
+                        Book Now
+                      </button>
+                      <button
+                        onClick={() => setActiveModalPkg(pkg)}
+                        className="w-full bg-white border border-[#E7D9C6] hover:border-[#D2571E] text-[#3B322C] hover:text-[#D2571E] py-2.5 rounded-full font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all"
+                      >
+                        <span>ℹ️</span>
+                        View Full Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* BOTTOM SECTION CTA */}
+        <section className="bg-gradient-to-br from-[#D2571E] to-[#B54717] rounded-3xl p-6 sm:p-10 md:p-12 text-center text-white my-12 shadow-xl relative overflow-hidden">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3">
+            Ready to give your pet the best care?
+          </h2>
+          <p className="text-white/90 text-xs sm:text-base max-w-xl mx-auto mb-6 leading-relaxed">
+            Book a doorstep visit today — certified vet & grooming care delivered straight to your home.
           </p>
-          <div className="tpf-pkg-cta-row">
-            <Link
-              href="https://wa.me/919211338489"
-              target="_blank"
-              className="tpf-pkg-btn tpf-pkg-btn-primary"
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <button
+              onClick={() =>
+                window.open(
+                  `https://wa.me/?text=${encodeURIComponent(
+                    "Hello! I am looking to book a pet care package."
+                  )}`,
+                  "_blank"
+                )
+              }
+              className="w-full sm:w-auto bg-white text-[#D2571E] hover:bg-slate-50 px-8 py-3.5 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"
             >
-              <span className="material-symbols-outlined">calendar_today</span>{" "}
-              Book a Package
-            </Link>
+              <span>💬</span>
+              WhatsApp Us
+            </button>
             <Link
-              href="https://wa.me/919211338489"
-              target="_blank"
-              className="tpf-pkg-btn tpf-pkg-btn-outline"
+              href="/"
+              className="w-full sm:w-auto bg-transparent border-2 border-white/60 hover:border-white text-white px-8 py-3.5 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
             >
-              <span className="material-symbols-outlined">chat</span> WhatsApp
-              Us
+              <span>🏠</span>
+              Return Home
             </Link>
           </div>
         </section>
       </main>
 
-      {/* Detail Modal */}
-      {modalPkg && (
+      {/* DETAIL MODAL */}
+      {activeModalPkg && (
         <div
-          className="tpf-pkg-modal-backdrop open"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) closeModal();
-          }}
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+          onClick={() => setActiveModalPkg(null)}
         >
-          <div className="tpf-pkg-modal" role="dialog" aria-modal="true">
-            <button
-              className="tpf-pkg-modal-close"
-              onClick={closeModal}
-              aria-label="Close"
-            >
-              <span className="material-symbols-outlined">close</span>
-            </button>
-            <div className="tpf-pkg-modal-hero">
+          <div
+            className="bg-[#FBF6EE] w-full max-w-3xl rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden my-auto max-h-[90vh] flex flex-col relative animate-in fade-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Hero Banner Image */}
+            <div className="relative h-48 sm:h-64 w-full overflow-hidden bg-[#1a0905]">
               <img
-                src={POSTER_IMAGES[modalPkg.img]}
-                alt={`${modalPkg.name} — official package poster`}
+                src={activeModalPkg.image}
+                alt={activeModalPkg.name}
+                className="w-full h-full object-cover object-center"
               />
-              <div className="tpf-pkg-modal-hero-tag">
-                <span className="tpf-pkg-poster-tag">
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontSize: 13 }}
-                  >
-                    photo_camera
-                  </span>{" "}
-                  Official Poster, Digitized
-                </span>
-                <h2>{modalPkg.name}</h2>
-                <div className="tpf-pkg-price">
-                  {modalPkg.price}{" "}
-                  <span className="tpf-pkg-unit">{modalPkg.unit}</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1a0905] via-[#1a0905]/40 to-transparent" />
+              
+              <button
+                onClick={() => setActiveModalPkg(null)}
+                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-colors font-bold z-20 border border-white/20"
+                aria-label="Close modal"
+              >
+                ✕
+              </button>
+
+              <div className="absolute bottom-4 left-5 right-5 text-white z-10">
+                <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                  <span className="bg-[#D2571E] text-white px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider">
+                    {activeModalPkg.pet === "both" ? "Dog & Cat" : activeModalPkg.pet}
+                  </span>
+                  {activeModalPkg.popular && (
+                    <span className="bg-amber-400 text-amber-950 font-bold px-3 py-0.5 rounded-full text-[11px] uppercase tracking-wider">
+                      Popular Package
+                    </span>
+                  )}
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-black leading-snug drop-shadow-md">
+                  {activeModalPkg.name}
+                </h2>
+                <div className="mt-1 flex items-baseline gap-2">
+                  <span className="text-2xl sm:text-3xl font-black text-amber-300">
+                    {activeModalPkg.price}
+                  </span>
+                  <span className="text-xs sm:text-sm text-white/80 font-medium">
+                    {activeModalPkg.unit}
+                  </span>
                 </div>
               </div>
             </div>
-            <div className="tpf-pkg-modal-body">
-              <OverviewBlock overview={modalPkg.overview} />
-              <IncludesBlock includes={modalPkg.includes} />
-              <TimelineBlock timeline={modalPkg.timeline} />
-              <div className="tpf-pkg-m-section">
-                <h3>
-                  <span className="material-symbols-outlined">favorite</span>{" "}
-                  Benefits
-                </h3>
-                <div className="tpf-pkg-benefit-row">
-                  {modalPkg.benefits.map((b) => (
-                    <BenefitChip key={b} benefitKey={b} />
-                  ))}
+
+            {/* Modal Body */}
+            <div className="p-5 sm:p-8 overflow-y-auto space-y-6">
+              <p className="text-sm sm:text-base text-[#6B5F55] leading-relaxed">
+                {activeModalPkg.summary}
+              </p>
+
+              {/* Overview */}
+              {activeModalPkg.overview && (
+                <OverviewBlock overview={activeModalPkg.overview} />
+              )}
+
+              {/* Inclusions */}
+              {activeModalPkg.includes && (
+                <IncludesBlock includes={activeModalPkg.includes} />
+              )}
+
+              {/* Timeline */}
+              {activeModalPkg.timeline && (
+                <TimelineBlock timeline={activeModalPkg.timeline} />
+              )}
+
+              {/* Savings */}
+              {activeModalPkg.savings && (
+                <SavingsBlock savings={activeModalPkg.savings} />
+              )}
+
+              {/* Benefits Chips */}
+              {activeModalPkg.benefits && activeModalPkg.benefits.length > 0 && (
+                <div className="pt-6 border-t border-[#E7D9C6]">
+                  <h3 className="text-lg md:text-xl font-bold text-[#3B322C] flex items-center gap-2 mb-3">
+                    <span>✨</span>
+                    Key Benefits
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {activeModalPkg.benefits.map((bKey) => (
+                      <BenefitChip key={bKey} benefitKey={bKey} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <SavingsBlock savings={modalPkg.savings} />
-              <TestimonialBlock pet={modalPkg.pet} />
-              <FaqBlock />
+              )}
+
+              {/* Testimonials */}
+              <TestimonialBlock pet={activeModalPkg.pet} />
+
+              {/* Why Us */}
               <WhyUsBlock />
+
+              {/* FAQs */}
+              <FaqBlock />
             </div>
-            <div className="tpf-pkg-modal-sticky-cta">
-              <div className="tpf-pkg-sticky-info">
-                <div className="tpf-pkg-sticky-price">{modalPkg.price}</div>
-                <div className="tpf-pkg-sticky-unit">{modalPkg.unit}</div>
+
+            {/* Modal Sticky CTA Footer */}
+            <div className="sticky bottom-0 bg-white border-t border-[#E7D9C6] p-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-lg z-20">
+              <div>
+                <span className="text-xl sm:text-2xl font-black text-[#D2571E] block">
+                  {activeModalPkg.price}
+                </span>
+                <span className="text-[11px] text-[#6B5F55]">
+                  {activeModalPkg.unit}
+                </span>
               </div>
-              <Link
-                href="https://wa.me/919211338489"
-                target="_blank"
-                className="tpf-pkg-btn tpf-pkg-btn-soft-green tpf-pkg-icon-btn"
-              >
-                <span className="material-symbols-outlined">chat</span>
-              </Link>
-              <a
-                href="tel:+919211338489"
-                className="tpf-pkg-btn tpf-pkg-btn-secondary tpf-pkg-icon-btn"
-              >
-                <span className="material-symbols-outlined">call</span>
-              </a>
-              <Link
-                href={`https://wa.me/919211338489?text=Hi%2C%20I%20want%20to%20book%20${encodeURIComponent(modalPkg.name)}`}
-                target="_blank"
-                className="tpf-pkg-btn tpf-pkg-btn-primary"
-                style={{ flex: 1 }}
-              >
-                <span className="material-symbols-outlined">
-                  calendar_today
-                </span>{" "}
-                Book Package
-              </Link>
+              <div className="flex gap-2 w-full sm:w-auto">
+                <button
+                  onClick={() => setActiveModalPkg(null)}
+                  className="flex-1 sm:flex-initial px-5 py-3 rounded-full border border-[#E7D9C6] text-[#3B322C] font-semibold text-xs sm:text-sm hover:border-[#D2571E] transition-colors"
+                >
+                  Close
+                </button>
+                <button
+                  onClick={() => handleWhatsAppBooking(activeModalPkg)}
+                  className="flex-1 sm:flex-initial bg-[#D2571E] hover:bg-[#B54717] text-white px-7 py-3 rounded-full font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"
+                >
+                  <span>📅</span>
+                  Book Package
+                </button>
+              </div>
             </div>
           </div>
         </div>
