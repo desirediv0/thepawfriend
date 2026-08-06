@@ -39,13 +39,13 @@ export default function Preloader() {
     >
       {/* Logo Only */}
       <div
-        className={`w-32 h-32 md:w-40 md:h-40 transition-all duration-700 transform flex items-center justify-center ${
+        className={`w-32 h-32 md:w-40 md:h-40 transition-all duration-700 transform flex items-center justify-center rounded-full overflow-hidden ${
           showLogo ? "opacity-100 scale-100" : "opacity-0 scale-90"
         }`}
       >
         <img
           alt="The Paws Friend Logo"
-          className="w-full h-full object-contain filter drop-shadow-md mix-blend-multiply"
+          className="w-full h-full object-contain rounded-full mix-blend-multiply"
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkuANiBnzYDxy_sQLfNvBAGihvzbWHQFJB6zcyXBITtmp3uFCnp2Ej1LTQwXHJzLlfP0dnDHX5RVkOCQClmL1VCdSX_n7OAHKQuBvjgY5jJY6lrETQ7vHXBMNx00o6AFYHqSO4nqvgPHy3j26U0edBEwE5CY0Gu7F-H3vU9Hq1P_zSqbDcDBuqA7nAe_1zGH9nNtkiL_oRWASTRBeSifWNN4pgU9zWJkxYHZkY3Ug_Lde7iyKXtz4_ITYjtfwD5zOO-Fo9TrHJnpMU"
         />
       </div>

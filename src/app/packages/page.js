@@ -62,7 +62,7 @@ const TESTIMONIALS = {
       name: "Arjun S.",
       pet: "Labrador · Bruno",
       rating: 5,
-      text: "We did the Ultra Premium bundle for Bruno's first year — grooming, shots, training, all scheduled for us. Zero mental load.",
+      text: "We did the Elite bundle for Bruno's first year — grooming, shots, training, all scheduled for us. Zero mental load.",
     },
   ],
   cat: [
@@ -100,7 +100,7 @@ const PACKAGES = [
     pet: "dog",
     cat: "packages",
     image: "/dog_grooming_card.png",
-    name: "Adult Dog — Ultra Premium Bundle",
+    name: "Adult Dog — Elite",
     unit: "per year, all-inclusive",
     price: "₹20,999",
     popular: true,
@@ -175,11 +175,11 @@ const PACKAGES = [
     pet: "dog",
     cat: "packages",
     image: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=800&h=500&fit=crop&q=80",
-    name: "Adult Dog — Premium Bundle",
+    name: "Adult Dog — Premium",
     unit: "per year, all-inclusive",
     price: "₹18,999",
     summary:
-      "Core training plus a full year of grooming and vaccination — a lighter alternative to Ultra Premium.",
+      "Core training plus a full year of grooming and vaccination — a lighter alternative to Elite.",
     overview: {
       ageFit: "Adult dogs, 1–7 years",
       breedFit: "Any breed, any size",
@@ -245,7 +245,7 @@ const PACKAGES = [
     pet: "dog",
     cat: "packages",
     image: "/puppy_care_card.png",
-    name: "Puppy — Ultra Premium Bundle",
+    name: "Puppy — Elite",
     unit: "per 3-month plan, all-inclusive",
     price: "₹36,999",
     summary:
@@ -314,7 +314,7 @@ const PACKAGES = [
     pet: "dog",
     cat: "packages",
     image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&h=500&fit=crop&q=80",
-    name: "Puppy — Premium Bundle",
+    name: "Puppy — Premium",
     unit: "per 1-month plan, all-inclusive",
     price: "₹20,999",
     summary:
@@ -375,7 +375,7 @@ const PACKAGES = [
     pet: "cat",
     cat: "packages",
     image: "/cat_grooming_card.png",
-    name: "Cat Yearly Bundle",
+    name: "Cat Elite",
     unit: "per year, all-inclusive",
     price: "₹7,799",
     summary:

@@ -214,7 +214,7 @@ export default function Footer() {
             {[
               { value: "5200+", label: "Happy Pet Parents" },
               { value: "4.8 ★", label: "Average Rating" },
-              { value: "Delhi NCR", label: "Cities Covered" },
+              { value: "6 Cities", label: "Delhi · Gurgaon · Noida · Gr. Noida · Ghaziabad · Faridabad" },
             ].map((s) => (
               <div key={s.label} style={{ textAlign: "center" }}>
                 <div
@@ -388,11 +388,11 @@ export default function Footer() {
                 </li>
                 <li style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "#ffb59f", marginTop: "1px", flexShrink: 0 }}>mail</span>
-                  <span style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.55)", lineHeight: "20px" }}>support@thepawsfriend.in</span>
+                  <span style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.55)", lineHeight: "20px" }}>support@thepawsfriend.com</span>
                 </li>
                 <li style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "#ffb59f", marginTop: "1px", flexShrink: 0 }}>location_on</span>
-                  <span style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.55)", lineHeight: "20px" }}>Delhi NCR, India<br />Services available at doorstep</span>
+                  <span style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.55)", lineHeight: "20px" }}>Delhi, Gurgaon, Noida, Greater Noida, Ghaziabad, Faridabad<br />Services available at doorstep</span>
                 </li>
               </ul>
             </div>

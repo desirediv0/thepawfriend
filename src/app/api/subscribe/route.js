@@ -43,7 +43,7 @@ export async function POST(request) {
           <hr style="border: none; border-top: 1px solid #eee;" />
           <div style="font-size: 12px; color: #666; line-height: 1.6;">
             <p style="margin: 0; font-weight: bold; color: #ab2f00;">The Paws Friend — Doorstep Pet Healthcare</p>
-            <p style="margin: 2px 0;">Website: <a href="https://thepawsfriend.com" style="color: #ab2f00;">thepawsfriend.com</a> | Email: support@thepawsfriend.in</p>
+            <p style="margin: 2px 0;">Website: <a href="https://thepawsfriend.com" style="color: #ab2f00;">thepawsfriend.com</a> | Email: support@thepawsfriend.com</p>
             <p style="margin: 2px 0;">Phone: +91 9211338489 | Emergency: +91 9211338488</p>
           </div>
         </div>

@@ -24,7 +24,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-xl font-bold mb-2 text-on-surface">3. Contact & Support</h2>
           <p>
-            For privacy inquiries or data requests, contact us at <strong>support@thepawsfriend.in</strong> or call <strong>+91 9211338489</strong>. Emergency contact: <strong>+91 9211338488</strong>.
+            For privacy inquiries or data requests, contact us at <strong>support@thepawsfriend.com</strong> or call <strong>+91 9211338489</strong>. Emergency contact: <strong>+91 9211338488</strong>.
           </p>
         </section>
       </div>

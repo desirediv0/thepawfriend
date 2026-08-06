@@ -91,8 +91,8 @@ export default function ContactPage() {
             <div className="flex flex-col gap-3">
               {[
                 { icon: "call", text: "+91 9211338489 (Emergency: +91 9211338488)", label: "Phone & Emergency" },
-                { icon: "mail", text: "support@thepawsfriend.in", label: "Email" },
-                { icon: "location_on", text: "Delhi NCR, India", label: "Location" },
+                { icon: "mail", text: "support@thepawsfriend.com", label: "Email" },
+                { icon: "location_on", text: "Delhi, Gurgaon, Noida, Greater Noida, Ghaziabad, Faridabad", label: "Location" },
               ].map((c) => (
                 <div
                   key={c.text}
@@ -147,9 +147,9 @@ export default function ContactPage() {
               </div>
               <div className="min-w-0">
                 <h3 className="font-bold text-lg sm:text-xl text-on-surface mb-1">Email</h3>
-                <p className="text-xs sm:text-sm text-on-surface-variant font-medium truncate">support@thepawsfriend.in</p>
+                <p className="text-xs sm:text-sm text-on-surface-variant font-medium truncate">support@thepawsfriend.com</p>
                 <button
-                  onClick={() => window.open("mailto:support@thepawsfriend.in", "_self")}
+                  onClick={() => window.open("mailto:support@thepawsfriend.com", "_self")}
                   className="text-xs sm:text-sm text-primary mt-2 font-semibold hover:underline block text-left"
                 >
                   Send Email →
@@ -162,14 +162,9 @@ export default function ContactPage() {
                 <span className="material-symbols-outlined text-xl sm:text-2xl">location_on</span>
               </div>
               <div className="min-w-0">
-                <h3 className="font-bold text-lg sm:text-xl text-on-surface mb-1">Address</h3>
-                <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">D-111, Sector 4, Noida, Uttar Pradesh - 201301</p>
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="text-xs sm:text-sm text-primary mt-2 font-semibold hover:underline block text-left"
-                >
-                  Get Directions →
-                </button>
+                <h3 className="font-bold text-lg sm:text-xl text-on-surface mb-1">Service Area</h3>
+                <p className="text-xs sm:text-sm text-on-surface-variant leading-relaxed">Delhi, Gurgaon, Noida, Greater Noida, Ghaziabad & Faridabad</p>
+                <p className="text-xs sm:text-sm text-primary mt-1 font-semibold">Doorstep Visits Available</p>
               </div>
             </div>
 
@@ -249,34 +244,6 @@ export default function ContactPage() {
         </section>
       </div>
 
-      {/* Map Section */}
-      <section className="w-full h-[380px] sm:h-[450px] relative overflow-hidden bg-surface-container-highest">
-        <div className="absolute inset-0 pointer-events-none z-10 shadow-[inset_0px_0px_50px_rgba(0,0,0,0.05)]"></div>
-        <div
-          className="w-full h-full bg-cover bg-center grayscale contrast-[0.9] opacity-80"
-          style={{
-            backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtnT9_4tROqTbNIad8WUa-1roil6SlhuzOmZ8yFmk6HpoK0sht2AuuPNKmkSN4OxS0X-DCuKFfy804Ymbe2Vp7SL_YejcFl8z-rd_amO6t6hEGLtQTVsScUwRj-ISYB04lHELA-Oz1w77TClhQSyj_4_ktFKnve5qibQEO32nR8YGXoQN5cwzmuNSUXw1dMQJXWVWTOYfc-n7aZydcJx5I0WdbSMtFJp7GXY98MfYT9Rf3zBx0_8hRKc8KolRTk9Pb3kcy3f_M4iK')`
-          }}
-        ></div>
-        {/* Floating Map Pin Card */}
-        <div
-          onClick={() => setIsModalOpen(true)}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer"
-        >
-          <div className="apple-glass-elevated p-4 rounded-2xl flex items-center gap-3 sm:gap-4 animate-bounce">
-            <img
-              alt="Logo"
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full mix-blend-multiply"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkuANiBnzYDxy_sQLfNvBAGihvzbWHQFJB6zcyXBITtmp3uFCnp2Ej1LTQwXHJzLlfP0dnDHX5RVkOCQClmL1VCdSX_n7OAHKQuBvjgY5jJY6lrETQ7vHXBMNx00o6AFYHqSO4nqvgPHy3j26U0edBEwE5CY0Gu7F-H3vU9Hq1P_zSqbDcDBuqA7nAe_1zGH9nNtkiL_oRWASTRBeSifWNN4pgU9zWJkxYHZkY3Ug_Lde7iyKXtz4_ITYjtfwD5zOO-Fo9TrHJnpMU"
-            />
-            <div>
-              <p className="font-bold text-primary text-xs sm:text-sm">The Paws Friend</p>
-              <p className="text-[11px] text-on-surface-variant">Click to view flagship clinic details</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Emergency Care Banner */}
       <section className="bg-primary py-6 overflow-hidden pb-24 sm:pb-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6 text-center md:text-left">
@@ -295,35 +262,6 @@ export default function ContactPage() {
           </button>
         </div>
       </section>
-
-      {/* Branch Modal Overlay */}
-      {isModalOpen && (
-        <div
-          onClick={() => setIsModalOpen(false)}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="apple-glass-elevated p-6 sm:p-8 max-w-sm w-full relative rounded-2xl"
-          >
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-4 right-4 text-on-surface-variant hover:text-primary focus:outline-none"
-            >
-              <span className="material-symbols-outlined">close</span>
-            </button>
-            <h3 className="font-bold text-lg sm:text-xl text-primary mb-4">Noida Flagship Clinic</h3>
-            <p className="text-xs sm:text-sm text-on-surface mb-2">📍 D-81, Sector 4, Noida, Uttar Pradesh - 201301</p>
-            <p className="text-xs sm:text-sm text-on-surface mb-4">⏰ Working hours: Mon - Sun (9 AM - 9 PM)</p>
-            <button
-              onClick={() => window.open("https://maps.google.com/?q=Noida+Sector+4", "_blank")}
-              className="w-full bg-[#D2571E] text-white py-3 rounded-lg font-bold text-xs sm:text-sm flex justify-center items-center gap-2 active:scale-95 transition-all shadow-md"
-            >
-              <span className="material-symbols-outlined text-base">directions</span> Get Directions
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 }

@@ -84,17 +84,6 @@ export default function AboutPage() {
 
   const sections = [
     {
-      tag: "Our Story",
-      title: "Born from a Love for Pets",
-      accent: "Love for Pets",
-      body: "The Paws Friend began in 2014 when Dr. Neha Sharma, frustrated by the stress clinics caused her own pet, decided to bring veterinary care home. What started as weekend house calls with a single kit bag has grown into Delhi NCR's most trusted doorstep pet-care service — built on love, trust, and a relentless commitment to every animal we touch.",
-      icon: "auto_stories",
-      img: "https://images.unsplash.com/photo-1548767797-d8c844163c4a?auto=format&fit=crop&w=800&q=80",
-      imgAlt: "Vet caring for a dog at home",
-      points: ["Founded with 2 veterinarians", "Grown to 30+ certified professionals", "Served 2,000+ families across Delhi NCR"],
-      imgLeft: true,
-    },
-    {
       tag: "Our Mission",
       title: "Accessible Care, Every Doorstep",
       accent: "Every Doorstep",
@@ -103,7 +92,7 @@ export default function AboutPage() {
       img: "https://images.unsplash.com/photo-1581888227599-779811939961?auto=format&fit=crop&w=800&q=80",
       imgAlt: "Professional vet visiting home",
       points: ["Same-day doorstep appointments", "Transparent, flat-rate pricing", "No hidden charges — ever"],
-      imgLeft: false,
+      imgLeft: true,
     },
     {
       tag: "Our Vision",
@@ -114,7 +103,7 @@ export default function AboutPage() {
       img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=800&q=80",
       imgAlt: "Happy dog with family",
       points: ["Pan-India expansion by 2030", "AI-powered preventive health plans", "Community wellness programs"],
-      imgLeft: true,
+      imgLeft: false,
     },
   ];
 

@@ -19,7 +19,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-bold mb-2 text-on-surface">2. Services & Home Visits</h2>
           <p>
-            We provide doorstep pet healthcare, vaccinations, consultation, and grooming services in Delhi NCR. All services are conducted by licensed veterinary professionals.
+            We provide doorstep pet healthcare, vaccinations, consultation, and grooming services in Delhi, Gurgaon, Noida, Greater Noida, Ghaziabad, and Faridabad. All services are conducted by licensed veterinary professionals.
           </p>
         </section>
 
@@ -40,7 +40,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-bold mb-2 text-on-surface">5. Contact Information</h2>
           <p>
-            If you have questions regarding these terms, please email us at <strong>support@thepawsfriend.in</strong>.
+            If you have questions regarding these terms, please email us at <strong>support@thepawsfriend.com</strong>.
           </p>
         </section>
       </div>
