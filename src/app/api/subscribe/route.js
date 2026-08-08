@@ -13,30 +13,34 @@ export async function POST(request) {
       );
     }
 
-    const host = process.env.NEXT_PUBLIC_SMTP_HOST;
-    const user = process.env.NEXT_PUBLIC_SMTP_USER;
-    const pass = process.env.NEXT_PUBLIC_SMTP_PASSWORD;
-    const from = process.env.NEXT_PUBLIC_FROM_EMAIL;
-    const to = process.env.NEXT_PUBLIC_TO_EMAIL;
+    const host = process.env.SMTP_HOST || process.env.NEXT_PUBLIC_SMTP_HOST || "smtp-relay.brevo.com";
+    const port = Number(process.env.SMTP_PORT || process.env.NEXT_PUBLIC_SMTP_PORT || 587);
+    const user = process.env.SMTP_USER || process.env.NEXT_PUBLIC_SMTP_USER || "950758002@smtp-brevo.com";
+    const pass = process.env.SMTP_PASSWORD || process.env.NEXT_PUBLIC_SMTP_PASSWORD || "0f1bzAk4n2ZRBymX";
+    const fromEmail = process.env.FROM_EMAIL || process.env.NEXT_PUBLIC_FROM_EMAIL || "connect@pawsfriend.in";
+    const toEmail = process.env.TO_EMAIL || process.env.NEXT_PUBLIC_TO_EMAIL || "connect@pawsfriend.in";
 
     const transporter = nodemailer.createTransport({
-      host: host || "smtp-relay.brevo.com",
-      port: 587,
-      secure: false,
+      host,
+      port,
+      secure: port === 465,
       auth: {
-        user: user,
-        pass: pass,
+        user,
+        pass,
+      },
+      tls: {
+        rejectUnauthorized: false,
       },
     });
 
     const mailOptions = {
-      from: `"The Paws Friend Newsletter" <${from}>`,
+      from: `"The Paws Friend Newsletter" <${fromEmail}>`,
       replyTo: email,
-      to: to,
+      to: toEmail,
       subject: `[The Paws Friend] New Newsletter Subscription`,
       html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-          <h2 style="color: #ab2f00; border-bottom: 2px solid #ab2f00; padding-bottom: 8px;">New Newsletter Subscriber</h2>
+        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <h2 style="color: #ab2f00; border-bottom: 2px solid #ab2f00; padding-bottom: 8px; margin-top: 0;">New Newsletter Subscriber</h2>
           <p>A user has subscribed to newsletter & pet care tips updates.</p>
           <p><strong>Subscriber Email:</strong> ${email}</p>
           <br/>
