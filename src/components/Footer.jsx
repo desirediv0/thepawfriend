@@ -458,7 +458,8 @@ export default function Footer() {
       {/* Back to Top */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-8 right-8 w-12 h-12 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 z-40 ${
+        aria-label="Scroll back to top"
+        className={`fixed bottom-8 left-8 w-11 h-11 md:w-12 md:h-12 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 z-40 ${
           showBackToTop ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         style={{ background: "#ab2f00", color: "#fff" }}

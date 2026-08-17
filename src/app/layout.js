@@ -2,6 +2,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
+import FloatingActions from "@/components/FloatingActions";
 import { ToastProvider } from "@/context/ToastContext";
 
 export const metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
             {children}
           </main>
           <Footer />
+          <FloatingActions />
         </ToastProvider>
       </body>
     </html>
