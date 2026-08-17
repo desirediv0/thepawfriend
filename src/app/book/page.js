@@ -16,6 +16,7 @@ function BookingForm() {
   const [userName, setUserName] = useState("");
   const [petAge, setPetAge] = useState("");
   const [location, setLocation] = useState("");
+  const [city, setCity] = useState("");
   const [loading, setLoading] = useState(false);
 
   const petOptions = [
@@ -26,7 +27,7 @@ function BookingForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!petName || !phone || !email) {
+    if (!petName || !phone || !email || !city) {
       showToast("Please fill out all required fields.", "error");
       return;
     }
@@ -46,6 +47,7 @@ function BookingForm() {
       userName: userName || "",
       petAge: petAge || "",
       location: location || "",
+      city: city || "",
     };
 
     try {
@@ -176,9 +178,37 @@ function BookingForm() {
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              placeholder="Your location"
+              placeholder="Your address / location"
               className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-on-surface transition-all"
             />
+          </div>
+
+          {/* Select City */}
+          <div className="space-y-2">
+            <label htmlFor="city" className="font-label-md text-label-md text-on-surface-variant block">
+              Select City *
+            </label>
+            <div className="relative">
+              <select
+                id="city"
+                required
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-on-surface transition-all cursor-pointer appearance-none font-medium pr-10"
+              >
+                <option value="" disabled>Select your city</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Gurugram">Gurugram</option>
+                <option value="Noida">Noida</option>
+                <option value="Greater Noida">Greater Noida</option>
+                <option value="Gaziyabad">Gaziyabad</option>
+                <option value="Faridabad">Faridabad</option>
+                <option value="Lucknow">Lucknow</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-on-surface-variant">
+                <span className="material-symbols-outlined text-xl">expand_more</span>
+              </div>
+            </div>
           </div>
 
           {/* Phone + Email side by side */}

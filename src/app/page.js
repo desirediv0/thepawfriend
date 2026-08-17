@@ -36,6 +36,7 @@ export default function Home() {
   const [queryUserName, setQueryUserName] = useState("");
   const [queryPetAge, setQueryPetAge] = useState("");
   const [queryLocation, setQueryLocation] = useState("");
+  const [queryCity, setQueryCity] = useState("");
   const [queryLoading, setQueryLoading] = useState(false);
 
   // GSAP Animations
@@ -134,7 +135,8 @@ export default function Home() {
           query: queryMessage || "",
           userName: queryUserName || "",
           petAge: queryPetAge || "",
-          location: queryLocation || ""
+          location: queryLocation || "",
+          city: queryCity || ""
         })
       });
 
@@ -150,6 +152,7 @@ export default function Home() {
         setQueryUserName("");
         setQueryPetAge("");
         setQueryLocation("");
+        setQueryCity("");
       } else {
         showToast(result.error || "Failed to submit appointment.", "error");
       }
@@ -395,6 +398,36 @@ export default function Home() {
                         color: "#fff",
                       }}
                     />
+                  </div>
+
+                  {/* Select City */}
+                  <div>
+                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Select City *</label>
+                    <div className="relative">
+                      <select
+                        required
+                        value={queryCity}
+                        onChange={(e) => setQueryCity(e.target.value)}
+                        className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all font-medium appearance-none cursor-pointer pr-8"
+                        style={{
+                          background: "rgba(255,255,255,0.18)",
+                          border: "1px solid rgba(255,255,255,0.30)",
+                          color: queryCity ? "#fff" : "rgba(255,255,255,0.6)",
+                        }}
+                      >
+                        <option value="" disabled style={{ color: "#222", background: "#fff" }}>Select your city</option>
+                        <option value="Delhi" style={{ color: "#222", background: "#fff" }}>Delhi</option>
+                        <option value="Gurugram" style={{ color: "#222", background: "#fff" }}>Gurugram</option>
+                        <option value="Noida" style={{ color: "#222", background: "#fff" }}>Noida</option>
+                        <option value="Greater Noida" style={{ color: "#222", background: "#fff" }}>Greater Noida</option>
+                        <option value="Gaziyabad" style={{ color: "#222", background: "#fff" }}>Gaziyabad</option>
+                        <option value="Faridabad" style={{ color: "#222", background: "#fff" }}>Faridabad</option>
+                        <option value="Lucknow" style={{ color: "#222", background: "#fff" }}>Lucknow</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-white/70">
+                        <span className="material-symbols-outlined text-[18px]">expand_more</span>
+                      </div>
+                    </div>
                   </div>
 
 

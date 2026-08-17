@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { petName, petType, phone, query, service, specialRequests, userName, petAge, location, email } = body;
+    const { petName, petType, phone, query, service, specialRequests, userName, petAge, location, city, email } = body;
 
     if (!phone) {
       return NextResponse.json(
@@ -39,7 +39,7 @@ export async function POST(request) {
       from: `"The Paws Friend Booking" <${fromEmail}>`,
       replyTo: email ? `"${userName || 'Customer'}" <${email}>` : undefined,
       to: toEmail,
-      subject: `[New Appointment] ${service || 'Booking'} for ${petName || 'Pet'} (${petType || 'Pet'}) - +91 ${phone}`,
+      subject: `[New Appointment] ${city ? `[${city}] ` : ''}${service || 'Booking'} for ${petName || 'Pet'} (${petType || 'Pet'}) - +91 ${phone}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; color: #333;">
           <div style="background-color: #ab2f00; padding: 20px; text-align: center; color: #ffffff;">
@@ -62,18 +62,22 @@ export async function POST(request) {
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${email || "N/A"}</td>
               </tr>
               <tr>
-                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Location:</td>
-                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${location || "N/A"}</td>
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">City:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold; color: #ab2f00;">${city || "N/A"}</td>
               </tr>
               <tr style="background-color: #f8f9fa;">
+                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Location / Address:</td>
+                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${location || "N/A"}</td>
+              </tr>
+              <tr>
                 <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Selected Pet Type:</td>
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee; color: #ab2f00; font-weight: bold;">${petType || "N/A"}</td>
               </tr>
-              <tr>
+              <tr style="background-color: #f8f9fa;">
                 <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Pet Name:</td>
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${petName || "N/A"}</td>
               </tr>
-              <tr style="background-color: #f8f9fa;">
+              <tr>
                 <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Pet Age:</td>
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${petAge || "N/A"}</td>
               </tr>
