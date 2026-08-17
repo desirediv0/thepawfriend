@@ -32,10 +32,8 @@ export default function Home() {
   const [queryService, setQueryService] = useState("");
   const [queryPetName, setQueryPetName] = useState("");
   const [queryPhone, setQueryPhone] = useState("");
-  const [queryMessage, setQueryMessage] = useState("");
   const [queryUserName, setQueryUserName] = useState("");
   const [queryPetAge, setQueryPetAge] = useState("");
-  const [queryLocation, setQueryLocation] = useState("");
   const [queryCity, setQueryCity] = useState("");
   const [queryLoading, setQueryLoading] = useState(false);
 
@@ -131,11 +129,8 @@ export default function Home() {
           petType: queryPetType || "Dog",
           service: queryService || "General Consultation",
           phone: queryPhone,
-          specialRequests: queryMessage || "",
-          query: queryMessage || "",
           userName: queryUserName || "",
           petAge: queryPetAge || "",
-          location: queryLocation || "",
           city: queryCity || ""
         })
       });
@@ -148,10 +143,8 @@ export default function Home() {
         setQueryService("");
         setQueryPetName("");
         setQueryPhone("");
-        setQueryMessage("");
         setQueryUserName("");
         setQueryPetAge("");
-        setQueryLocation("");
         setQueryCity("");
       } else {
         showToast(result.error || "Failed to submit appointment.", "error");
@@ -322,8 +315,8 @@ export default function Home() {
                   
                   {/* Offer Pill */}
                   <div className="mt-3 inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold shadow-sm" style={{ background: "linear-gradient(90deg, #ff4e50, #f9d423)", color: "#111" }}>
-                    <span>🎉</span>
-                    <span>Special Offers Available - Up to 10% OFF!</span>
+                    <span>📞</span>
+                    <span>Book now free expert call</span>
                   </div>
                 </div>
 
@@ -382,24 +375,6 @@ export default function Home() {
                     />
                   </div>
 
-                  {/* Your Location */}
-                  <div>
-                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Your Location *</label>
-                    <input
-                      required
-                      type="text"
-                      value={queryLocation}
-                      onChange={(e) => setQueryLocation(e.target.value)}
-                      placeholder="Your location"
-                      className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all font-medium"
-                      style={{
-                        background: "rgba(255,255,255,0.18)",
-                        border: "1px solid rgba(255,255,255,0.30)",
-                        color: "#fff",
-                      }}
-                    />
-                  </div>
-
                   {/* Select City */}
                   <div>
                     <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Select City *</label>
@@ -429,8 +404,6 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-
-
 
                   {/* Mobile Number */}
                   <div>
@@ -463,23 +436,6 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Special Requests */}
-                  <div>
-                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Special Requests</label>
-                    <textarea
-                      value={queryMessage}
-                      onChange={(e) => setQueryMessage(e.target.value)}
-                      placeholder="Tell us about any specific concerns or requirements..."
-                      rows={2}
-                      className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all resize-none"
-                      style={{
-                        background: "rgba(255,255,255,0.18)",
-                        border: "1px solid rgba(255,255,255,0.30)",
-                        color: "#fff",
-                      }}
-                    />
-                  </div>
-
                   <button
                     type="submit"
                     disabled={queryLoading}
@@ -494,7 +450,7 @@ export default function Home() {
                     onMouseOut={e => e.currentTarget.style.background = "linear-gradient(135deg, #ab2f00 0%, #d43b00 100%)"}
                   >
                     <span className="material-symbols-outlined text-[18px]">calendar_today</span>
-                    {queryLoading ? "Booking..." : "Book Now & Save Up to 10% OFF ✦"}
+                    {queryLoading ? "Booking..." : "Book Now - Free Expert Call ✦"}
                   </button>
                 </form>
 

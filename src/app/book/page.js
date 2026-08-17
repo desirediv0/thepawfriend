@@ -12,10 +12,8 @@ function BookingForm() {
   const [petName, setPetName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [query, setQuery] = useState("");
   const [userName, setUserName] = useState("");
   const [petAge, setPetAge] = useState("");
-  const [location, setLocation] = useState("");
   const [city, setCity] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -39,14 +37,11 @@ function BookingForm() {
       petType,
       phone,
       email,
-      query,
       breed: "N/A",
       service: "Consultation",
       ownerName: userName || "",
-      address: location || "",
       userName: userName || "",
       petAge: petAge || "",
-      location: location || "",
       city: city || "",
     };
 
@@ -167,22 +162,6 @@ function BookingForm() {
             />
           </div>
 
-          {/* Your Location */}
-          <div className="space-y-2">
-            <label htmlFor="location" className="font-label-md text-label-md text-on-surface-variant block">
-              Your Location *
-            </label>
-            <input
-              id="location"
-              required
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Your address / location"
-              className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-on-surface transition-all"
-            />
-          </div>
-
           {/* Select City */}
           <div className="space-y-2">
             <label htmlFor="city" className="font-label-md text-label-md text-on-surface-variant block">
@@ -241,21 +220,6 @@ function BookingForm() {
                 className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-on-surface transition-all"
               />
             </div>
-          </div>
-
-          {/* Custom Query */}
-          <div className="space-y-2">
-            <label htmlFor="query" className="font-label-md text-label-md text-on-surface-variant block">
-              What do you need? <span className="opacity-60">(optional)</span>
-            </label>
-            <textarea
-              id="query"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="e.g. Grooming, vaccination, health check-up, or any specific concern..."
-              rows={3}
-              className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-on-surface transition-all resize-none"
-            />
           </div>
 
           {/* Submit */}

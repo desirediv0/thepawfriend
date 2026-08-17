@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { petName, petType, phone, query, service, specialRequests, userName, petAge, location, city, email } = body;
+    const { petName, petType, phone, service, userName, petAge, city, email } = body;
 
     if (!phone) {
       return NextResponse.json(
@@ -32,8 +32,6 @@ export async function POST(request) {
         rejectUnauthorized: false,
       },
     });
-
-    const notesContent = specialRequests || query || "";
 
     const mailOptions = {
       from: `"The Paws Friend Booking" <${fromEmail}>`,
@@ -66,18 +64,14 @@ export async function POST(request) {
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold; color: #ab2f00;">${city || "N/A"}</td>
               </tr>
               <tr style="background-color: #f8f9fa;">
-                <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Location / Address:</td>
-                <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${location || "N/A"}</td>
-              </tr>
-              <tr>
                 <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Selected Pet Type:</td>
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee; color: #ab2f00; font-weight: bold;">${petType || "N/A"}</td>
               </tr>
-              <tr style="background-color: #f8f9fa;">
+              <tr>
                 <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Pet Name:</td>
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee;">${petName || "N/A"}</td>
               </tr>
-              <tr>
+              <tr style="background-color: #f8f9fa;">
                 <td style="padding: 10px 14px; font-weight: bold; border-bottom: 1px solid #eee;">Pet Age:</td>
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${petAge || "N/A"}</td>
               </tr>
@@ -86,15 +80,6 @@ export async function POST(request) {
                 <td style="padding: 10px 14px; border-bottom: 1px solid #eee; font-weight: bold;">${service || "N/A"}</td>
               </tr>
             </table>
-
-            ${notesContent ? `
-              <div style="margin-top: 20px;">
-                <p style="margin: 0 0 6px; font-weight: bold; font-size: 14px;">Special Requests / Concerns:</p>
-                <div style="background-color: #fff8f5; border-left: 4px solid #ab2f00; padding: 12px 16px; border-radius: 4px; font-size: 13px; color: #444;">
-                  ${String(notesContent).replace(/\n/g, '<br/>')}
-                </div>
-              </div>
-            ` : ''}
           </div>
 
           <div style="background-color: #fafafa; padding: 16px 24px; border-top: 1px solid #eeeeee; font-size: 12px; color: #666; text-align: center; line-height: 1.6;">
