@@ -642,7 +642,7 @@ export default function ServicesPage() {
             Need Help Choosing The Right Service?
           </h2>
           <p className="text-white/90 text-xs sm:text-base max-w-xl mx-auto mb-6 leading-relaxed">
-            Our veterinary and grooming coordinators are available to guide you based on your pet's age, breed and health needs.
+            Our veterinary and grooming coordinators are available to guide you based on your pet&apos;s age, breed and health needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
             <button

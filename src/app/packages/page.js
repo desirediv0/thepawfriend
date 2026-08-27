@@ -1293,7 +1293,7 @@ export default function PackagesPage() {
               No packages found
             </h3>
             <p className="text-xs sm:text-sm text-[#6B5F55] mb-4">
-              We couldn't find any packages matching this category selection.
+              We couldn&apos;t find any packages matching this category selection.
             </p>
             <button
               onClick={() => {

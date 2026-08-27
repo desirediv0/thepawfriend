@@ -173,7 +173,7 @@ export default function GalleryPage() {
         <div className="max-w-container-max mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
           <div className="text-center md:text-left">
             <h2 className="font-headline-lg text-headline-lg text-white mb-2">Want Your Pet to be in Our Gallery?</h2>
-            <p className="font-body-md text-body-md text-white/90">Share your pet's happy moments with us and get featured!</p>
+            <p className="font-body-md text-body-md text-white/90">Share your pet&apos;s happy moments with us and get featured!</p>
           </div>
           <Link
             href="/contact"
