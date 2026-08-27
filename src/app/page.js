@@ -1,620 +1,653 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useToast } from "@/context/ToastContext";
+import HeroBookingForm from "@/components/HeroBookingForm";
+import InteractiveArticleGrid from "@/components/InteractiveArticleGrid";
 
-function Counter({ target, duration = 1500, suffix = "" }) {
-  const [count, setCount] = useState(0);
+export const metadata = {
+  title: "Vet Doctor Home Visit & Vaccination Packages | Delhi NCR & Lucknow | The Paws Friend",
+  description:
+    "Book licensed vet doctor home visits & vaccination packages in Delhi, Gurugram, Noida, Ghaziabad, Faridabad & Lucknow. Puppy 8-shot schedule ₹6999, adult dog vaccine ₹3999, consultation from ₹299. AEO & SEO optimized.",
+  keywords: [
+    "vet doctor home visit",
+    "at home veterinary care delhi ncr",
+    "puppy 8 shot vaccination schedule india",
+    "home dog vaccination near me",
+    "vet consultation cost lucknow delhi",
+    "parvo distemper rapid kit test price",
+  ],
+  alternates: {
+    canonical: "https://thepawsfriend.com/veterinary",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
+  },
+  openGraph: {
+    title: "At-Home Vet Doctor Consultation & Vaccination Packages | The Paws Friend",
+    description: "Experienced certified BVSc veterinarians visiting your home in Delhi NCR & Lucknow.",
+    url: "https://thepawsfriend.com/veterinary",
+    siteName: "The Paws Friend",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=1200&q=80",
+        width: 1200,
+        height: 630,
+        alt: "Vet Doctor Home Visit & Health Care",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vet Doctor Home Visit & Vaccination Packages",
+    description: "Licensed BVSc & MVSc vet doctors visiting your home in Delhi NCR & Lucknow.",
+    images: [
+      "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+};
 
-  useEffect(() => {
-    const numericTarget = parseInt(target.replace(/[^0-9.]/g, ""), 10);
-    let startTimestamp = null;
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      setCount(Math.floor(progress * numericTarget));
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
-    };
-    window.requestAnimationFrame(step);
-  }, [target, duration]);
-
-  return <span>{count.toLocaleString()}{suffix}</span>;
-}
-
-export default function Home() {
-  const { showToast } = useToast();
-  
-  // State for Hero Quick Callback Form
-  const [queryPetType, setQueryPetType] = useState("");
-  const [queryService, setQueryService] = useState("");
-  const [queryPetName, setQueryPetName] = useState("");
-  const [queryPhone, setQueryPhone] = useState("");
-  const [queryUserName, setQueryUserName] = useState("");
-  const [queryPetAge, setQueryPetAge] = useState("");
-  const [queryCity, setQueryCity] = useState("");
-  const [queryLoading, setQueryLoading] = useState(false);
-
-  // GSAP Animations
-  useEffect(() => {
-    const initGsap = async () => {
-      try {
-        const { gsap } = await import("gsap");
-        const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Hero timeline animations
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        tl.fromTo(".gsap-hero-item", 
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 0.8, stagger: 0.15 }
-        );
-        tl.fromTo(".gsap-hero-form",
-          { opacity: 0, scale: 0.93, y: 20 },
-          { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "back.out(1.7)" },
-          "-=0.6"
-        );
-
-        // Stats section scroll animation
-        gsap.fromTo(".gsap-stat-card",
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            scrollTrigger: {
-              trigger: ".gsap-stats-section",
-              start: "top 85%",
-              toggleActions: "play none none none"
-            }
-          }
-        );
-
-        // Core Services section scroll animation
-        gsap.fromTo(".gsap-service-card",
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            scrollTrigger: {
-              trigger: ".gsap-services-section",
-              start: "top 80%",
-              toggleActions: "play none none none"
-            }
-          }
-        );
-
-        // Why Choose Us list items scroll animation
-        gsap.fromTo(".gsap-choose-item",
-          { opacity: 0, x: -30 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.6,
-            stagger: 0.15,
-            scrollTrigger: {
-              trigger: ".gsap-choose-section",
-              start: "top 80%",
-              toggleActions: "play none none none"
-            }
-          }
-        );
-      } catch (err) {
-        console.warn("GSAP loading failed:", err);
-      }
-    };
-
-    initGsap();
-  }, []);
-
-  const handleQuickQuery = async (e) => {
-    e.preventDefault();
-    if (!queryPhone || queryPhone.length < 10) {
-      showToast("Please enter a valid 10-digit mobile number.", "error");
-      return;
-    }
-    setQueryLoading(true);
-
-    try {
-      const response = await fetch("/api/book", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          petName: queryPetName || "My Pet",
-          petType: queryPetType || "Dog",
-          service: queryService || "General Consultation",
-          phone: queryPhone,
-          userName: queryUserName || "",
-          petAge: queryPetAge || "",
-          city: queryCity || ""
-        })
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        showToast("Appointment booked successfully! Our team will contact you shortly.", "success");
-        setQueryPetType("");
-        setQueryService("");
-        setQueryPetName("");
-        setQueryPhone("");
-        setQueryUserName("");
-        setQueryPetAge("");
-        setQueryCity("");
-      } else {
-        showToast(result.error || "Failed to submit appointment.", "error");
-      }
-    } catch (err) {
-      showToast("Something went wrong. Please try again.", "error");
-    } finally {
-      setQueryLoading(false);
-    }
+export default function VeterinaryPage() {
+  const jsonLdVet = {
+    "@context": "https://schema.org",
+    "@type": "VeterinaryCare",
+    name: "The Paws Friend Veterinary Home Care",
+    telephone: "+91-9211338489",
+    areaServed: ["Delhi", "Gurugram", "Noida", "Greater Noida", "Ghaziabad", "Faridabad", "Lucknow"],
+    description:
+      "Comprehensive home veterinary visits, cold-chain vaccinations, blood diagnostics, and preventive healthcare packages for dogs and cats.",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "580",
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Veterinary & Vaccination Packages",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Complete Puppy Vaccination Package (8 Shots)",
+            description: "Puppy DP, DHPPiL, Corona, Anti-Rabies, Kennel Cough & boosters + Deworming.",
+          },
+          price: "6999",
+          priceCurrency: "INR",
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Adult Dog Annual Vaccination Package",
+            description: "Anti-Rabies, DHPPiL (9-in-1), Corona, Kennel Cough & Deworming.",
+          },
+          price: "3999",
+          priceCurrency: "INR",
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Kitten Vaccination Package",
+            description: "Tricat, Anti-Rabies, boosters & Deworming.",
+          },
+          price: "3999",
+          priceCurrency: "INR",
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Adult Cat Annual Vaccination",
+            description: "Tricat, Anti-Rabies & Deworming.",
+          },
+          price: "1999",
+          priceCurrency: "INR",
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Puppy Consultation (Home Visit)",
+            description: "At-home physical examination and diet plan.",
+          },
+          price: "299",
+          priceCurrency: "INR",
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Adult Dog Consultation (Home Visit)",
+            description: "At-home physical examination and digital prescription.",
+          },
+          price: "499",
+          priceCurrency: "INR",
+        },
+      ],
+    },
   };
+
+  const jsonLdBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://thepawsfriend.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Veterinary Care",
+        item: "https://thepawsfriend.com/veterinary",
+      },
+    ],
+  };
+
+  // AEO (Answer Engine Optimization) Structured FAQs for Perplexity, ChatGPT & Google AI Overviews
+  const aeoFaqs = [
+    {
+      q: "What vaccines are mandatory for puppies in India?",
+      a: "Mandatory puppy vaccines in India include the **Puppy DP** (Distemper & Parvovirus at day 35), **DHPPiL / 9-in-1 core vaccine** (at day 50 & booster at day 71), **Canine Corona vaccine** (day 60 & 90), **Anti-Rabies** (at day 90 & booster at day 120), and **Kennel Cough** (day 120). Deworming should accompany every shot schedule.",
+    },
+    {
+      q: "How much does a vet doctor home visit cost in Delhi NCR and Lucknow?",
+      a: "At The Paws Friend, a standalone home consultation by a licensed BVSc vet doctor starts at **₹299 for puppies** and **₹499 for adult dogs**. Comprehensive annual vaccination packages range from **₹1,999 to ₹6,999** with zero hidden travel fees.",
+    },
+    {
+      q: "Can dogs get vaccinated at home safely without going to a clinic?",
+      a: "Yes. Home vaccination is 100% safe when administered by certified veterinarians maintaining **cold-chain storage (2°C to 8°C)**. Home vaccination eliminates clinic waiting rooms, preventing exposure to contagious viral infections like Parvovirus and Distemper.",
+    },
+    {
+      q: "How do I prepare my dog for a vet home consultation?",
+      a: "To prepare your dog: **1.** Keep your pet in a well-lit quiet room 15 minutes before the doctor's arrival. **2.** Avoid feeding heavy meals 1 hour prior. **3.** Have previous medical history/vaccination cards ready for review.",
+    },
+    {
+      q: "What should I do if my pet shows sudden fever or vomiting?",
+      a: "If your pet shows high fever (above 102.5°F), persistent vomiting, or extreme lethargy: **1.** Keep them hydrated with electrolyte water. **2.** Do NOT give human paracetamol or ibuprofen (toxic to dogs/cats). **3.** Call our 24/7 emergency helpline (+91 9211338488) immediately for a vet home dispatch.",
+    },
+  ];
+
+  const jsonLdFaq = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: aeoFaqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: f.a.replace(/\*\*/g, ""),
+      },
+    })),
+  };
+
+  const vetPackages = [
+    {
+      id: "puppy-vacc",
+      title: "Complete Puppy Vaccination Package (8 Shots)",
+      badge: "8 SHOTS + BOOSTERS",
+      unit: "Complete Schedule",
+      price: "₹6,999",
+      originalPrice: "₹10,500",
+      popular: true,
+      summary: "Full 8-shot puppy vaccination schedule tracked from Day 35 through boosters.",
+      includes: [
+        "Day 35: Puppy DP Shot",
+        "Day 50: DHPPiL (9-in-1)",
+        "Day 60: Canine Corona Vaccine",
+        "Day 71: DHPPiL Booster",
+        "Day 90: Canine Corona Booster + Anti-Rabies",
+        "Day 120: Anti-Rabies Booster + Kennel Cough",
+        "Deworming Medication Included",
+        "Cold-chain Maintained Vaccines",
+      ],
+    },
+    {
+      id: "adult-vacc",
+      title: "Adult Dog Annual Vaccination Package",
+      badge: "ANNUAL CORE SHIELD",
+      unit: "One-Time Visit",
+      price: "₹3,999",
+      originalPrice: "₹5,499",
+      popular: false,
+      summary: "Annual re-vaccination shield for adult dogs including Kennel Cough & Anti-Rabies.",
+      includes: [
+        "Anti-Rabies Core Shot",
+        "DHPPiL (9-in-1) Core Shot",
+        "Canine Corona Vaccine",
+        "Kennel Cough Protection",
+        "Deworming Dose",
+        "Full Physical Health Checkup",
+      ],
+    },
+    {
+      id: "kitten-vacc",
+      title: "Kitten Vaccination Package",
+      badge: "KITTEN CARE",
+      unit: "Complete Schedule",
+      price: "₹3,999",
+      originalPrice: "₹6,800",
+      popular: false,
+      summary: "Complete first-year vaccination schedule for kittens from Day 60 to Day 125.",
+      includes: [
+        "Day 60: Tricat Vaccine",
+        "Day 90: Tricat Booster",
+        "Day 95: Anti-Rabies Vaccine",
+        "Day 125: Anti-Rabies Booster",
+        "Kitten Deworming",
+        "Weight & Growth Inspection",
+      ],
+    },
+    {
+      id: "cat-vacc",
+      title: "Adult Cat Annual Vaccination",
+      badge: "CAT CORE SHIELD",
+      unit: "One-Time Visit",
+      price: "₹1,999",
+      originalPrice: "₹2,800",
+      popular: false,
+      summary: "Annual core protection for adult cats against respiratory & viral infections.",
+      includes: [
+        "Tricat Vaccine",
+        "Anti-Rabies Vaccine",
+        "Deworming Dose",
+        "Basic Wellness Examination",
+      ],
+    },
+  ];
+
+  const standaloneServices = [
+    { name: "Puppy Consultation (Home Visit)", price: "₹299" },
+    { name: "Adult Dog Consultation (Home Visit)", price: "₹499" },
+    { name: "Rapid Kit Test – Parvo", price: "₹1,199" },
+    { name: "Rapid Kit Test – Distemper", price: "₹1,999" },
+    { name: "Puppy DP Shot", price: "₹1,199" },
+    { name: "Anti-Rabies Shot", price: "₹999" },
+    { name: "DHPPiL (9-in-1) Shot", price: "₹1,199" },
+    { name: "Kennel Cough Vaccine", price: "₹1,499" },
+    { name: "Tricat (Feline Vaccine)", price: "₹1,199" },
+  ];
 
   return (
     <>
-      {/* ── Hero Section ── Full-width bg image + left content + right glass form */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdVet) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }}
+      />
+
+      {/* ── Hero Section ── */}
       <section
         className="relative overflow-hidden"
         style={{
-          minHeight: "100vh",
-          backgroundImage: `url('https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=1600&q=80')`,
+          minHeight: "90vh",
+          backgroundImage: `url('https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=1600&q=80')`,
           backgroundSize: "cover",
-          backgroundPosition: "center 30%",
+          backgroundPosition: "center",
         }}
       >
-        {/* Dark overlay gradient — left darker, right lighter so form is readable */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(105deg, rgba(20,10,5,0.78) 0%, rgba(20,10,5,0.55) 50%, rgba(20,10,5,0.30) 100%)",
+              "linear-gradient(105deg, rgba(20,10,5,0.88) 0%, rgba(20,10,5,0.70) 50%, rgba(20,10,5,0.45) 100%)",
           }}
         />
-        {/* Subtle primary tint overlay */}
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ background: "rgba(171,47,0,0.10)" }}
+          style={{ background: "rgba(171,47,0,0.15)" }}
         />
 
-        <div className="relative z-10 max-w-container-max mx-auto px-gutter" style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: "88px", paddingBottom: "48px" }}>
+        <div
+          className="relative z-10 max-w-container-max mx-auto px-gutter"
+          style={{
+            minHeight: "90vh",
+            display: "flex",
+            alignItems: "center",
+            paddingTop: "88px",
+            paddingBottom: "48px",
+          }}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full">
-
-            {/* ── Left: Text Content ── */}
+            {/* Left Column Content */}
             <div className="space-y-6">
-              {/* Badge */}
-              <div className="gsap-hero-item inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-label-md text-label-md"
+              <nav aria-label="Breadcrumb" className="text-xs text-white/70 flex items-center gap-2">
+                <Link href="/" className="hover:underline">Home</Link>
+                <span>/</span>
+                <span className="text-primary-fixed font-bold">Veterinary Services & Packages</span>
+              </nav>
+
+              <div
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold"
                 style={{
-                  background: "rgba(255,219,209,0.18)",
-                  border: "1px solid rgba(255,219,209,0.40)",
+                  background: "rgba(255,219,209,0.22)",
+                  border: "1px solid rgba(255,219,209,0.45)",
                   color: "#ffdbd1",
                   backdropFilter: "blur(8px)",
-                }}>
-                <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
-                Professional Pet Care You Can Trust
+                }}
+              >
+                <span className="material-symbols-outlined text-[16px]">
+                  clinical_notes
+                </span>
+                Licensed BVSc & MVSc Veterinarians
               </div>
 
-              {/* Headline */}
-              <h1 className="gsap-hero-item font-headline-xl leading-tight"
-                style={{
-                  color: "#fff",
-                  fontSize: "clamp(2rem, 4.5vw, 3.2rem)",
-                  lineHeight: 1.15,
-                  textShadow: "0 2px 4px rgba(0,0,0,0.5), 0 6px 20px rgba(0,0,0,0.35), 0 12px 40px rgba(171,47,0,0.25)",
-                }}>
-                Professional Pet<br />
-                Healthcare{" "}
-                <span style={{ color: "#ffb59f", textShadow: "0 2px 4px rgba(0,0,0,0.4), 0 6px 24px rgba(171,47,0,0.45), 0 0 40px rgba(255,181,159,0.20)" }}>At Your Doorstep</span>
+              <h1
+                className="font-headline-xl leading-tight text-white"
+                style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.4rem)" }}
+              >
+                Vet Doctor Home Visit & <br />
+                <span style={{ color: "#ffb59f" }}>Vaccination Packages</span>
               </h1>
 
-              {/* Sub */}
-              <p className="gsap-hero-item text-body-lg max-w-lg"
-                style={{ color: "rgba(255,255,255,0.75)" }}>
-                Expert veterinary care in the comfort of your home. From routine vaccinations to emergency consultations — we bring the clinic to you.
+              <p
+                className="text-body-lg max-w-lg"
+                style={{ color: "rgba(255,255,255,0.85)" }}
+              >
+                Protect your pet from clinic stress and cross-infections. Certified vet doctors delivering complete consultations, cold-chain vaccines, blood tests & prescriptions directly to your door in Delhi NCR & Lucknow.
               </p>
 
-              {/* Trust chips */}
-              <div className="gsap-hero-item flex flex-wrap gap-2 pt-1">
+              {/* Trust Badges */}
+              <div className="flex flex-wrap gap-2 pt-1">
                 {[
-                  { icon: "verified_user", label: "Licensed Vets" },
-                  { icon: "health_and_safety", label: "Insured" },
-                  { icon: "schedule", label: "Same-Day Visits" },
-                  { icon: "vaccines", label: "US-Based Vaccination & Medicine" },
-                ].map((t) => (
-                  <span key={t.label}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-label-md font-label-md"
+                  "Licensed BVSc Vets",
+                  "Cold-Chain Vaccines",
+                  "24/7 Helpline",
+                  "Digital Prescriptions",
+                ].map((b) => (
+                  <span
+                    key={b}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
                     style={{
-                      background: "rgba(255,255,255,0.12)",
-                      border: "1px solid rgba(255,255,255,0.25)",
+                      background: "rgba(255,255,255,0.15)",
+                      border: "1px solid rgba(255,255,255,0.3)",
                       color: "#fff",
-                      backdropFilter: "blur(6px)",
-                    }}>
-                    <span className="material-symbols-outlined text-[15px]" style={{ fontVariationSettings: "'FILL' 1", color: "#ffb59f" }}>{t.icon}</span>
-                    {t.label}
+                    }}
+                  >
+                    <span className="material-symbols-outlined text-[14px]" style={{ color: "#ffb59f" }}>
+                      verified
+                    </span>
+                    {b}
                   </span>
                 ))}
               </div>
 
-              {/* CTAs */}
-              <div className="gsap-hero-item flex flex-col sm:flex-row gap-3 pt-2">
+              <div className="flex items-center gap-3 pt-2">
                 <Link
-                  href="/book"
-                  className="bg-primary text-on-primary px-7 py-3.5 rounded-xl font-headline-md text-headline-md shadow-lg hover:bg-primary-container transition-all active:scale-95 flex items-center justify-center gap-2"
-                  style={{ fontSize: "16px" }}
+                  href="/grooming"
+                  className="px-5 py-2.5 rounded-xl font-bold text-sm text-white border border-white/30 hover:bg-white/10 transition-all"
                 >
-                  <span className="material-symbols-outlined text-[20px]">calendar_today</span>
-                  Book Appointment
+                  Explore Grooming Packages →
                 </Link>
-                <button
-                  onClick={() => window.open("https://wa.me/919211338489", "_blank")}
-                  className="px-7 py-3.5 rounded-xl font-headline-md text-headline-md transition-all active:scale-95 flex items-center justify-center gap-2"
-                  style={{
-                    background: "rgba(255,255,255,0.12)",
-                    border: "1.5px solid rgba(255,255,255,0.35)",
-                    color: "#fff",
-                    backdropFilter: "blur(8px)",
-                    fontSize: "16px",
-                  }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                  </svg>
-                  WhatsApp Us
-                </button>
-              </div>
-
-              {/* Star rating */}
-              <div className="gsap-hero-item flex items-center gap-3 pt-2">
-                <div className="flex -space-x-2.5">
-                  {[
-                    "https://lh3.googleusercontent.com/aida-public/AB6AXuCbk9yweuJOYJJsoofS1e2mwLP266cxGqsHr1HKD-DWvS-fKpuXjtX46HpG7mkCyMKyThaR1X4BZ6-S-pB-2WWFizSsw0JU9wXBleSM03gkgPacHgRWigSlZV9lAzP3S2-Gf9B1xFPIgfoQrLUPRBOy8Om3oOxp5YEfuBy7yUMshki_4_YtfO94MZfoi9iWnDW3_jiT_Xg10UI2mRRQ_Ix16HYd8XupO3IQyXuS73_Ribxjt70iAy7TJTt6TFqWF7b54cDE36nrQN_1",
-                    "https://lh3.googleusercontent.com/aida-public/AB6AXuBE36jkWFdRQY8xfwaQotoiRB4HwXi3yKyXfhzEf4uHHVY84oqCY5_KuHRAZbcW2269iCoNxXDsQbgTos59yX7J1aRqeJkPteHSvSA8fYfScE80kpPnrzbU-D1la7x_CB8MOE2NiHm-KjAdSCFcZgyFpAWhZX5ThBAL_gyTIP6WOdVmYDQF-Uh1LuBx6vJ7pC7MLIpqKfUETlAWvQd_0P412y9Zd-lXc_vtfxLaTdqW8x8weZxH2WHEGLDwpNznoEhxL1G1LTV_jYn6",
-                    "https://lh3.googleusercontent.com/aida-public/AB6AXuDXyLVDi5f1YZJkg_30-r9zB0emdgtFFfL3EU87to1ia_4lpWws8slFrqVYm2sgYx4c6td03zDBVav2DW0GlSn88-IHovCEi4DK6pucMEdy6RvKlzkuYcTUGpIo3R2epxaMDLqqUbRSOlo1qlhVeTP0rVa_tTaS3Wf-1KmJost7kyFFp8iH8XWWKIfmls23bMBSFTZLmhxcKcLPD1D4-jH84ZkS9naqeO5NpcoVXbolzJYEC32YgYxO_2zo99SU-a4QeBvHGBCqqtUP",
-                  ].map((url, i) => (
-                    <div key={i} className="w-9 h-9 rounded-full border-2" style={{ border: "2px solid rgba(255,255,255,0.5)", backgroundImage: `url('${url}')`, backgroundSize: "cover" }} />
-                  ))}
-                </div>
-                <div>
-                  <div className="flex" style={{ color: "#ffb59f" }}>
-                    {[1,2,3,4,5].map(i => (
-                      <span key={i} className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                    ))}
-                  </div>
-                  <span className="text-label-md" style={{ color: "rgba(255,255,255,0.70)" }}>
-                    <span className="font-bold text-white">4.8</span>/5 · <Counter target="5200" suffix="+" /> Happy Pet Parents
-                  </span>
-                </div>
               </div>
             </div>
 
-            {/* ── Right: Glassmorphism Form Card ── */}
-            <div className="gsap-hero-form flex justify-end">
-              <div
-                className="w-full max-w-sm rounded-[1.75rem] p-7 space-y-5"
-                style={{
-                  background: "rgba(255,255,255,0.12)",
-                  backdropFilter: "blur(28px) saturate(160%)",
-                  WebkitBackdropFilter: "blur(28px) saturate(160%)",
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25)",
-                }}
-              >
-                {/* Card header */}
-                <div className="text-center">
-                  <h3 className="font-headline-md text-center" style={{ color: "#fff", fontSize: "22px", fontWeight: 800, textTransform: "capitalize" }}>
-                    Book Your Appointment
-                  </h3>
-                  <p className="text-label-md mt-1 text-center font-bold tracking-wider" style={{ color: "rgba(255,255,255,0.75)", fontSize: "11px", textTransform: "uppercase" }}>
-                    PROFESSIONAL HOME VISITS - OFFERS ON TREATMENTS
-                  </p>
-                  
-                  {/* Offer Pill */}
-                  <div className="mt-3 inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold shadow-sm" style={{ background: "linear-gradient(90deg, #ff4e50, #f9d423)", color: "#111" }}>
-                    <span>📞</span>
-                    <span>Book now free expert call</span>
-                  </div>
-                </div>
-
-                <form onSubmit={handleQuickQuery} className="space-y-3 pt-2">
-                  {/* Pet Name */}
-                  <div>
-                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Pet Name *</label>
-                    <input
-                      required
-                      type="text"
-                      value={queryPetName}
-                      onChange={(e) => setQueryPetName(e.target.value)}
-                      placeholder="Your pet's name"
-                      className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all font-medium"
-                      style={{
-                        background: "rgba(255,255,255,0.18)",
-                        border: "1px solid rgba(255,255,255,0.30)",
-                        color: "#fff",
-                      }}
-                    />
-                  </div>
-
-                  {/* Your Name */}
-                  <div>
-                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Your Name *</label>
-                    <input
-                      required
-                      type="text"
-                      value={queryUserName}
-                      onChange={(e) => setQueryUserName(e.target.value)}
-                      placeholder="Your name"
-                      className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all font-medium"
-                      style={{
-                        background: "rgba(255,255,255,0.18)",
-                        border: "1px solid rgba(255,255,255,0.30)",
-                        color: "#fff",
-                      }}
-                    />
-                  </div>
-
-                  {/* Pet Age */}
-                  <div>
-                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Pet Age *</label>
-                    <input
-                      required
-                      type="text"
-                      value={queryPetAge}
-                      onChange={(e) => setQueryPetAge(e.target.value)}
-                      placeholder="e.g. 2 years"
-                      className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all font-medium"
-                      style={{
-                        background: "rgba(255,255,255,0.18)",
-                        border: "1px solid rgba(255,255,255,0.30)",
-                        color: "#fff",
-                      }}
-                    />
-                  </div>
-
-                  {/* Select City */}
-                  <div>
-                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Select City *</label>
-                    <div className="relative">
-                      <select
-                        required
-                        value={queryCity}
-                        onChange={(e) => setQueryCity(e.target.value)}
-                        className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all font-medium appearance-none cursor-pointer pr-8"
-                        style={{
-                          background: "rgba(255,255,255,0.18)",
-                          border: "1px solid rgba(255,255,255,0.30)",
-                          color: queryCity ? "#fff" : "rgba(255,255,255,0.6)",
-                        }}
-                      >
-                        <option value="" disabled style={{ color: "#222", background: "#fff" }}>Select your city</option>
-                        <option value="Delhi" style={{ color: "#222", background: "#fff" }}>Delhi</option>
-                        <option value="Gurugram" style={{ color: "#222", background: "#fff" }}>Gurugram</option>
-                        <option value="Noida" style={{ color: "#222", background: "#fff" }}>Noida</option>
-                        <option value="Greater Noida" style={{ color: "#222", background: "#fff" }}>Greater Noida</option>
-                        <option value="Gaziyabad" style={{ color: "#222", background: "#fff" }}>Gaziyabad</option>
-                        <option value="Faridabad" style={{ color: "#222", background: "#fff" }}>Faridabad</option>
-                        <option value="Lucknow" style={{ color: "#222", background: "#fff" }}>Lucknow</option>
-                      </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-white/70">
-                        <span className="material-symbols-outlined text-[18px]">expand_more</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Mobile Number */}
-                  <div>
-                    <label className="block text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.85)" }}>Mobile Number *</label>
-                    <div className="flex gap-2">
-                      <div
-                        className="px-3 py-2 rounded-xl text-xs font-bold flex items-center justify-center shrink-0"
-                        style={{
-                          background: "rgba(255,255,255,0.22)",
-                          border: "1px solid rgba(255,255,255,0.30)",
-                          color: "#fff",
-                        }}
-                      >
-                        +91
-                      </div>
-                      <input
-                        required
-                        type="tel"
-                        maxLength={10}
-                        value={queryPhone}
-                        onChange={(e) => setQueryPhone(e.target.value.replace(/\D/g, ""))}
-                        placeholder="10-digit number"
-                        className="w-full px-4 py-2 rounded-xl outline-none text-xs transition-all"
-                        style={{
-                          background: "rgba(255,255,255,0.18)",
-                          border: "1px solid rgba(255,255,255,0.30)",
-                          color: "#fff",
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={queryLoading}
-                    className="w-full py-3.5 mt-2 rounded-xl font-extrabold flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50"
-                    style={{
-                      background: "linear-gradient(135deg, #ab2f00 0%, #d43b00 100%)",
-                      color: "#fff",
-                      fontSize: "14px",
-                      boxShadow: "0 4px 20px rgba(171,47,0,0.45)",
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = "#cf4516"}
-                    onMouseOut={e => e.currentTarget.style.background = "linear-gradient(135deg, #ab2f00 0%, #d43b00 100%)"}
-                  >
-                    <span className="material-symbols-outlined text-[18px]">calendar_today</span>
-                    {queryLoading ? "Booking..." : "Book Now - Free Expert Call ✦"}
-                  </button>
-                </form>
-
-                <div className="flex items-center justify-center gap-1.5 pt-1" style={{ fontSize: "12px", color: "rgba(255,255,255,0.75)" }}>
-                  <span className="material-symbols-outlined text-[15px]" style={{ color: "#ffb59f" }}>verified_user</span>
-                  <span>Our expert will reach out to you in 15 mins</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Bar */}
-      <section className="py-12 bg-surface gsap-stats-section">
-        <div className="max-w-container-max mx-auto px-gutter grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div className="gsap-stat-card flex flex-col items-center text-center space-y-2">
-            <div className="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-full text-primary">
-              <span className="material-symbols-outlined text-[28px]">verified_user</span>
-            </div>
-            <h3 className="font-headline-md text-headline-md">Certified Vets</h3>
-            <p className="text-label-md text-on-surface-variant">Licensed & Experienced</p>
-          </div>
-          <div className="gsap-stat-card flex flex-col items-center text-center space-y-2">
-            <div className="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-full text-primary">
-              <span className="material-symbols-outlined text-[28px]">emergency</span>
-            </div>
-            <h3 className="font-headline-md text-headline-md">Emergency</h3>
-            <p className="text-label-md text-on-surface-variant">24/7 Support Available</p>
-          </div>
-          <div className="gsap-stat-card flex flex-col items-center text-center space-y-2">
-            <div className="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-full text-primary">
-              <span className="material-symbols-outlined text-[28px]">verified_user</span>
-            </div>
-            <h3 className="font-headline-md text-headline-md">Professional</h3>
-            <p className="text-label-md text-on-surface-variant">Verified Veterinarians</p>
-          </div>
-          <div className="gsap-stat-card flex flex-col items-center text-center space-y-2">
-            <div className="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-full text-primary">
-              <span className="material-symbols-outlined text-[28px]">home</span>
-            </div>
-            <h3 className="font-headline-md text-headline-md">Home Care</h3>
-            <p className="text-label-md text-on-surface-variant">Stress-Free Environment</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Bento Grid */}
-      <section className="py-section-padding bg-background gsap-services-section">
-        <div className="max-w-container-max mx-auto px-gutter">
-          <div className="text-center mb-16 space-y-4">
-            <h2 className="font-headline-xl text-headline-xl-mobile md:text-headline-lg text-on-background">Our Core Services</h2>
-            <p className="text-body-md text-on-surface-variant max-w-2xl mx-auto">Complete care for every stage of your pet's life, delivered with compassion and professional expertise.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-            {/* Service 1 */}
-            <div className="gsap-service-card apple-glass apple-glass-hover p-8 rounded-2xl flex flex-col justify-between">
-              <div className="space-y-4">
-                <span className="material-symbols-outlined text-4xl text-primary">medical_services</span>
-                <h3 className="font-headline-md text-headline-md">Vet Consultations</h3>
-                <p className="text-body-md text-on-surface-variant">Comprehensive health checks, diagnosis, and treatment plans in the stress-free comfort of your home.</p>
-              </div>
-              <Link href="/book?service=Consultation" className="text-primary font-bold text-label-md inline-flex items-center gap-1 mt-6">
-                Book Consultation <span className="material-symbols-outlined text-[18px]">east</span>
-              </Link>
-            </div>
-            {/* Service 2 */}
-            <div className="gsap-service-card apple-glass apple-glass-hover p-8 rounded-2xl flex flex-col justify-between">
-              <div className="space-y-4">
-                <span className="material-symbols-outlined text-4xl text-primary">content_cut</span>
-                <h3 className="font-headline-md text-headline-md">Pet Grooming</h3>
-                <p className="text-body-md text-on-surface-variant">Professional bathing, haircuts, nail trimming, and ear cleaning services to keep your pet looking and feeling great.</p>
-              </div>
-              <Link href="/book?service=Grooming" className="text-primary font-bold text-label-md inline-flex items-center gap-1 mt-6">
-                Book Grooming <span className="material-symbols-outlined text-[18px]">east</span>
-              </Link>
-            </div>
-            {/* Service 3 */}
-            <div className="gsap-service-card apple-glass apple-glass-hover p-8 rounded-2xl flex flex-col justify-between">
-              <div className="space-y-4">
-                <span className="material-symbols-outlined text-4xl text-primary">vaccines</span>
-                <h3 className="font-headline-md text-headline-md">Vaccinations</h3>
-                <p className="text-body-md text-on-surface-variant">Timely core and non-core vaccinations to protect your pet against major infectious diseases.</p>
-              </div>
-              <Link href="/book?service=Vaccination" className="text-primary font-bold text-label-md inline-flex items-center gap-1 mt-6">
-                Book Vaccination <span className="material-symbols-outlined text-[18px]">east</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-section-padding bg-surface-container-lowest gsap-choose-section">
-        <div className="max-w-container-max mx-auto px-gutter grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl group border border-[#E7D9C6]">
-            <img
-              src="/service_vet_consultation.png"
-              alt="Why Choose The Paws Friend Doorstep Care"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            {/* Right Hero Booking Form */}
+            <HeroBookingForm
+              defaultService="Veterinary Consultation"
+              formTitle="Book Vet Doctor Visit"
+              formSubtitle="LICENSED VET AT YOUR DOORSTEP"
+              offerBadge="🩺 Free consultation call with Senior Vet"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4 text-white text-xs sm:text-sm font-bold bg-black/40 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/20 flex items-center gap-2">
-              <span>⭐</span>
-              <span>100% Certified Doorstep Vet &amp; Grooming Care</span>
-            </div>
-          </div>
-          <div className="space-y-8">
-            <h2 className="font-headline-xl text-headline-xl-mobile md:text-headline-lg text-on-background">Why Choose Us?</h2>
-            <div className="space-y-6">
-              <div className="gsap-choose-item flex gap-4">
-                <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                <div>
-                  <h4 className="font-bold text-headline-md">Stress-Free Home Visit</h4>
-                  <p className="text-body-md text-on-surface-variant">No clinic queues, no carrier battles. Your pet is treated in their natural, safe environment.</p>
-                </div>
-              </div>
-              <div className="gsap-choose-item flex gap-4">
-                <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                <div>
-                  <h4 className="font-bold text-headline-md">Hygiene & Safety First</h4>
-                  <p className="text-body-md text-on-surface-variant">We follow strict clinical-grade protocols for every visit to ensure a safe environment.</p>
-                </div>
-              </div>
-              <div className="gsap-choose-item flex gap-4">
-                <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                <div>
-                  <h4 className="font-bold text-headline-md">Doorstep Convenience</h4>
-                  <p className="text-body-md text-on-surface-variant">No stress of travel or clinic waiting rooms. Professional healthcare in the comfort of your home.</p>
-                </div>
-              </div>
-            </div>
-            <Link
-              href="/about"
-              className="bg-primary text-on-primary px-8 py-4 rounded-lg font-headline-md text-headline-md hover:bg-primary-container transition-all inline-block"
-            >
-              Read All Testimonials
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="max-w-container-max mx-auto px-gutter mb-section-padding">
-        <div className="bg-primary-container rounded-[2rem] p-12 md:p-16 text-center text-on-primary-container relative overflow-hidden">
-          <div className="absolute inset-0 bg-pattern opacity-10"></div>
-          <div className="relative z-10 space-y-8">
-            <h2 className="font-headline-xl text-headline-xl-mobile md:text-headline-xl">Give Your Pet The Best Care They Deserve</h2>
-            <p className="text-body-lg max-w-2xl mx-auto opacity-90">Join thousands of happy pet parents who have switched to a smarter, stress-free way of managing their pet's health.</p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link
-                href="/book"
-                className="bg-white text-primary px-10 py-5 rounded-xl font-headline-md text-headline-md shadow-xl hover:bg-surface-container transition-all active:scale-95 text-center"
+      {/* ── Integrated Veterinary & Vaccination Packages ── */}
+      <section className="py-16 bg-surface" id="packages">
+        <div className="max-w-container-max mx-auto px-gutter space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="text-primary font-bold text-sm tracking-wider uppercase">
+              Vaccination & Healthcare Packages
+            </span>
+            <h2 className="font-headline-lg text-3xl md:text-4xl font-extrabold text-on-surface">
+              Comprehensive Veterinary Vaccination Packages
+            </h2>
+            <p className="text-on-surface-variant text-base">
+              Transparent, flat-rate medical care protocols administered by registered doctors with booster tracking.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {vetPackages.map((pkg) => (
+              <div
+                key={pkg.id}
+                className={`relative rounded-3xl p-8 flex flex-col justify-between transition-all ${
+                  pkg.popular
+                    ? "bg-white border-2 border-primary shadow-xl"
+                    : "bg-white border border-surface-variant/50 shadow-sm hover:shadow-md"
+                }`}
               >
-                Book Your First Visit
-              </Link>
+                {pkg.badge && (
+                  <div
+                    className={`absolute -top-3.5 left-1/2 -translate-x-1/2 text-xs font-extrabold px-4 py-1 rounded-full shadow-md ${
+                      pkg.popular
+                        ? "bg-primary text-white"
+                        : "bg-surface-container-high text-on-surface"
+                    }`}
+                  >
+                    {pkg.badge}
+                  </div>
+                )}
+
+                <div className="space-y-6 pt-2">
+                  <div>
+                    <span className="text-xs font-bold text-primary uppercase tracking-wider">
+                      {pkg.unit}
+                    </span>
+                    <h3 className="font-headline-md text-2xl font-bold text-on-surface mt-1">
+                      {pkg.title}
+                    </h3>
+                    <div className="mt-3 flex items-baseline gap-2">
+                      <span className="text-3xl font-extrabold text-primary">
+                        {pkg.price}
+                      </span>
+                      <span className="text-sm text-on-surface-variant line-through">
+                        {pkg.originalPrice}
+                      </span>
+                    </div>
+                    <p className="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                      {pkg.summary}
+                    </p>
+                  </div>
+
+                  <div className="border-t border-surface-variant/40 pt-4">
+                    <h4 className="text-xs font-bold text-on-surface uppercase tracking-wider mb-3">
+                      Vaccine Inclusions & Schedule:
+                    </h4>
+                    <ul className="space-y-2.5 text-xs text-on-surface-variant">
+                      {pkg.includes.map((inc) => (
+                        <li key={inc} className="flex items-start gap-2">
+                          <span className="material-symbols-outlined text-primary text-[16px] shrink-0 mt-0.5">
+                            check_circle
+                          </span>
+                          <span>{inc}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="pt-8">
+                  <Link
+                    href={`/book?service=Veterinary&package=${encodeURIComponent(pkg.title)}`}
+                    className={`w-full py-3.5 rounded-xl font-bold text-sm text-center block transition-all ${
+                      pkg.popular
+                        ? "bg-primary text-white hover:bg-primary-container shadow-md"
+                        : "bg-surface-container text-on-surface hover:bg-primary/10 hover:text-primary"
+                    }`}
+                  >
+                    Book {pkg.title}
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Standalone Medical Services & Test Price List ── */}
+      <section className="py-16 bg-surface-container/40">
+        <div className="max-w-container-max mx-auto px-gutter space-y-8">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="text-primary font-bold text-sm tracking-wider uppercase">
+              Single Visit Price List
+            </span>
+            <h2 className="font-headline-lg text-3xl font-extrabold text-on-surface">
+              Standalone Consultations & Diagnostic Tests
+            </h2>
+            <p className="text-on-surface-variant text-sm">
+              Need a single vaccine, rapid virus test kit, or doctor home visit? Check our transparent price list below.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border border-surface-variant/40 shadow-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {standaloneServices.map((item) => (
+                <div
+                  key={item.name}
+                  className="flex items-center justify-between p-3.5 rounded-xl bg-surface-container/30 border border-surface-variant/30 text-xs font-semibold"
+                >
+                  <span className="text-on-surface">{item.name}</span>
+                  <span className="text-primary font-extrabold text-sm">{item.price}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 text-center pt-4 border-t border-surface-variant/30">
               <Link
-                href="/services"
-                className="bg-transparent border-2 border-white text-white px-10 py-5 rounded-xl font-headline-md text-headline-md hover:bg-white hover:text-primary transition-all active:scale-95 text-center"
+                href="/book?service=Veterinary%20Consultation"
+                className="bg-primary text-white px-8 py-3 rounded-xl font-bold text-sm inline-block shadow-md hover:bg-primary-container transition-all"
               >
-                View All Services
+                Book Vet Consultation Now →
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Pet Healthcare Tips & Doctor Advice ── */}
+      <section className="py-16 bg-white">
+        <div className="max-w-container-max mx-auto px-gutter space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="text-primary font-bold text-sm tracking-wider uppercase">
+              Veterinary Advice & Health Tips
+            </span>
+            <h2 className="font-headline-lg text-3xl font-extrabold text-on-surface">
+              Essential Health Guidance For Pet Parents
+            </h2>
+            <p className="text-on-surface-variant text-sm">
+              Proven clinical advice from our senior veterinary surgeons to keep your furry family healthy.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-surface-container/30 p-7 rounded-2xl border border-surface-variant/40 space-y-3">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
+                01
+              </div>
+              <h3 className="font-bold text-lg text-on-surface">Cold-Chain Vaccine Safety</h3>
+              <p className="text-xs text-on-surface-variant leading-relaxed">
+                Vaccines lose potency if exposed to room temperature. Always insist on cold-chain transport (2°C–8°C) to ensure full antibody production against Rabies & Parvovirus.
+              </p>
+            </div>
+
+            <div className="bg-surface-container/30 p-7 rounded-2xl border border-surface-variant/40 space-y-3">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
+                02
+              </div>
+              <h3 className="font-bold text-lg text-on-surface">Early Puppy Deworming Protocol</h3>
+              <p className="text-xs text-on-surface-variant leading-relaxed">
+                Puppies should be dewormed starting at 2 weeks of age and repeated every 2 weeks until 3 months. Intestinal worms can cause severe anemia and stunted growth.
+              </p>
+            </div>
+
+            <div className="bg-surface-container/30 p-7 rounded-2xl border border-surface-variant/40 space-y-3">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
+                03
+              </div>
+              <h3 className="font-bold text-lg text-on-surface">Emergency Fever & Vomiting Triage</h3>
+              <p className="text-xs text-on-surface-variant leading-relaxed">
+                Normal dog/cat temperature is 101°F–102.5°F. If fever exceeds 103°F or vomiting lasts more than 6 hours, avoid human medicines and schedule a rapid vet visit immediately.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── AEO (Answer Engine Optimization) FAQs Section ── */}
+      <section className="py-16 bg-surface-container/40" id="faqs">
+        <div className="max-w-container-max mx-auto px-gutter space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="text-primary font-bold text-sm tracking-wider uppercase">
+              Answer Engine Optimized FAQs
+            </span>
+            <h2 className="font-headline-lg text-3xl font-extrabold text-on-surface">
+              Frequently Asked Veterinary Questions
+            </h2>
+            <p className="text-on-surface-variant text-sm">
+              Authoritative, direct answers to common pet medical questions.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto space-y-4">
+            {aeoFaqs.map((faq) => (
+              <div
+                key={faq.q}
+                className="bg-white p-6 rounded-2xl border border-surface-variant/40 space-y-2 shadow-sm"
+              >
+                <h3 className="font-headline-md text-base font-bold text-on-surface">
+                  {faq.q}
+                </h3>
+                <p className="text-on-surface-variant text-xs leading-relaxed">
+                  {faq.a.split("**").map((part, i) =>
+                    i % 2 === 1 ? <strong key={i}>{part}</strong> : part
+                  )}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Interactive Magazine & Article Grid ── */}
+      <InteractiveArticleGrid category="veterinary" />
+
+      {/* ── Footer Banner ── */}
+      <section className="py-12 bg-primary text-white">
+        <div className="max-w-container-max mx-auto px-gutter text-center space-y-6">
+          <h2 className="text-2xl md:text-3xl font-extrabold">
+            Ready to Schedule Your Pet&apos;s Vet Doctor Home Visit?
+          </h2>
+          <p className="max-w-xl mx-auto text-white/90 text-sm">
+            Delhi NCR (Delhi, Gurgaon, Noida, Ghaziabad, Faridabad) & Lucknow.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 pt-2">
+            <Link
+              href="/grooming"
+              className="bg-white text-primary px-6 py-3 rounded-xl font-extrabold hover:bg-primary-fixed transition-all"
+            >
+              Explore Grooming Packages →
+            </Link>
+            <Link
+              href="/lucknow/veterinary"
+              className="bg-primary-container/40 text-white border border-white/40 px-6 py-3 rounded-xl font-extrabold hover:bg-white/20 transition-all"
+            >
+              Lucknow Vet Doctor Page →
+            </Link>
           </div>
         </div>
       </section>
