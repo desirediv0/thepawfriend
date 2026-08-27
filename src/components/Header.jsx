@@ -17,14 +17,20 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Navigation Links — Combined Core Services, Dedicated Landing Pages & Info Pages
   const navLinks = [
     { name: "Home", href: "/" },
+    // Dedicated Doorstep Care & City Hub Landing Pages (SEO & High Conversion)
+    { name: "Veterinary", href: "/veterinary" },
+    { name: "Grooming", href: "/grooming" },
+    { name: "Lucknow", href: "/lucknow" },
+    // Core Services, Catalog & Company Info
     { name: "Services", href: "/services" },
     { name: "Packages", href: "/packages" },
     { name: "About Us", href: "/about" },
     { name: "Gallery", href: "/gallery" },
     { name: "Blog", href: "/blog" },
-    { name: "Contact", href: "/contact" }
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
