@@ -1221,7 +1221,7 @@ export default function PackagesPage() {
     const message = encodeURIComponent(
       `Hello! I want to book the ${pkg.name} (${pkg.price}) for my pet.`
     );
-    window.open(`https://wa.me/?text=${message}`, "_blank");
+    window.open(`https://wa.me/919211338489?text=${message}`, "_blank");
   };
 
   return (
@@ -1418,7 +1418,7 @@ export default function PackagesPage() {
             <button
               onClick={() =>
                 window.open(
-                  `https://wa.me/?text=${encodeURIComponent(
+                  `https://wa.me/919211338489?text=${encodeURIComponent(
                     "Hello! I am looking to book a pet care package."
                   )}`,
                   "_blank"

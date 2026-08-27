@@ -169,7 +169,6 @@ export default function GroomingPage() {
     ],
   };
 
-  // AEO (Answer Engine Optimization) Structured FAQs for Perplexity, ChatGPT & Google AI Overviews
   const aeoFaqs = [
     {
       q: "What is included in full dog grooming at home?",
@@ -366,7 +365,6 @@ export default function GroomingPage() {
           }}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center w-full">
-            {/* Left Column - SEO H1 Content */}
             <div className="space-y-6">
               <nav aria-label="Breadcrumb" className="text-xs text-white/70 flex items-center gap-2">
                 <Link href="/" className="hover:underline">Home</Link>
@@ -404,7 +402,6 @@ export default function GroomingPage() {
                 Gentle, professional dog and cat grooming in your living room. Warm herbal baths, breed haircuts, tick removal, nail clipping & ear cleaning by certified groomers.
               </p>
 
-              {/* City chips */}
               <div className="flex flex-wrap gap-2 pt-1">
                 {["Delhi", "Gurugram", "Noida", "Ghaziabad", "Faridabad", "Lucknow"].map((c) => (
                   <span
@@ -434,7 +431,6 @@ export default function GroomingPage() {
               </div>
             </div>
 
-            {/* Right Hero Booking Form */}
             <HeroBookingForm
               defaultService="Grooming"
               formTitle="Book Doorstep Grooming"

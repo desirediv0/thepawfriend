@@ -4,6 +4,21 @@ import Link from "next/link";
 import { useEffect } from "react";
 
 export default function AboutPage() {
+  // AboutPage Structured Data (JSON-LD) for Search Engine Rich Snippets & Technical SEO
+  const jsonLdAbout = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "About The Paws Friend - Professional Doorstep Pet Healthcare",
+    url: "https://thepawsfriend.com/about",
+    description:
+      "The Paws Friend brings clinical-grade vet care and certified grooming to your home in Delhi NCR & Lucknow.",
+    mainEntity: {
+      "@type": "Organization",
+      name: "The Paws Friend",
+      telephone: "+91-9211338489",
+      url: "https://thepawsfriend.com",
+    },
+  };
 
   useEffect(() => {
     const init = async () => {
@@ -123,6 +138,11 @@ export default function AboutPage() {
 
   return (
     <>
+      {/* ── JSON-LD Structured Data Script for Search Engine Indexing ── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdAbout) }}
+      />
       {/* ── Hero ── */}
       <section className="relative px-gutter py-section-padding max-w-container-max mx-auto overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
