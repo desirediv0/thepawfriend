@@ -156,8 +156,34 @@ export default function Home() {
     }
   };
 
+  // LocalBusiness & WebSite Structured Data (JSON-LD) for Search Engine Rich Snippets & Local SEO
+  const jsonLdHome = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "The Paws Friend",
+    url: "https://thepawsfriend.com",
+    telephone: "+91-9211338489",
+    description: "Doorstep veterinary doctor visits, vaccinations, and pet grooming in Delhi NCR & Lucknow.",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "IN",
+      addressRegion: "Delhi NCR & Uttar Pradesh",
+    },
+    areaServed: ["Delhi", "Gurugram", "Noida", "Greater Noida", "Ghaziabad", "Faridabad", "Lucknow"],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "650",
+    },
+  };
+
   return (
     <>
+      {/* ── JSON-LD Structured Data Script for Local Business Indexing ── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdHome) }}
+      />
       {/* ── Hero Section ── Full-width bg image + left content + right glass form */}
       <section
         className="relative overflow-hidden"
@@ -499,7 +525,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Bento Grid */}
+      {/* Services Bento Grid — Direct Links to Dedicated Pages */}
       <section className="py-section-padding bg-background gsap-services-section">
         <div className="max-w-container-max mx-auto px-gutter">
           <div className="text-center mb-16 space-y-4">
@@ -507,37 +533,37 @@ export default function Home() {
             <p className="text-body-md text-on-surface-variant max-w-2xl mx-auto">Complete care for every stage of your pet's life, delivered with compassion and professional expertise.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-            {/* Service 1 */}
+            {/* Service 1: Veterinary Consultations */}
             <div className="gsap-service-card apple-glass apple-glass-hover p-8 rounded-2xl flex flex-col justify-between">
               <div className="space-y-4">
                 <span className="material-symbols-outlined text-4xl text-primary">medical_services</span>
-                <h3 className="font-headline-md text-headline-md">Vet Consultations</h3>
-                <p className="text-body-md text-on-surface-variant">Comprehensive health checks, diagnosis, and treatment plans in the stress-free comfort of your home.</p>
+                <h3 className="font-headline-md text-headline-md">Doorstep Vet Doctor Visits</h3>
+                <p className="text-body-md text-on-surface-variant">Comprehensive health checks, diagnosis, vaccinations, and treatment plans in the stress-free comfort of your home.</p>
               </div>
-              <Link href="/book?service=Consultation" className="text-primary font-bold text-label-md inline-flex items-center gap-1 mt-6">
-                Book Consultation <span className="material-symbols-outlined text-[18px]">east</span>
+              <Link href="/veterinary" className="text-primary font-bold text-label-md inline-flex items-center gap-1 mt-6 hover:underline">
+                Explore Vet Packages <span className="material-symbols-outlined text-[18px]">east</span>
               </Link>
             </div>
-            {/* Service 2 */}
+            {/* Service 2: Pet Grooming */}
             <div className="gsap-service-card apple-glass apple-glass-hover p-8 rounded-2xl flex flex-col justify-between">
               <div className="space-y-4">
                 <span className="material-symbols-outlined text-4xl text-primary">content_cut</span>
-                <h3 className="font-headline-md text-headline-md">Pet Grooming</h3>
-                <p className="text-body-md text-on-surface-variant">Professional bathing, haircuts, nail trimming, and ear cleaning services to keep your pet looking and feeling great.</p>
+                <h3 className="font-headline-md text-headline-md">Doorstep Pet Grooming</h3>
+                <p className="text-body-md text-on-surface-variant">Warm herbal baths, breed-specific haircuts, nail trimming, ear cleaning, and anti-tick spa at home.</p>
               </div>
-              <Link href="/book?service=Grooming" className="text-primary font-bold text-label-md inline-flex items-center gap-1 mt-6">
-                Book Grooming <span className="material-symbols-outlined text-[18px]">east</span>
+              <Link href="/grooming" className="text-primary font-bold text-label-md inline-flex items-center gap-1 mt-6 hover:underline">
+                Explore Grooming Packages <span className="material-symbols-outlined text-[18px]">east</span>
               </Link>
             </div>
-            {/* Service 3 */}
+            {/* Service 3: Lucknow Doorstep Care */}
             <div className="gsap-service-card apple-glass apple-glass-hover p-8 rounded-2xl flex flex-col justify-between">
               <div className="space-y-4">
-                <span className="material-symbols-outlined text-4xl text-primary">vaccines</span>
-                <h3 className="font-headline-md text-headline-md">Vaccinations</h3>
-                <p className="text-body-md text-on-surface-variant">Timely core and non-core vaccinations to protect your pet against major infectious diseases.</p>
+                <span className="material-symbols-outlined text-4xl text-primary">location_on</span>
+                <h3 className="font-headline-md text-headline-md">Lucknow Doorstep Care</h3>
+                <p className="text-body-md text-on-surface-variant">Dedicated doorstep vet doctor home visits &amp; pet grooming across all Lucknow sectors within 30 mins.</p>
               </div>
-              <Link href="/book?service=Vaccination" className="text-primary font-bold text-label-md inline-flex items-center gap-1 mt-6">
-                Book Vaccination <span className="material-symbols-outlined text-[18px]">east</span>
+              <Link href="/lucknow" className="text-primary font-bold text-label-md inline-flex items-center gap-1 mt-6 hover:underline">
+                Explore Lucknow Hub <span className="material-symbols-outlined text-[18px]">east</span>
               </Link>
             </div>
           </div>
