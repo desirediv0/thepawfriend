@@ -504,7 +504,7 @@ export default function Home() {
         <div className="max-w-container-max mx-auto px-gutter">
           <div className="text-center mb-16 space-y-4">
             <h2 className="font-headline-xl text-headline-xl-mobile md:text-headline-lg text-on-background">Our Core Services</h2>
-            <p className="text-body-md text-on-surface-variant max-w-2xl mx-auto">Complete care for every stage of your pet's life, delivered with compassion and professional expertise.</p>
+            <p className="text-body-md text-on-surface-variant max-w-2xl mx-auto">Complete care for every stage of your pet&apos;s life, delivered with compassion and professional expertise.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
             {/* Service 1 */}
@@ -600,7 +600,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-pattern opacity-10"></div>
           <div className="relative z-10 space-y-8">
             <h2 className="font-headline-xl text-headline-xl-mobile md:text-headline-xl">Give Your Pet The Best Care They Deserve</h2>
-            <p className="text-body-lg max-w-2xl mx-auto opacity-90">Join thousands of happy pet parents who have switched to a smarter, stress-free way of managing their pet's health.</p>
+            <p className="text-body-lg max-w-2xl mx-auto opacity-90">Join thousands of happy pet parents who have switched to a smarter, stress-free way of managing their pet&apos;s health.</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
                 href="/book"
