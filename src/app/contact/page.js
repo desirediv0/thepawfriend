@@ -4,6 +4,20 @@ import { useState } from "react";
 import { useToast } from "@/context/ToastContext";
 
 export default function ContactPage() {
+  const jsonLdContact = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact The Paws Friend - Doorstep Pet Healthcare Support",
+    url: "https://thepawsfriend.com/contact",
+    description: "Get in touch with The Paws Friend for doorstep vet doctor visits & pet grooming inquiries in Delhi NCR & Lucknow.",
+    mainEntity: {
+      "@type": "Organization",
+      name: "The Paws Friend",
+      telephone: "+91-9211338489",
+      email: "support@thepawsfriend.com",
+    },
+  };
+
   const { showToast } = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -49,6 +63,10 @@ export default function ContactPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdContact) }}
+      />
       {/* ── Hero with Reception Image — Responsive Split Layout ── */}
       <section className="bg-gradient-to-br from-[#1a0905] to-[#2c1208] overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 min-h-0 md:min-h-[520px]">
