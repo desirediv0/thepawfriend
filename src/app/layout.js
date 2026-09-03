@@ -106,7 +106,7 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" className="scroll-smooth h-full">
+    <html lang="en" className="scroll-smooth h-full overflow-x-hidden">
       <head>
         <meta name="theme-color" content="#ab2f00" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -124,7 +124,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdGlobalOrg) }}
         />
       </head>
-      <body className="min-h-full bg-background text-on-surface font-body-md antialiased flex flex-col pt-20">
+      <body className="min-h-full bg-background text-on-surface font-body-md antialiased flex flex-col pt-20 overflow-x-hidden">
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

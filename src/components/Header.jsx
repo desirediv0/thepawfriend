@@ -27,10 +27,15 @@ export default function Header() {
     // Core Services, Catalog & Company Info
     { name: "Services", href: "/services" },
     { name: "Packages", href: "/packages" },
-    { name: "About Us", href: "/about" },
-    { name: "Gallery", href: "/gallery" },
-    { name: "Blog", href: "/blog" },
-    { name: "Contact", href: "/contact" },
+    {
+      name: "Contact",
+      href: "/contact",
+      dropdown: [
+        { name: "About Us", href: "/about" },
+        { name: "Gallery", href: "/gallery" },
+        { name: "Blog", href: "/blog" },
+      ],
+    },
   ];
 
   return (
@@ -57,7 +62,37 @@ export default function Header() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1.5 bg-surface-container/60 p-1.5 rounded-full border border-surface-variant/30 backdrop-blur-md">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = pathname === link.href || link.dropdown?.some(d => pathname === d.href);
+              
+              if (link.dropdown) {
+                return (
+                  <div key={link.name} className="relative group">
+                    <Link
+                      href={link.href}
+                      className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 inline-flex items-center gap-1 ${
+                        isActive
+                          ? "bg-primary text-white shadow-sm"
+                          : "text-on-surface-variant hover:text-primary hover:bg-white/60"
+                      }`}
+                    >
+                      {link.name}
+                      <span className="material-symbols-outlined text-[16px]">expand_more</span>
+                    </Link>
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-surface-variant/40 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden flex flex-col py-1">
+                      {link.dropdown.map(drop => (
+                        <Link
+                          key={drop.name}
+                          href={drop.href}
+                          className={`px-4 py-2.5 text-sm font-medium transition-colors hover:bg-primary/5 hover:text-primary ${pathname === drop.href ? "text-primary bg-primary/5" : "text-on-surface"}`}
+                        >
+                          {drop.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={link.name}
@@ -101,6 +136,39 @@ export default function Header() {
           <div className="md:hidden bg-white/95 backdrop-blur-xl border-b border-surface-variant/40 px-6 py-4 space-y-3 animate-in slide-in-from-top-5 duration-200 shadow-xl">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
+              
+              if (link.dropdown) {
+                return (
+                  <div key={link.name} className="space-y-1">
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className={`block py-2.5 px-4 rounded-xl font-semibold text-base transition-colors ${
+                        isActive || link.dropdown.some(d => pathname === d.href)
+                          ? "bg-primary-container/20 text-primary font-bold"
+                          : "text-on-surface hover:bg-surface-container"
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                    <div className="pl-6 space-y-1 border-l-2 border-surface-variant/30 ml-4">
+                      {link.dropdown.map(drop => (
+                        <Link
+                          key={drop.name}
+                          href={drop.href}
+                          onClick={() => setIsOpen(false)}
+                          className={`block py-2 px-4 rounded-xl text-sm font-medium transition-colors ${
+                            pathname === drop.href ? "text-primary bg-primary/5" : "text-on-surface-variant hover:text-on-surface"
+                          }`}
+                        >
+                          {drop.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={link.name}
