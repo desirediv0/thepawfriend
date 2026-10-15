@@ -38,8 +38,18 @@ export function ThankYou() {
       const parsed = raw ? (JSON.parse(raw) as Info) : null
       if (parsed && Date.now() - parsed.at < WINDOW) found = parsed
     } catch { /* ignore */ }
-    if (found) setInfo(found)
-    else router.replace('/') // nobody submitted a form: this page is not for direct visits
+    if (!found) { router.replace('/'); return } // nobody submitted a form: this page is not for direct visits
+    setInfo(found)
+
+    // Google Ads form conversion — once per submission (a refresh must not count it again).
+    try {
+      const sent = `pf-conv-${found.at}`
+      const w = window as unknown as { gtag?: (...a: unknown[]) => void }
+      if (!sessionStorage.getItem(sent) && typeof w.gtag === 'function') {
+        w.gtag('event', 'conversion', { send_to: 'AW-17519548132/YRojCMTPgJgdEOSt_KFB' })
+        sessionStorage.setItem(sent, '1')
+      }
+    } catch { /* tracking must never break the page */ }
   }, [router])
 
   if (!info) return <main className="min-h-[70vh] bg-ivory" aria-busy="true" />

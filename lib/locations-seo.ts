@@ -9,7 +9,7 @@ export type CitySeo = {
   faqs: { q: string; a: string }[]
 }
 
-export const SITE_URL = 'https://thepawsfriend.com'
+export const SITE_URL = 'https://www.thepawsfriend.com'
 
 export const citySeo: Record<string, CitySeo> = {
   delhi: {
