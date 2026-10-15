@@ -1,10 +1,18 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { IconAlertCircle, IconCircleCheck } from '@tabler/icons-react'
 import { validateLead, type LeadType } from './lead'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
+
+export const THANKS_KEY = 'pf-thanks'
+
+/** Remembers that a form was just submitted, so /thank-you only opens after a real submission (not a typed-in URL). */
+export function markSubmitted(type: LeadType, name: string, city = '') {
+  try { sessionStorage.setItem(THANKS_KEY, JSON.stringify({ type, name: name.trim().split(' ')[0] ?? '', city, at: Date.now() })) } catch { /* storage blocked: the thank-you page falls back to home */ }
+}
 
 /**
  * Shared submit logic for every enquiry form. Posts to /api/lead (nodemailer → Brevo SMTP on the server).
@@ -13,6 +21,7 @@ type Status = 'idle' | 'loading' | 'success' | 'error'
 export function useLeadForm(type: LeadType, extra: Record<string, string> = {}) {
   const [status, setStatus] = useState<Status>('idle')
   const [error, setError] = useState('')
+  const router = useRouter()
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -30,7 +39,8 @@ export function useLeadForm(type: LeadType, extra: Record<string, string> = {}) 
       const out = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
       if (!res.ok || !out.ok) throw new Error(out.error || 'Something went wrong.')
       form.reset()
-      setStatus('success')
+      markSubmitted(type, String(raw.name ?? ''), String(raw.city ?? ''))
+      router.push('/thank-you') // status stays 'loading' until the page changes, so the form never flashes back
     } catch (err) {
       setStatus('error')
       setError(err instanceof Error ? err.message : 'Something went wrong. Please call +91 9211338489.')

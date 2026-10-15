@@ -1,12 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { IconAlertCircle, IconArrowRight, IconCircleCheck, IconLoader2 } from '@tabler/icons-react'
 import { Button } from '@/components/ui/button'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { CONTACT, isIndianPhone } from '@/lib/contact'
-import { Honeypot } from '@/lib/use-lead-form'
+import { Honeypot, markSubmitted } from '@/lib/use-lead-form'
 
 type Errors = Partial<Record<'name' | 'phone' | 'message', string>>
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -17,6 +18,7 @@ const label = '!text-[10px] !font-extrabold uppercase tracking-[.2em] text-muted
 export function ContactForm() {
   const [errors, setErrors] = useState<Errors>({})
   const [status, setStatus] = useState<Status>('idle')
+  const router = useRouter()
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -39,7 +41,8 @@ export function ContactForm() {
       const out = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
       if (!res.ok || !out.ok) throw new Error(out.error || 'failed')
       form.reset()
-      setStatus('success')
+      markSubmitted('contact', name)
+      router.push('/thank-you')
     } catch {
       setStatus('error')
     }
