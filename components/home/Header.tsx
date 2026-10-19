@@ -7,9 +7,9 @@ import { usePathname } from 'next/navigation'
 import { IconArrowUpRight, IconBrandWhatsapp, IconMapPin, IconMenu2, IconPhone, IconX } from '@tabler/icons-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { locationHref } from '@/lib/locations-data'
 import { cities as allCities, nav, PHONE, PHONE_HREF, WHATSAPP } from '@/lib/content'
 
-const cities = allCities.filter((c) => c !== 'Lucknow')
 
 export function Header() {
   const [open, setOpen] = useState(false)
@@ -62,10 +62,9 @@ export function Header() {
               {[0, 1].map((k) => (
                 <li key={k} aria-hidden={k === 1} className="flex shrink-0 items-center">
                   <span className="px-5">Trusted doorstep pet healthcare</span>
-                  {cities.map((c) => (
-                    <span key={c} className="flex items-center gap-5 px-2.5"><i className="size-[3px] rounded-full bg-brand" /><IconMapPin size={12} stroke={1.75} className="-mr-3" />{c}</span>
+                  {allCities.map((c) => (
+                    <Link key={c} href={locationHref(c)} tabIndex={k === 1 ? -1 : undefined} className="flex items-center gap-5 px-2.5 transition-colors hover:text-white"><i className="size-[3px] rounded-full bg-brand" /><IconMapPin size={12} stroke={1.75} className="-mr-3" />{c}</Link>
                   ))}
-                  <span className="flex items-center gap-5 px-2.5"><i className="size-[3px] rounded-full bg-brand" />Lucknow</span>
                   <i className="mx-5 size-[3px] rounded-full bg-brand" />
                 </li>
               ))}

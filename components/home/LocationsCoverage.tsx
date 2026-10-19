@@ -66,7 +66,7 @@ export function LocationsCoverage() {
               <div className="absolute inset-0 flex flex-col items-center justify-center px-3 text-center text-white">
                 <p className="text-[9px] font-extrabold uppercase tracking-[.2em] text-[#f4a37f] sm:text-[10px]">{loc.region}</p>
                 <p key={loc.slug} className="display mt-1 animate-[fadeUp_.6s_ease-out] text-[clamp(1.35rem,5.4vw,2.4rem)] [text-wrap:balance]">{loc.name}</p>
-                <Link href={`/locations/${loc.slug}`} className="btn btn-brand mt-3 !min-h-[38px] !gap-1.5 !px-4 !text-[11.5px] sm:!min-h-[42px] sm:!text-[12.5px]">View city <IconArrowUpRight size={14} stroke={2} /></Link>
+                <Link href={`/${loc.slug}`} className="btn btn-brand mt-3 !min-h-[38px] !gap-1.5 !px-4 !text-[11.5px] sm:!min-h-[42px] sm:!text-[12.5px]">View city <IconArrowUpRight size={14} stroke={2} /></Link>
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import {
 } from '@tabler/icons-react'
 import { CountUp } from '@/components/home/CountUp'
 import { CONTACT, serviceCities, whatsappHref } from '@/lib/contact'
+import { locationHref } from '@/lib/locations-data'
 
 /* ---------- 2. Contact / reception information ---------- */
 export function ContactDetails() {
@@ -63,7 +64,7 @@ export function ServiceArea() {
             <li key={c} className="relative flex items-center gap-6 py-3.5 pl-10 sm:gap-8">
               <span aria-hidden className="absolute left-0 top-1/2 grid size-6 -translate-y-1/2 place-items-center rounded-full bg-sand"><span className="size-3 rounded-full border-2 border-brand bg-paper" /></span>
               <span className="w-8 text-[11px] font-extrabold tabular-nums text-brand">0{i + 1}</span>
-              <span className="text-[clamp(1.8rem,4vw,3.2rem)] font-extrabold leading-none tracking-[-.04em]">{c}</span>
+              <Link href={locationHref(c)} className="text-[clamp(1.8rem,4vw,3.2rem)] font-extrabold leading-none tracking-[-.04em] transition-colors hover:text-brand">{c}</Link>
               <IconMapPin size={20} stroke={1.5} className="ml-auto hidden text-ink/40 sm:block" />
             </li>
           ))}

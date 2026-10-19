@@ -1,7 +1,9 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { IconArrowUpRight, IconHeart, IconMapPin, IconScissors, IconSparkles } from '@tabler/icons-react'
 import { BookingPanel } from '@/components/pages/BookingPanel'
 import { groomCities } from '@/lib/grooming-data'
+import { locationHref } from '@/lib/locations-data'
 
 export function GroomHero() {
   return (
@@ -48,7 +50,7 @@ export function GroomHero() {
         <div className="flex flex-col gap-3 border-y border-line py-5 sm:flex-row sm:items-center sm:gap-8">
           <p className="flex shrink-0 items-center gap-2 text-[10px] font-extrabold uppercase tracking-[.2em] text-brand"><IconMapPin size={15} stroke={1.75} /> Serving</p>
           <ul className="no-scrollbar -mx-4 flex gap-x-7 overflow-x-auto px-4 text-[15px] font-bold sm:mx-0 sm:px-0">
-            {groomCities.map((c, i) => <li key={c} className="flex shrink-0 items-center gap-7">{c}{i < groomCities.length - 1 && <i aria-hidden className="size-1 rounded-full bg-brand" />}</li>)}
+            {groomCities.map((c, i) => <li key={c} className="flex shrink-0 items-center gap-7"><Link href={locationHref(c)} className="transition-colors hover:text-brand">{c}</Link>{i < groomCities.length - 1 && <i aria-hidden className="size-1 rounded-full bg-brand" />}</li>)}
           </ul>
         </div>
       </div>

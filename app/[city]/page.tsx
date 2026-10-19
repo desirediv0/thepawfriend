@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const loc = getLocation(slug)
   if (!loc) return {}
   const seo = citySeo[slug]
-  const url = `/locations/${slug}`
+  const url = `/${slug}`
   return {
     title: { absolute: seo.title },
     description: seo.description,
@@ -34,7 +34,7 @@ export default async function CityPage({ params }: Props) {
   const loc = getLocation((await params).city)
   if (!loc) notFound()
   const seo = citySeo[loc.slug]
-  const pageUrl = `${SITE_URL}/locations/${loc.slug}`
+  const pageUrl = `${SITE_URL}/${loc.slug}`
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -162,7 +162,7 @@ export default async function CityPage({ params }: Props) {
         <div className="wrap">
           <p className="label !text-[#f4a37f]">Other cities</p>
           <ul className="mt-5 flex flex-wrap gap-2.5">
-            {locations.filter((l) => l.slug !== loc.slug).map((l) => <li key={l.slug}><Link href={`/locations/${l.slug}`} className="inline-flex rounded-full border border-white/25 px-4 py-2 text-[13px] font-semibold transition-colors hover:bg-white hover:text-ink">{l.name}</Link></li>)}
+            {locations.filter((l) => l.slug !== loc.slug).map((l) => <li key={l.slug}><Link href={`/${l.slug}`} className="inline-flex rounded-full border border-white/25 px-4 py-2 text-[13px] font-semibold transition-colors hover:bg-white hover:text-ink">{l.name}</Link></li>)}
           </ul>
         </div>
       </section>

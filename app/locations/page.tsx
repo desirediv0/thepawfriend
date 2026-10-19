@@ -19,7 +19,7 @@ export default function LocationsPage() {
         <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {locations.map((l) => (
             <li key={l.slug}>
-              <Link href={`/locations/${l.slug}`} className="group block overflow-hidden rounded-[14px] border border-line bg-paper transition-colors hover:border-brand">
+              <Link href={`/${l.slug}`} className="group block overflow-hidden rounded-[14px] border border-line bg-paper transition-colors hover:border-brand">
                 <div className="relative aspect-[16/10] overflow-hidden"><Image src={l.image} alt="" fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-105" /></div>
                 <div className="p-5">
                   <p className="flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-[.12em] text-brand"><IconMapPin size={13} stroke={2} />{l.region}</p>

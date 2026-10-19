@@ -9,6 +9,13 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 31,
   },
   compress: true,
+  async redirects() {
+    return [
+      // City pages live at /<city> (same as the old site). Old /locations/<city> links keep working.
+      { source: '/locations/:city(delhi|gurugram|noida|greater-noida|ghaziabad|faridabad|lucknow)', destination: '/:city', permanent: true },
+      { source: '/gurgaon', destination: '/gurugram', permanent: true },
+    ]
+  },
   async headers() {
     const cache = [{ key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=604800' }]
     return [

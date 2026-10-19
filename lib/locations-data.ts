@@ -22,8 +22,9 @@ export const locations: Location[] = [
 export const getLocation = (slug: string) => locations.find((l) => l.slug === slug)
 
 export const locationHref = (name: string) => {
-  const l = locations.find((x) => x.name.toLowerCase() === name.toLowerCase())
-  return l ? `/locations/${l.slug}` : '/locations'
+  const key = name.toLowerCase() === 'gurgaon' ? 'gurugram' : name.toLowerCase()
+  const l = locations.find((x) => x.name.toLowerCase() === key)
+  return l ? `/${l.slug}` : '/locations'
 }
 
 export const cityServices = [

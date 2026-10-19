@@ -29,7 +29,7 @@ export function Footer() {
         </nav>
         <div className="md:col-span-2">
           <p className={head}>Locations</p>
-          <ul className="space-y-2.5">{cities.map((c) => <li key={c}><Link href={locationHref(c)} className={`${col} flex items-center gap-1.5`}><IconMapPin size={13} stroke={1.75} />{c}</Link></li>)}</ul>
+          <ul className="space-y-2.5">{cities.map((c) => <li key={c}><Link href={locationHref(c)} className={`${col} flex items-center gap-1.5`}><IconMapPin size={13} stroke={1.75} />{c}</Link></li>)}<li><Link href="/locations" className={`${col} font-bold !text-[#f4a37f] hover:!text-white`}>All locations →</Link></li></ul>
         </div>
         <div id="contact" className="scroll-mt-28 md:col-span-2">
           <p className={head}>Support</p>
