@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Instrument_Serif, Manrope } from 'next/font/google'
 import { FloatingContactActions } from '@/components/FloatingContactActions'
 import { GoogleTag } from '@/components/GoogleTag'
+import { MetaPixel } from '@/components/MetaPixel'
 import { Footer } from '@/components/home/Footer'
 import { Header } from '@/components/home/Header'
 import './globals.css'
@@ -28,7 +29,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${manrope.variable} ${serif.variable}`}>
-      <body className="max-md:pb-[84px]"><Header />{children}<Footer /><FloatingContactActions />{process.env.NODE_ENV === 'production' && <><Analytics /><GoogleTag /></>}</body>
+      <body className="max-md:pb-[84px]"><Header />{children}<Footer /><FloatingContactActions />{process.env.NODE_ENV === 'production' && <><Analytics /><GoogleTag /><MetaPixel /></>}</body>
     </html>
   )
 }

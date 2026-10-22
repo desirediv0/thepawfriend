@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { ThankYou } from '@/components/thank-you/ThankYou'
 
 export const metadata: Metadata = {
@@ -7,5 +8,14 @@ export const metadata: Metadata = {
 }
 
 export default function ThankYouPage() {
-  return <ThankYou />
+  return (
+    <>
+      <ThankYou />
+      {process.env.NODE_ENV === 'production' && (
+        <Script id="meta-pixel-lead" strategy="afterInteractive">
+          {`fbq('track', 'Lead');`}
+        </Script>
+      )}
+    </>
+  )
 }
